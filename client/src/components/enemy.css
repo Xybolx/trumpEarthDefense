@@ -1,0 +1,59 @@
+@keyframes Motion {
+  from {
+    top: 0%;
+  }
+  to {
+    top: 75%;
+  }
+}
+
+@keyframes Motion2 {
+  from {
+    top: 75%;
+  }
+  to {
+    top: 0%;
+  }
+}
+
+@keyframes Motion3 {
+  0% {
+    top: 50%;
+  }
+  50% {
+    top: 75%;
+  }
+  100% {
+    top: 75%;
+  }
+}
+
+.target {
+  background: url("../imgs/enemy.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: Motion 2s infinite alternate;
+  position: fixed;
+  transform: rotate(-90deg);
+}
+
+.target2 {
+  background: url("../imgs/enemy.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: Motion2 2s infinite alternate;
+  position: fixed;
+  transform: rotate(-90deg);
+}
+
+.target3 {
+  background: url("../imgs/enemy.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: Motion3 2s infinite alternate;
+  position: fixed;
+  transform: rotate(-90deg);
+}

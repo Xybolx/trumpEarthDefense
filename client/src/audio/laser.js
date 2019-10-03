@@ -1,0 +1,1 @@
+export const laser = new Audio('laser.mp3');

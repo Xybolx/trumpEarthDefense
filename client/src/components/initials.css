@@ -1,0 +1,41 @@
+@keyframes Flash {
+  from {
+    color: yellow;
+  }
+  to {
+    color: red;
+  }
+}
+
+td {
+  text-transform: uppercase;
+}
+
+.table-responsive {
+  background: rgba(0, 0, 0, 0.438);
+}
+
+.table {
+  color: yellow;
+}
+
+.initials {
+  color: yellow;
+  padding-top: 150px;
+  animation: Flash .25s infinite;
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+input {
+  text-align: center;
+  text-transform: uppercase;
+  background: transparent;
+  border: unset;
+  animation: Flash .25s infinite;
+  font-size: 50px;
+}
+
+input:focus {
+  outline: unset;
+}
