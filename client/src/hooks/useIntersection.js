@@ -2,46 +2,55 @@ import { useState, useEffect, useContext } from "react";
 import ScoreContext from "../context/scoreContext";
 import useInterval from "./useInterval";
 
-const useIntersection = (missle, enemy, boolean, setBoolean, setNumber) => {
+const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOver) => {
 
+    // state
     const [isIntersecting, setIsIntersecting] = useState(false);
 
-    const { setScore } = useContext(ScoreContext);
+    // context
+    const { incScore100 } = useContext(ScoreContext);
 
+    // audio elements
     const splode = new Audio("splode.mp3");
+    const laugh = new Audio("laughing.mp3");
 
+    // function to advance player projectile/detect if it reaches the end of the screen/detect intersection
     const missleTick = () => {
         const missleStyle = missle.current.style;
         const winWidth = window.innerWidth;
         const docWidth = document.documentElement.clientWidth;
         const rect1 = missle.current.getBoundingClientRect();
         const rect2 = enemy.current.getBoundingClientRect();
+
         const enemyIntersect = 
             rect1.x < rect2.x + rect2.width &&
             rect1.x + rect1.width > rect2.x &&
             rect1.y < rect2.y + rect2.height &&
             rect1.height + rect1.y > rect2.y;
-        if (rect1.right > (winWidth || docWidth)) {
-            console.log("out of view");
-            setBoolean(false);
+
+        if (!gameOver && rect1.right > (winWidth || docWidth)) {
+            setIsFlying(false);
             missleStyle.top = 0 + "px";
             missleStyle.visibility = "hidden";
         }
-        if (enemyIntersect) {
+        if (!gameOver && enemyIntersect) {
+            splode.volume = 1;
             splode.play();
-            setScore(score => score + 100);
-            setBoolean(false);
+            incScore100();
+            setIsFlying(false);
             setIsIntersecting(true);
-            console.log("intersecting!");
         }
         missleStyle.top = parseInt(missleStyle.top) - 10 + "px";        
     };
 
+    // function to advance enemies across screen/
     const enemyTick = () => {
         const rect = enemy.current.getBoundingClientRect();
         const enemyStyle = enemy.current.style;
-        if (rect.left <= 0) {
-            setNumber(number => number - 1);
+        if (!gameOver && rect.left <= 0) {
+            laugh.playbackRate = 1.5;
+            laugh.play();
+            setLives(lives => lives - 1);
             enemyStyle.right = 0 + "px";
         }
     };
@@ -50,13 +59,15 @@ const useIntersection = (missle, enemy, boolean, setBoolean, setNumber) => {
         const missleStyle = missle.current.style;
         const enemyStyle = enemy.current.style;
         const missleRect = missle.current.getBoundingClientRect();
+
         const resetEnemy = () => {
             setIsIntersecting(false);
             enemy.current.className = "target";
             enemyStyle.right = 0 + "px";
         };
+
         if (isIntersecting) {
-            const destroyTimer = setTimeout(resetEnemy, 150);
+            const destroyTimer = setTimeout(resetEnemy, 500);
             missleStyle.top = 0 + "px";
             missleStyle.visibility = "hidden";
             enemyStyle.top = missleRect.top + "px";
@@ -70,11 +81,11 @@ const useIntersection = (missle, enemy, boolean, setBoolean, setNumber) => {
     useInterval(() => {
         enemyTick();
         enemy.current.style.right = parseInt(enemy.current.style.right) + 15 + "px";
-    }, 250);
+    }, !gameOver ? 250 : null);
 
     useInterval(() => {
         missleTick();
-    }, boolean ? 25 : null);
+    }, !gameOver && isFlying ? 30 : null);
 
 };
 

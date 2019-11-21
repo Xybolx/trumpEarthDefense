@@ -6,7 +6,7 @@ module.exports = {
         db.Scores
             .find(req.query)
             .sort({ score: -1 })
-            .limit(8)
+            // .limit(8)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },

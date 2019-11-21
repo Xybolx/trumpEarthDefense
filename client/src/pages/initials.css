@@ -27,15 +27,19 @@ td {
   text-transform: uppercase;
 }
 
-input {
+#initial-input {
   text-align: center;
   text-transform: uppercase;
   background: transparent;
-  border: unset;
+  border: yellow;
   animation: Flash .25s infinite;
   font-size: 50px;
 }
 
 input:focus {
   outline: unset;
+}
+
+.initial {
+  margin-top: 50px;
 }

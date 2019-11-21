@@ -2,54 +2,76 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import API from '../utils/API';
 import ScoreContext from '../context/scoreContext';
+import SpecialContext from '../context/specialContext';
 import useTimeout from '../hooks/useTimeout';
 import useForm from '../hooks/useForm';
+import useValidate from '../hooks/useValidate';
+import Title from '../components/title';
+import SubmitBtn from '../components/buttons/SubmitBtn';
 import "./initials.css";
 
 const Initials = () => {
 
+    // refs
     const earth = useRef();
-
     const input = useRef();
+    const form = useRef();
 
-    const { score } = useContext(ScoreContext);
+    // context
+    const { score, clearScore } = useContext(ScoreContext);
+    const { clearSpecial } = useContext(SpecialContext);
 
+    // useForm
     const [values, handleChange, handleClearForm] = useForm();
 
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    const [isValidInitials, setIsValidInitials] = useState(false);
-
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-    const splode = new Audio('splode.mp3');
-
+    // de-structure values object
     const { initials } = values;
 
+    // useValidate
+    const [errors, resetValidate] = useValidate(initials);
+
+    // de-structure errors object
+    const { isValidInitials } = errors;
+
+    // local state
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    // audio
+    const splode = new Audio('splode.mp3');
+
+    // handleSubmit
     const handleSubmit = ev => {
         ev.preventDefault();
         API.saveScore({
-            initials,
+            initials, 
             score
-        })
-            .then(() => setIsSubmitted(true))
-            .catch(err => console.log(err));
-        handleClearForm();
-        window.location.pathname = "/scores";
+        }).then(() => resetValidate())
+          .then(() => handleClearForm())
+          .then(() => clearScore())
+          .then(() => clearSpecial())
+          .then(() => setIsSubmitted(true))
+          .catch(err => console.log(err));
     };
 
+    // useTimeout
     useTimeout(() => {
         setIsLoaded(true);
     }, 3000);
 
     useEffect(() => {
+        form.current.style.display = "none";
+    }, []);
+
+    useEffect(() => {
         const loadStyle = () => {
             earth.current.style.display = "none";
+            form.current.style.display = "block";
+            input.current.focus();
             setIsLoaded(false);
         };
         if (isLoaded) {
-            const loadTimer = setTimeout(loadStyle, 500);
-            input.current.focus();
+            const loadTimer = setTimeout(loadStyle, 350);
             splode.play();
             return () => {
                 clearTimeout(loadTimer);
@@ -57,32 +79,22 @@ const Initials = () => {
         }
     }, [isLoaded, splode]);
 
-    useEffect(() => {
-        const initialsRegEx = /^(?=[0-9a-zA-Z]{3}$).*/;
-        const initialsMatch = initialsRegEx.test(initials);
-        if (initials && initialsMatch) {
-            setIsValidInitials(true);
-        }
-        if (!initialsMatch) {
-            setIsValidInitials(false);
-        }
-    }, [initials, setIsValidInitials]);
-
-    if (isValidInitials && isSubmitted) {
+    if (isSubmitted) {
         return <Redirect to="/scores" />
     }
 
     return (
-        <div className="container">
-            <h2 className='title' style={{ color: 'yellow', marginTop: 100 }}>Game Over</h2>
+        <div className="initial container">
+            <Title>Game Over</Title>
+            <p className="text-white">Good job jerk, they blew up the Earth!</p>
             <div style={{ width: 400, height: 400 }} className="container-fluid">
                 <img ref={earth} className="img-fluid" alt="EARTH" src={isLoaded ? "splode.gif" : "earth.png"} />
                 <div className="initials">{initials}</div>
             </div>
-            <div className="form-group">
+            <div ref={form} className="form-group">
                     <label htmlFor="initials-input">Enter Initials</label>
-                    <div style={!isValidInitials ? { display: "block", color: "red" } : { display: "none" }}>Initials must be 3 characters!</div>
-                    <div style={isValidInitials ? { display: "block", color: "lawngreen" } : { display: "none" }}>Valid initials!</div>
+                    <div style={initials && !isValidInitials ? { display: "block", color: "red" } : { display: "none" }}>Initials must be 3 characters!</div>
+                    <div style={initials && isValidInitials ? { display: "block", color: "lawngreen" } : { display: "none" }}>Valid initials!</div>
                 <form onSubmit={handleSubmit}>
                     <input
                         ref={input}
@@ -91,12 +103,11 @@ const Initials = () => {
                         name="initials"
                         value={initials || ""}
                         onChange={handleChange}
-                        autoComplete="false"
+                        autoComplete="off"
+                        required
                     />
+                    <SubmitBtn />
                 </form>
-            </div>
-            <div>
-                <button onClick={handleSubmit} className="btn btn-link btn-lg">&nbsp;&nbsp;Submit&nbsp;&nbsp;</button>
             </div>
         </div>
     );

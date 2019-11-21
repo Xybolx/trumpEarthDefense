@@ -1,0 +1,13 @@
+/* @keyframes Flash {
+  from {
+    color: yellow;
+  }
+  to {
+    color: red;
+  }
+} */
+
+.title {
+  animation: Flash .75s infinite;
+  color: yellow;
+}

@@ -28,8 +28,17 @@
   }
 }
 
+@keyframes Motion4 {
+  from {
+    top: 50%;
+  }
+  to {
+    top: 0%;
+  }
+}
+
 .target {
-  background: url("../imgs/enemy.png");
+  background: url("../../imgs/enemy.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -39,7 +48,7 @@
 }
 
 .target2 {
-  background: url("../imgs/enemy.png");
+  background: url("../../imgs/enemy.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -49,11 +58,21 @@
 }
 
 .target3 {
-  background: url("../imgs/enemy.png");
+  background: url("../../imgs/enemy.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   animation: Motion3 2s infinite alternate;
+  position: fixed;
+  transform: rotate(-90deg);
+}
+
+.target4 {
+  background: url("../../imgs/enemy.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: Motion4 5s infinite alternate;
   position: fixed;
   transform: rotate(-90deg);
 }
