@@ -3,6 +3,7 @@ import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
+import CenteredColumn from '../components/centeredColumn';
 
 const Instructions = () => {
 
@@ -17,7 +18,7 @@ const Instructions = () => {
     return (
         <div className="container text-center home-earth">
             <Title>How To Play</Title>
-            <div className="instructions col-md-6 offset-md-3">
+            <CenteredColumn className="instructions">
                 <p className="text-white border-bottom"><i className="fas fa-gamepad fa-fw fa-2x" /> Controls</p>
                 <p className="text-white">Move Up <span className="fas fa-long-arrow-alt-up fa-fw fa-2x"></span> <span style={{ color: "yellow" }}>Scroll Wheel Up</span></p>
                 <p className="text-white">Move Down <span className="fas fa-long-arrow-alt-down fa-fw fa-2x"></span> <span style={{ color: "yellow" }}>Scroll Wheel Down</span></p>
@@ -41,7 +42,7 @@ const Instructions = () => {
                 </div>
                 <NavBtn to="/game">Start</NavBtn>
                 <NavBtn to="/">Home</NavBtn>
-            </div>
+            </CenteredColumn>
         </div>
     );
 };

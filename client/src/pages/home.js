@@ -2,6 +2,7 @@ import React from 'react';
 import useFizzBuzz from '../hooks/useFizzBuzz';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
+import CenteredColumn from '../components/centeredColumn';
 
 const Home = () => {
 
@@ -11,11 +12,11 @@ const Home = () => {
     
     return (
         <div className="container text-center home-earth">
-            <Title>Round Earth Defense</Title>
-            <div className="home-controls col-md-6 offset-md-3">
+            <Title>React Earth Defense</Title>
+            <CenteredColumn className="home-controls">
                 <NavBtn to="/instructions">Start</NavBtn>
                 <NavBtn to="/scores">Scores</NavBtn>
-            </div>
+            </CenteredColumn>
         </div>
     );
 };

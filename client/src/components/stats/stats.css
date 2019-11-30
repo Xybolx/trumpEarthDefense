@@ -1,0 +1,38 @@
+@keyframes SpecialFlash {
+  from {
+    border: solid white;
+  }
+  to {
+    border: .2px solid dodgerblue;
+  }
+}
+
+.progress {
+    background: none;
+    text-shadow: 1px 1px 1px black;
+  }
+  
+  .progress-bar {
+    text-shadow: .5px .5px black;
+  }
+  
+  .bg-danger, .badge-danger {
+    background: linear-gradient(darkred, tomato, darkred);
+  }
+  
+  .bg-success, .badge-success {
+    background: linear-gradient(darkgreen, lawngreen, darkgreen);
+  }
+  
+  .bg-warning, .badge-warning {
+    background: linear-gradient(darkgoldenrod, yellow, goldenrod);
+  }
+
+  .bg-flash {
+    background: linear-gradient(darkgreen, lawngreen, darkgreen);
+    animation: SpecialFlash .25s infinite;
+  }
+
+  /* .fa-star.fa-fw.fa-2x.text-light {
+    animation: SpecialFlash .15s infinite;
+  } */

@@ -76,3 +76,11 @@
   position: fixed;
   transform: rotate(-90deg);
 }
+
+.destroyAll {
+  background: url('../../imgs/big-bang.gif');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+}

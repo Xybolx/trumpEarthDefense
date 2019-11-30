@@ -12,13 +12,13 @@ import './App.css';
 
 const App = () => {
 
-  const [score, incScore, incScore100, decScore, clearScore] = useCounter(0);
+  const [score, setScore, incScore, incScore100, incScore400, decScore, clearScore] = useCounter(0);
 
-  const scoreValue = useMemo(() => ({ score, incScore, incScore100, decScore, clearScore }), [score, incScore, incScore100, decScore, clearScore]);
+  const scoreValue = useMemo(() => ({ score, setScore, incScore, incScore100, incScore400, decScore, clearScore }), [score, setScore, incScore, incScore100, incScore400, decScore, clearScore]);
 
-  const [special, incSpecial, incSpecial100, decSpecial, clearSpecial] = useCounter(0);
+  const [special, setSpecial, incSpecial, incSpecial100, incSpecial400, decSpecial, clearSpecial] = useCounter(0);
 
-  const specialValue = useMemo(() => ({ special, incSpecial, incSpecial100, decSpecial, clearSpecial }), [special, incSpecial, incSpecial100, decSpecial, clearSpecial]);
+  const specialValue = useMemo(() => ({ special, setSpecial, incSpecial, incSpecial100, incSpecial400, decSpecial, clearSpecial }), [special, setSpecial, incSpecial, incSpecial100, incSpecial400, decSpecial, clearSpecial]);
 
   return (
     <Router>

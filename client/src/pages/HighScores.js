@@ -3,6 +3,7 @@ import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
+import './HighScores.css';
 
 const HighScores = () => {
 

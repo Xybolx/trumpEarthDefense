@@ -6,7 +6,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 750px;
+  height: 100vh;
   width: auto;
   overflow-y: hidden;
   color: yellow;
@@ -95,7 +95,7 @@
   background: rgba(0, 0, 0, 0.801);
 }
 
-.progress {
+/* .progress {
   background: none;
   text-shadow: 1px 1px 1px black;
 }
@@ -114,7 +114,7 @@
 
 .bg-warning, .badge-warning {
   background: linear-gradient(darkgoldenrod, yellow, goldenrod);
-}
+} */
 
 .bg-dark {
   background: url("./imgs/stars.jpg");
@@ -127,7 +127,7 @@
   color: white;
 }
 
-#search {
+/* #search {
   text-align: center;
   background: transparent;
   border: solid yellow;
@@ -145,4 +145,4 @@ input:focus {
 .table-responsive {
   overflow-y: auto;
   max-height: 550px;
-}
+} */

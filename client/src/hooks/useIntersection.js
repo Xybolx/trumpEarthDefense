@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import ScoreContext from "../context/scoreContext";
+import SpecialContext from "../context/specialContext";
 import useInterval from "./useInterval";
 
 const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOver) => {
@@ -8,7 +9,8 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
     const [isIntersecting, setIsIntersecting] = useState(false);
 
     // context
-    const { incScore100 } = useContext(ScoreContext);
+    const { setScore } = useContext(ScoreContext);
+    const { special, setSpecial, clearSpecial } = useContext(SpecialContext);
 
     // audio elements
     const splode = new Audio("splode.mp3");
@@ -29,14 +31,16 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
             rect1.height + rect1.y > rect2.y;
 
         if (!gameOver && rect1.right > (winWidth || docWidth)) {
+            clearSpecial();
             setIsFlying(false);
             missleStyle.top = 0 + "px";
             missleStyle.visibility = "hidden";
         }
-        if (!gameOver && enemyIntersect) {
-            splode.volume = 1;
+        if (!gameOver && enemyIntersect && special < 5) {
+            splode.volume = .50;
             splode.play();
-            incScore100();
+            setScore(score => score + 100);
+            setSpecial(special => special + 1);
             setIsFlying(false);
             setIsIntersecting(true);
         }
@@ -67,7 +71,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
         };
 
         if (isIntersecting) {
-            const destroyTimer = setTimeout(resetEnemy, 500);
+            const destroyTimer = setTimeout(resetEnemy, 750);
             missleStyle.top = 0 + "px";
             missleStyle.visibility = "hidden";
             enemyStyle.top = missleRect.top + "px";
