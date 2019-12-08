@@ -1,26 +1,26 @@
 import React, { forwardRef } from "react";
 import "./enemy.css";
 
-export const Enemy = forwardRef((props, enemyRef) => (
+export const Enemy = forwardRef(({ children }, enemyRef) => (
     <div ref={enemyRef} style={{ right: -300, height: 150, width: 150 }} className="target">
-        {props.children}
+        { children }
     </div>
 ));
 
-export const Enemy2 = forwardRef((props, enemy2Ref) => (
+export const Enemy2 = forwardRef(({ children }, enemy2Ref) => (
     <div ref={enemy2Ref} style={{ right: -200, height: 150, width: 150 }} className="target2">
-        {props.children}
+        { children }
     </div>
 ));
 
-export const Enemy3 = forwardRef((props, enemy3Ref) => (
+export const Enemy3 = forwardRef(({ children }, enemy3Ref) => (
     <div ref={enemy3Ref} style={{ right: -100, height: 150, width: 150 }} className="target3">
-        {props.children}
+        { children }
     </div>
 ));
 
-export const Enemy4 = forwardRef((props, enemy4Ref) => (
+export const Enemy4 = forwardRef(({ children }, enemy4Ref) => (
     <div ref={enemy4Ref} style={{ right: "0%", height: 150, width: 150 }} className="target4">
-        {props.children}
+        { children }
     </div>
 ));

@@ -14,13 +14,13 @@ const useCounter = initial => {
     const increment400 = useCallback(() => setValue(value => value + 400), []);
 
     // function to decrement count by 1
-    const decrement1 = useCallback(() => setValue(value => value - 1), []);
+    // const decrement1 = useCallback(() => setValue(value => value - 1), []);
 
     // function to clear count
     const clear = useCallback(() => setValue(initial), [initial]);
 
     // return an array
-    return [value, setValue, increment1, increment100, increment400, decrement1, clear];
+    return [value, setValue, increment1, increment100, increment400, clear];
 
 };
 

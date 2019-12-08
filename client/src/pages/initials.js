@@ -79,6 +79,10 @@ const Initials = () => {
         }
     }, [isLoaded, splode]);
 
+    useEffect(() => {
+
+    }, []);
+
     if (isSubmitted) {
         return <Redirect to="/scores" />
     }

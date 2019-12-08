@@ -89,7 +89,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
     useInterval(() => {
         missleTick();
-    }, !gameOver && isFlying ? 30 : null);
+    }, !gameOver && isFlying ? 25 : null);
 
 };
 

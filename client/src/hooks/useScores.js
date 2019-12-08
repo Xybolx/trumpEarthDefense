@@ -20,7 +20,6 @@ const useScores = search => {
         if (search) {
             setResults(scores.filter(score =>
                 score.initials === search.toLowerCase() || score.score >= search));
-                console.log("getting results");
         }
     }, [scores, search, setResults]);
 

@@ -10,6 +10,7 @@
 .progress {
     background: none;
     text-shadow: 1px 1px 1px black;
+    height: 25px;
   }
   
   .progress-bar {
