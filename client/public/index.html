@@ -28,6 +28,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
+  <style>
+    .buttons, .axes {
+      padding: 1em;
+    }
+    /*meter*/.axis {
+      min-width: 200px;
+      margin: 1em;
+    }
+    .button {
+      padding: 1em;
+      border-radius: 20px;
+      border: 1px solid black;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAAxJREFUCNdjYPjPAAACAgEAqiqeJwAAAABJRU5ErkJggg==);
+      background-size: 0% 0%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+    .pressed {
+      border: 1px solid red;
+    }
+    </style>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
