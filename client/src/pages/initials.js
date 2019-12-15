@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import { post } from 'axios';
 import API from '../utils/API';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
@@ -25,7 +26,7 @@ const Initials = () => {
     const [values, handleChange, handleClearForm] = useForm();
 
     // de-structure values object
-    const { initials } = values;
+   const { initials } = values;
 
     // useValidate
     const [errors, resetValidate] = useValidate(initials);
@@ -43,10 +44,12 @@ const Initials = () => {
     // handleSubmit
     const handleSubmit = ev => {
         ev.preventDefault();
-        API.saveScore({
-            initials, 
+        const initialsAndScore = {
+            initials,
             score
-        }).then(() => resetValidate())
+        }
+        post('/api/scores', initialsAndScore)       
+          .then(() => resetValidate())
           .then(() => handleClearForm())
           .then(() => clearScore())
           .then(() => clearSpecial())
