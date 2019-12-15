@@ -87,7 +87,7 @@ const HighScores = () => {
                         mappedScores :
                         results.length && search ?
                         mappedResults : ""}
-                </ScoreTable>
+                    </ScoreTable>
                 </React.Suspense>
             </div>
             <div style={{ marginTop: 10 }}>

@@ -6,7 +6,7 @@ import CenteredColumn from '../components/centeredColumn';
 
 const Home = () => {
 
-    const numbers = useFizzBuzz(100);
+    const numbers = useFizzBuzz(200);
 
     console.log(numbers);
     
