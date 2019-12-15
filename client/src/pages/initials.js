@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { post } from 'axios';
 import API from '../utils/API';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
@@ -48,7 +47,7 @@ const Initials = () => {
             initials,
             score
         }
-        post('/api/scores', initialsAndScore)       
+        API.saveScore(initialsAndScore)       
           .then(() => resetValidate())
           .then(() => handleClearForm())
           .then(() => clearScore())
