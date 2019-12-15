@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
+import ScoreTable from '../components/scoreTable';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import './HighScores.css';
@@ -55,7 +56,7 @@ const HighScores = () => {
                         <button onClick={handleClearForm} className="btn btn-outline-light" type="button" id="button-addon2">&nbsp;&nbsp;Reset&nbsp;&nbsp;</button>
                     </div>
                 </div>
-                <table className="table table-borderless">
+                {/* <table className="table table-borderless">
                     <thead className="th-row">
                         <tr className="text-white">
                             <th>#</th>
@@ -75,7 +76,19 @@ const HighScores = () => {
                                 </td>
                             </tr>}
                     </tbody>
-                </table>
+                </table> */}
+                <ScoreTable>
+                {scores.length && !search ?
+                    mappedScores :
+                    results.length && search ?
+                        mappedResults :
+                        <tr className="d-flex align-items-center">
+                            <td>
+                                Loading...
+                                        <div className="spinner-border text-white" role="status" aria-hidden="true" />
+                            </td>
+                        </tr>}
+                </ScoreTable>
             </div>
             <div style={{ marginTop: 10 }}>
                 <NavBtn to="/">Home</NavBtn>
