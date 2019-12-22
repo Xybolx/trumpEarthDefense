@@ -6,6 +6,7 @@ import SpecialContext from '../context/specialContext';
 import useTimeout from '../hooks/useTimeout';
 import useForm from '../hooks/useForm';
 import useValidate from '../hooks/useValidate';
+import PageContainer from '../components/pageContainer';
 import Title from '../components/title';
 import SubmitBtn from '../components/buttons/SubmitBtn';
 import "./initials.css";
@@ -81,16 +82,12 @@ const Initials = () => {
         }
     }, [isLoaded, splode]);
 
-    useEffect(() => {
-
-    }, []);
-
     if (isSubmitted) {
         return <Redirect to="/scores" />
     }
 
     return (
-        <div className="initial container">
+        <PageContainer className="initial">
             <Title>Game Over</Title>
             <p className="text-white">Good job jerk, they blew up the Earth!</p>
             <div style={{ width: 400, height: 400 }} className="container-fluid">
@@ -115,7 +112,7 @@ const Initials = () => {
                     <SubmitBtn />
                 </form>
             </div>
-        </div>
+        </PageContainer>
     );
 };
 

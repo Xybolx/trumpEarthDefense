@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
-// import ScoreTable from '../components/scoreTable';
+import PageContainer from '../components/pageContainer';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import './HighScores.css';
@@ -46,7 +46,7 @@ const HighScores = () => {
     }, []);
 
     return (
-        <div className="container text-center home-earth">
+        <PageContainer className="home-earth">
             <Title>High Scores</Title>
             <div className="col-md-6 offset-md-3 table-responsive">
                 <div>
@@ -60,27 +60,6 @@ const HighScores = () => {
                         <button onClick={handleClearForm} className="btn btn-outline-light" type="button" id="button-addon2">&nbsp;&nbsp;Reset&nbsp;&nbsp;</button>
                     </div>
                 </div>
-                {/* <table className="table table-borderless">
-                    <thead className="th-row">
-                        <tr className="text-white">
-                            <th>#</th>
-                            <th>Initials</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {scores.length && !search ?
-                            mappedScores :
-                            results.length && search ?
-                            mappedResults :
-                            <tr className="d-flex align-items-center">
-                                <td>
-                                    Loading...
-                                        <div className="spinner-border text-white" role="status" aria-hidden="true" />
-                                </td>
-                            </tr>}
-                    </tbody>
-                </table> */}
                 <React.Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
                     <ScoreTable>
                         {scores.length && !search ?
@@ -93,7 +72,7 @@ const HighScores = () => {
             <div style={{ marginTop: 10 }}>
                 <NavBtn to="/">Home</NavBtn>
             </div>
-        </div>
+        </PageContainer>
     );
 };
 
