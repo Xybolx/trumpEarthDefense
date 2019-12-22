@@ -119,6 +119,17 @@
   visibility: hidden;
 }
 
+.spinner-grow {
+  background: url("./imgs/special_orb.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.spinner-text {
+  animation: InputFlash .25s infinite;
+}
+
 /* #search {
   text-align: center;
   background: transparent;

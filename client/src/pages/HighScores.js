@@ -2,13 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
 import PageContainer from '../components/pageContainer';
+// import ScoreTable from '../components/scoreTable';
+import Spinner from '../components/spinner';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import './HighScores.css';
 
-// lazy loading imports
-const ScoreTable = React.lazy(() => 
-import("../components/scoreTable"));
+const ScoreTable = React.lazy(() => (
+    import('../components/scoreTable')
+));
 
 const HighScores = () => {
 
@@ -41,6 +43,8 @@ const HighScores = () => {
         </tr>
     ));
 
+    const noScoresOrResults = <tr><Spinner text="Loading..." /></tr>
+
     useEffect(() => {
         input.current.focus();
     }, []);
@@ -61,12 +65,13 @@ const HighScores = () => {
                     </div>
                 </div>
                 <React.Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                    <ScoreTable>
-                        {scores.length && !search ?
-                        mappedScores :
-                        results.length && search ?
-                        mappedResults : ""}
-                    </ScoreTable>
+                    <ScoreTable 
+                        scores={scores} 
+                        results={results} 
+                        mappedScores={mappedScores} 
+                        mappedResults={mappedResults}
+                        search={search} 
+                    />
                 </React.Suspense>
             </div>
             <div style={{ marginTop: 10 }}>

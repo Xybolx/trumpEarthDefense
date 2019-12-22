@@ -1,6 +1,7 @@
 import React from 'react';
+import Spinner from '../spinner';
 
-const ScoreTable = props => {
+const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) => {
 
     return (
         <table className="table table-borderless">
@@ -12,7 +13,10 @@ const ScoreTable = props => {
                 </tr>
             </thead>
             <tbody>
-                {props.children}
+            {scores.length && !search ?
+                        mappedScores :
+                        results.length && search ?
+                        mappedResults : <tr className="spinner-grow" role="status" aria-hidden="true"><td className="spinner-text">Loading...</td></tr>}
             </tbody>
         </table>
     );
