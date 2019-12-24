@@ -9,6 +9,10 @@ function connecthandler(e) {
   addgamepad(e.gamepad);
 }
 
+function disconnecthandler(e) {
+  removegamepad(e.gamepad);
+}
+
 function addgamepad(gamepad) {
   console.log("gamepad connected")
   controllers[gamepad.index] = gamepad;
@@ -85,7 +89,7 @@ function updateStatus() {
         pressed = val.pressed;
         val = val.value;
       }
-
+      
       let pct = Math.round(val * 100) + "%";
       b.style.backgroundSize = pct + " " + pct;
 
@@ -104,6 +108,32 @@ function updateStatus() {
     }
   }
 
+    if(navigator.webkitGetGamepads) {
+      var gp = navigator.webkitGetGamepads()[0];
+  
+      if(gp.buttons[0] == 1) {
+        b--;
+      } else if(gp.buttons[1] == 1) {
+        a++;
+      } else if(gp.buttons[2] == 1) {
+        b++;
+      } else if(gp.buttons[3] == 1) {
+        a--;
+      }
+    } else {
+      var gp = navigator.getGamepads()[0];
+  
+      if(gp.buttons[0].value > 0 || gp.buttons[0].pressed == true) {
+        b--;
+      } else if(gp.buttons[1].value > 0 || gp.buttons[1].pressed == true) {
+        a++;
+      } else if(gp.buttons[2].value > 0 || gp.buttons[2].pressed == true) {
+        b++;
+      } else if(gp.buttons[3].value > 0 || gp.buttons[3].pressed == true) {
+        a--;
+      }
+    }
+  };
   requestAnimationFrame(updateStatus);
 }
 
@@ -134,6 +164,5 @@ if (!haveEvents) {
       <a href="https://github.com/luser/gamepadtest"><img style={{ position: "absolute", top: 0, right: 0, border: 0 }} src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub" /></a>
         </div>
     );
-};
 
 export default Gamepad;

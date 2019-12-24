@@ -11,6 +11,7 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
+import Gamepad from './Gamepad';
 
 const GameContainer = () => {
 
@@ -178,6 +179,7 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
+            <Gamepad />
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />
