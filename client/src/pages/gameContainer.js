@@ -179,7 +179,12 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-            <Gamepad />
+            <Gamepad 
+                gameOver={gameOver}
+                isFlying={isFlying}
+                charge={charge}
+                setCharge={setCharge}
+            />
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />

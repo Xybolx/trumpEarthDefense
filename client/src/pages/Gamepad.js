@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Gamepad = () => {
+const Gamepad = props => {
 
 let haveEvents = 'ongamepadconnected' in window;
 let controllers = {};
+
+const laser = new Audio('laser.mp3');
 
 function connecthandler(e) {
   addgamepad(e.gamepad);
@@ -112,7 +114,10 @@ function updateStatus() {
       var gp = navigator.webkitGetGamepads()[0];
   
       if(gp.buttons[0] == 1) {
-        b--;
+        setIsFlying(true);
+            setCharge(0);
+            laser.volume = .25;
+            laser.play();
       } else if(gp.buttons[1] == 1) {
         a++;
       } else if(gp.buttons[2] == 1) {
@@ -133,7 +138,10 @@ function updateStatus() {
         a--;
       }
     }
+  
+    var start = rAF(gameLoop);
   };
+
   requestAnimationFrame(updateStatus);
 }
 
@@ -164,5 +172,6 @@ if (!haveEvents) {
       <a href="https://github.com/luser/gamepadtest"><img style={{ position: "absolute", top: 0, right: 0, border: 0 }} src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub" /></a>
         </div>
     );
+};
 
 export default Gamepad;
