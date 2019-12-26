@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Gamepad from 'react-gamepad';
-import XBOX from 'react-gamepad';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import useEventListener from '../hooks/useEventListener';
@@ -13,7 +12,6 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
-// import Gamepad from '../pages/XboxPad';
 
 const GameContainer = () => {
 
@@ -249,10 +247,6 @@ const GameContainer = () => {
     return (
         <div id="game-container">
         <Gamepad
-            gamepadIndex={0}
-            stickThreshold={0.5}
-            deadZone={0.08}
-            layout={XBOX}
 
             onConnect={connectHandler}
             onDisconnect={disconnectHandler}
