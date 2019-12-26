@@ -188,6 +188,12 @@ const GameContainer = () => {
      
       const buttonChangeHandler = (buttonName, down) => {
         console.log(buttonName, down)
+        if (buttonName === "DPadUp" && down === true) {
+            upHandler();
+        }
+        if (buttonName === "DPadDown" && down === true) {
+            downHandler();
+        }
       };
      
       const axisChangeHandler = (axisName, value, previousValue) => {
