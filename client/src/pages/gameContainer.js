@@ -226,24 +226,18 @@ const GameContainer = () => {
             missleRef.current.style.top = 0 + "px";
             specialMissleRef.current.style.visibility = "visible";
         }
-        console.log('A button pressed!');
       };
 
       const upHandler = () => {
         if (!gameOver) {
-            setUpPressed(true);
             planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
-        } else if (!gameOver && upPressed) {
-            setUpPressed(false);
-        }
-        console.log('Up was pressed!');
+        } 
       };
 
       const downHandler = () => {
         if (!gameOver) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
         }
-        console.log('Down was pressed!');
       };
 
     if (gameOver) {
@@ -271,7 +265,7 @@ const GameContainer = () => {
             onBack={() => {}}
         
             onLT={() => {}}
-            onRT={() => {}}
+            onRT={pressAHandler}
         
             onLB={() => {}}
             onRB={() => {}}
