@@ -45,6 +45,7 @@ const GameContainer = () => {
     const [aPressed, setAPressed] = useState(false);
     const [upPressed, setUpPressed] = useState(false);
 
+    // handle mouse controls
     // handle wheel events
     const wheelHandler = useCallback(
         ({ deltaY }) => {
@@ -81,7 +82,7 @@ const GameContainer = () => {
     // useEventListener for mouse down
     useEventListener("mousedown", mouseDownHandler, window);
 
-    // handle key down events
+    // handle keyboard controls
     const keyHandler = useCallback(({ key }) => {
         if (!gameOver && key === "ArrowUp") {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
@@ -177,6 +178,7 @@ const GameContainer = () => {
         }
     }, [gameOver, specialReset, clearSpecial, setScore, splode, rude]);
 
+    // handle gamepad controls
     const connectHandler = gamepadIndex => {
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
       };
