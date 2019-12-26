@@ -86,7 +86,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
     useInterval(() => {
         enemyTick();
-        if (!gameOver) {
+        if (!gameOver && enemy.current !== null) {
             enemy.current.style.right = parseInt(enemy.current.style.right) + 15 + "px";
         }
     }, !gameOver ? 250 : null);
