@@ -194,13 +194,13 @@ const GameContainer = () => {
         console.log(axisName, value)
       };
      
-    //   const buttonDownHandler = buttonName => {
-    //     console.log(buttonName, 'down')
-    //   };
+      const buttonDownHandler = buttonName => {
+        console.log(buttonName, 'down')
+      };
      
-    //   const buttonUpHandler = buttonName => {
-    //     console.log(buttonName, 'up')
-    //   };
+      const buttonUpHandler = buttonName => {
+        console.log(buttonName, 'up')
+      };
 
       const pressAHandler = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
@@ -251,10 +251,10 @@ const GameContainer = () => {
             onConnect={connectHandler}
             onDisconnect={disconnectHandler}
         
-            onButtonDown={buttonName => pressAHandler}
-            onButtonUp={(buttonName) => {}}
-            onButtonChange={(buttonName, pressed) => {}}
-            onAxisChange={(axisName, value, previousValue) => {}}
+            onButtonDown={buttonDownHandler}
+            onButtonUp={buttonUpHandler}
+            onButtonChange={buttonChangeHandler}
+            onAxisChange={axisChangeHandler}
         
             onA={pressAHandler}
             onB={() => {}}
