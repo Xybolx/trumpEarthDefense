@@ -115,12 +115,18 @@ const GameContainer = () => {
     useIntersection(missleRef, enemy3Ref, isFlying, setIsFlying, setLives, gameOver);
     useIntersection(missleRef, enemy4Ref, isFlying, setIsFlying, setLives, gameOver);
 
+    // useEffect(() => {
+    //     if (lives === 0) {
+    //         const gameOverTimer = setTimeout(setGameOver(true), 3000);
+    //         return () => {
+    //             clearTimeout(gameOverTimer);
+    //         };
+    //     }
+    // }, [lives]);
+
     useEffect(() => {
         if (lives === 0) {
-            const gameOverTimer = setTimeout(setGameOver(true), 3000);
-            return () => {
-                clearTimeout(gameOverTimer);
-            };
+            setGameOver(true);
         }
     }, [lives]);
 

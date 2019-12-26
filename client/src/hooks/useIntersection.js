@@ -14,7 +14,6 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
     // audio elements
     const splode = new Audio("splode.mp3");
-    const laugh = new Audio("laughing.mp3");
     const bong = new Audio("bing-bong.mp3");
 
     // function to advance player projectile/detect if it reaches the end of the screen/detect intersection
@@ -53,8 +52,6 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
         const rect = enemy.current.getBoundingClientRect();
         const enemyStyle = enemy.current.style;
         if (!gameOver && rect.left <= 0) {
-            // laugh.playbackRate = 1.5;
-            // laugh.play();
             bong.play();
             setLives(lives => lives - 1);
             enemyStyle.right = 0 + "px";
