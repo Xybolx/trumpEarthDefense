@@ -188,12 +188,6 @@ const GameContainer = () => {
      
       const buttonChangeHandler = (buttonName, down) => {
         console.log(buttonName, down)
-        if (buttonName === "DPadUp" && down === true) {
-            upHandler();
-        }
-        if (buttonName === "DPadDown" && down === true) {
-            downHandler();
-        }
       };
      
       const axisChangeHandler = (axisName, value, previousValue) => {
@@ -201,10 +195,16 @@ const GameContainer = () => {
       };
      
       const buttonDownHandler = buttonName => {
+        if (buttonName === "DPadUp") {
+            upHandler();
+        }
+        if (buttonName === "DPadDown") {
+            downHandler();
+        }
         console.log(buttonName, 'down')
       };
      
-      const buttonUpHandler = buttonName => {
+      const buttonUpHandler = buttonName => { 
         console.log(buttonName, 'up')
       };
 
