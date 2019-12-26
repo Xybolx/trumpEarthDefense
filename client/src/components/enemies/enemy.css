@@ -1,9 +1,9 @@
 @keyframes Motion {
   from {
-    top: 0%;
+    top: -10%;
   }
   to {
-    top: 75%;
+    top: 100%;
   }
 }
 
@@ -40,44 +40,54 @@
   }
 }
 
+@keyframes Tick {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-30deg);
+  }
+}
+
 .target {
-  background: url("../../imgs/enemy.png");
+  background: url("../../imgs/trump.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  animation: Motion 2s infinite alternate;
+  animation: Motion 5s infinite alternate,
+            Tick .25s infinite alternate;
   position: fixed;
-  transform: rotate(-90deg);
 }
 
 .target2 {
-  background: url("../../imgs/enemy.png");
+  background: url("../../imgs/trump.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  animation: Motion2 2.5s infinite alternate;
+  transform: rotate(15deg);
+  animation: Motion 3s infinite alternate,
+            Tick .25s infinite alternate;
   position: fixed;
-  transform: rotate(-90deg);
 }
 
 .target3 {
-  background: url("../../imgs/enemy.png");
+  background: url("../../imgs/trump.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  animation: Motion3 3s infinite alternate;
+  animation: Motion 2s infinite alternate,
+            Tick .25s infinite alternate;
   position: fixed;
-  transform: rotate(-90deg);
 }
 
 .target4 {
-  background: url("../../imgs/enemy.png");
+  background: url("../../imgs/trump.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  animation: Motion4 3.5s infinite alternate;
+  animation: Motion 2.5s infinite alternate,
+            Tick .25s infinite alternate;
   position: fixed;
-  transform: rotate(-90deg);
 }
 
 .destroyAll {

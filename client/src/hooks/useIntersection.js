@@ -15,6 +15,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
     // audio elements
     const splode = new Audio("splode.mp3");
     const laugh = new Audio("laughing.mp3");
+    const bong = new Audio("bing-bong.mp3");
 
     // function to advance player projectile/detect if it reaches the end of the screen/detect intersection
     const missleTick = () => {
@@ -52,8 +53,9 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
         const rect = enemy.current.getBoundingClientRect();
         const enemyStyle = enemy.current.style;
         if (!gameOver && rect.left <= 0) {
-            laugh.playbackRate = 1.5;
-            laugh.play();
+            // laugh.playbackRate = 1.5;
+            // laugh.play();
+            bong.play();
             setLives(lives => lives - 1);
             enemyStyle.right = 0 + "px";
         }
@@ -84,7 +86,9 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
     useInterval(() => {
         enemyTick();
-        enemy.current.style.right = parseInt(enemy.current.style.right) + 15 + "px";
+        if (!gameOver) {
+            enemy.current.style.right = parseInt(enemy.current.style.right) + 15 + "px";
+        }
     }, !gameOver ? 250 : null);
 
     useInterval(() => {

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import Gamepad from 'react-gamepad';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import useEventListener from '../hooks/useEventListener';
@@ -11,7 +12,7 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
-import Gamepad from './Gamepad';
+// import Gamepad from '../pages/XboxPad';
 
 const GameContainer = () => {
 
@@ -29,6 +30,7 @@ const GameContainer = () => {
     const laser = new Audio('laser.mp3');
     const splode = new Audio("splode.mp3");
     const specialSound = new Audio("special.mp3");
+    const rude = new Audio("rude.mp3");
 
     // context
     const { setScore } = useContext(ScoreContext);
@@ -40,6 +42,8 @@ const GameContainer = () => {
     const [isFlying, setIsFlying] = useState(false);
     const [charge, setCharge] = useState(3);
     const [specialReset, setSpecialReset] = useState(false);
+    const [aPressed, setAPressed] = useState(false);
+    const [upPressed, setUpPressed] = useState(false);
 
     // handle wheel events
     const wheelHandler = useCallback(
@@ -155,6 +159,7 @@ const GameContainer = () => {
         const destroyAllEnemies = () => {
             splode.volume = .75;
             splode.play();
+            rude.play();
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
             enemy3Ref.current.className = "destroyed";
@@ -170,8 +175,69 @@ const GameContainer = () => {
                 clearTimeout(destroyAllTimer);
             }
         }
-    }, [gameOver, specialReset, clearSpecial, setScore, splode]);
+    }, [gameOver, specialReset, clearSpecial, setScore, splode, rude]);
 
+    const connectHandler = gamepadIndex => {
+        console.log(`Gamepad ${gamepadIndex + 1} connected !`);
+      };
+     
+      const disconnectHandler = gamepadIndex => {
+        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`)
+      };
+     
+      const buttonChangeHandler = (buttonName, down) => {
+        console.log(buttonName, down)
+      };
+     
+      const axisChangeHandler = (axisName, value, previousValue) => {
+        console.log(axisName, value)
+      };
+     
+    //   const buttonDownHandler = buttonName => {
+    //     console.log(buttonName, 'down')
+    //   };
+     
+    //   const buttonUpHandler = buttonName => {
+    //     console.log(buttonName, 'up')
+    //   };
+
+      const pressAHandler = () => {
+        if (!gameOver && !isFlying && charge === 3 && special < 5) {
+            setAPressed(true);
+            setIsFlying(true);
+            setCharge(0);
+            laser.volume = .25;
+            laser.play();
+            missleRef.current.style.visibility = "visible";
+        }
+        if (!gameOver && charge === 3 && !isFlying && special === 5) {
+            specialSound.volume = 1;
+            specialSound.play();
+            setAPressed(true);
+            setSpecialReset(true);
+            missleRef.current.style.visibility = "hidden";
+            missleRef.current.style.top = 0 + "px";
+            specialMissleRef.current.style.visibility = "visible";
+        }
+        console.log('A button pressed!');
+      };
+
+      const upHandler = () => {
+        if (!gameOver) {
+            setUpPressed(true);
+            planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
+        } else if (!gameOver && upPressed) {
+            setUpPressed(false);
+        }
+        console.log('Up was pressed!');
+      };
+
+      const downHandler = () => {
+        if (!gameOver) {
+            planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
+        }
+        console.log('Down was pressed!');
+      };
 
     if (gameOver) {
         return <Redirect to="/initials" />;
@@ -179,12 +245,39 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-            <Gamepad 
-                gameOver={gameOver}
-                isFlying={isFlying}
-                charge={charge}
-                setCharge={setCharge}
-            />
+        <Gamepad
+        
+            onConnect={connectHandler}
+            onDisconnect={disconnectHandler}
+        
+            onButtonDown={buttonName => pressAHandler}
+            onButtonUp={(buttonName) => {}}
+            onButtonChange={(buttonName, pressed) => {}}
+            onAxisChange={(axisName, value, previousValue) => {}}
+        
+            onA={pressAHandler}
+            onB={() => {}}
+            onX={() => {}}
+            onY={() => {}}
+        
+            onStart={() => {}}
+            onBack={() => {}}
+        
+            onLT={() => {}}
+            onRT={() => {}}
+        
+            onLB={() => {}}
+            onRB={() => {}}
+        
+            onLS={() => {}}
+            onRS={() => {}}
+        
+            onUp={upHandler}
+            onDown={downHandler}
+            onLeft={() => {}}
+            onRight={() => {}}>
+                <div />
+        </Gamepad>
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />

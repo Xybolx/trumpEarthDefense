@@ -7,16 +7,21 @@ import CenteredColumn from '../components/centeredColumn';
 
 const Home = () => {
 
+    const fake = new Audio('fake.mp3');
+
+    const allFake = new Audio('all-fake.mp3');
+
     const numbers = useFizzBuzz(200);
 
     console.log(numbers);
     
     return (
         <PageContainer className="home-earth">
-            <Title>React Earth Defense</Title>
+            <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
-                <NavBtn to="/instructions">Start</NavBtn>
-                <NavBtn to="/scores">Scores</NavBtn>
+                <p>Ready to make Earth great again?</p>
+                <NavBtn to="/instructions"><span onClick={() => fake.play()}>I'm Ready!</span></NavBtn>
+                <NavBtn to="/scores"><span onClick={() => allFake.play()}>High Scores</span></NavBtn>
             </CenteredColumn>
         </PageContainer>
     );

@@ -18,7 +18,17 @@ app.use(express.static("client/public"));
 app.use(express.static("client/src/imgs"));
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/earth", { useNewUrlParser: true });
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/earth", { useNewUrlParser: true });
+
+// Connect to MongoDB
+mongoose
+  .connect(
+    process.env.MONGODB_URI ||
+    'mongodb://mongo:27017/earth',
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 // Add routes, both API and user
 app.use(routes);

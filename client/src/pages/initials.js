@@ -15,6 +15,7 @@ const Initials = () => {
 
     // refs
     const earth = useRef();
+    const trump = useRef();
     const input = useRef();
     const form = useRef();
 
@@ -37,9 +38,11 @@ const Initials = () => {
     // local state
     const [isLoaded, setIsLoaded] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    // const [trumpSRC, setTrumpSRC] = useState(false);
 
     // audio
     const splode = new Audio('splode.mp3');
+    const rich = new Audio('rich.mp3');
 
     // handleSubmit
     const handleSubmit = ev => {
@@ -63,14 +66,17 @@ const Initials = () => {
     }, 3000);
 
     useEffect(() => {
-        form.current.style.display = "none";
+            form.current.style.display = "none";
+            trump.current.style.display = "none";
     }, []);
 
     useEffect(() => {
         const loadStyle = () => {
             earth.current.style.display = "none";
+            trump.current.style.display = "block";
             form.current.style.display = "block";
             input.current.focus();
+            rich.play();
             setIsLoaded(false);
         };
         if (isLoaded) {
@@ -80,7 +86,14 @@ const Initials = () => {
                 clearTimeout(loadTimer);
             };
         }
-    }, [isLoaded, splode]);
+    }, [isLoaded, splode, rich]);
+
+    // useEffect(() => {
+    //     const srcInterval = setInterval(setTrumpSRC(true), 1000);
+    //     return () => {
+    //         clearInterval(srcInterval);
+    //     };
+    // }, []);
 
     if (isSubmitted) {
         return <Redirect to="/scores" />
@@ -89,9 +102,10 @@ const Initials = () => {
     return (
         <PageContainer className="initial">
             <Title>Game Over</Title>
-            <p className="text-white">Good job jerk, they blew up the Earth!</p>
+            <p className="text-white">Good job jerk, Trump blew up the Earth!</p>
             <div style={{ width: 400, height: 400 }} className="container-fluid">
                 <img ref={earth} className="img-fluid" alt="EARTH" src={isLoaded ? "splode.gif" : "earth.png"} />
+                <img ref={trump} className="img-fluid" alt="trump" src="trump-kiss.png" />
                 <div className="initials">{initials}</div>
             </div>
             <div ref={form} className="form-group">
