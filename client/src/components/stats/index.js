@@ -3,7 +3,7 @@ import ScoreContext from '../../context/scoreContext';
 import SpecialContext from '../../context/specialContext';
 import "./stats.css";
 
-const Stats = ({ charge, lives }) => {
+const Stats = ({ charge, lives, children }) => {
 
     // context
     const { score } = useContext(ScoreContext);
@@ -24,6 +24,7 @@ const Stats = ({ charge, lives }) => {
                     <i className="fas fa-star fa-fw fa-2x text-light" />
                     <div className={special === 5 ? "progress-bar bg-flash" : special >= 3 ? "progress-bar bg-warning" : "progress-bar bg-danger"} role="progressbar" style={{ width: `${special}` / 5 * 100 + "%" }} aria-valuenow={special / 5 * 100} aria-valuemin="0" aria-valuemax="100" />
                 </div>
+                {children}
         </div>
     );
 };

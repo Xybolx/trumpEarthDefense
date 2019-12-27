@@ -275,9 +275,9 @@ const GameContainer = () => {
             <Stats 
                 charge={charge} 
                 lives={lives} 
-                gameOver={gameOver} 
-            />
-            <div><i className="fas fa-gamepad fa-fw text-white" />{gamepadConnected ? "Gamepad Connected" : "No Gamepad Connected"}</div>
+                gameOver={gameOver}>
+                <div><i className="fas fa-gamepad fa-fw text-white" /> {gamepadConnected ? "Gamepad Connected" : "No Gamepad Connected"}</div>
+            </Stats>
             <Enemy ref={enemyRef} />
             <Enemy2 ref={enemy2Ref} />
             <Enemy3 ref={enemy3Ref} />
