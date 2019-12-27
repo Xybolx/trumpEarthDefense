@@ -26,7 +26,7 @@ const GameContainer = () => {
     const enemy4Ref = useRef();
 
     // audio
-    const [laser] = useState(new Audio('laser.mp3'));
+    const laser = new Audio('laser.mp3');
     const [splode] = useState(new Audio("splode.mp3"));
     const [specialSound] = useState(new Audio("special.mp3"));
     const [rude] = useState(new Audio("rude.mp3"));
@@ -62,7 +62,7 @@ const GameContainer = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
-            laser.volume = .25;
+            laser.volume = .50;
             laser.play();
             missleRef.current.style.visibility = "visible";
         }
@@ -90,7 +90,7 @@ const GameContainer = () => {
         if (!gameOver && key === " " && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
-            laser.volume = .25;
+            laser.volume = .50;
             laser.play();
             missleRef.current.style.visibility = "visible";
         }
@@ -201,7 +201,7 @@ const GameContainer = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
-            laser.volume = .25;
+            laser.volume = .50;
             laser.play();
             missleRef.current.style.visibility = "visible";
         }
