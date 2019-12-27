@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import useFizzBuzz from '../hooks/useFizzBuzz';
-import { Fake, Allfake } from '../components/audio';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import PageContainer from '../components/pageContainer';
@@ -8,9 +7,9 @@ import CenteredColumn from '../components/centeredColumn';
 
 const Home = () => {
 
-    // audio refs
-    const fakeRef = useRef();
-    const allFakeRef = useRef();
+    // state
+    const [fake] = useState(new Audio('fake.mp3'));
+    const [allFake] = useState(new Audio('all-fake.mp3'))
 
     // const fake = new Audio('fake.mp3');
 
@@ -27,8 +26,8 @@ const Home = () => {
             <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
                 <p>Ready to make Earth great again?</p>
-                <NavBtn to="/instructions"><span onClick={() => fakeRef.current.play()}>I'm Ready!</span></NavBtn>
-                <NavBtn to="/scores"><span onClick={() => allFakeRef.current.play()}>High Scores</span></NavBtn>
+                <NavBtn to="/instructions"><span onClick={() => fake.play()}>I'm Ready!</span></NavBtn>
+                <NavBtn to="/scores"><span onClick={() => allFake.play()}>High Scores</span></NavBtn>
             </CenteredColumn>
         </PageContainer>
     );
