@@ -115,15 +115,6 @@ const GameContainer = () => {
     useIntersection(missleRef, enemy3Ref, isFlying, setIsFlying, setLives, gameOver);
     useIntersection(missleRef, enemy4Ref, isFlying, setIsFlying, setLives, gameOver);
 
-    // useEffect(() => {
-    //     if (lives === 0) {
-    //         const gameOverTimer = setTimeout(setGameOver(true), 3000);
-    //         return () => {
-    //             clearTimeout(gameOverTimer);
-    //         };
-    //     }
-    // }, [lives]);
-
     useEffect(() => {
         if (lives === 0) {
             setGameOver(true);
@@ -216,7 +207,6 @@ const GameContainer = () => {
 
       const pressAHandler = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
-            setAPressed(true);
             setIsFlying(true);
             setCharge(0);
             laser.volume = .25;
@@ -226,7 +216,6 @@ const GameContainer = () => {
         if (!gameOver && charge === 3 && !isFlying && special === 5) {
             specialSound.volume = 1;
             specialSound.play();
-            setAPressed(true);
             setSpecialReset(true);
             missleRef.current.style.visibility = "hidden";
             missleRef.current.style.top = 0 + "px";
