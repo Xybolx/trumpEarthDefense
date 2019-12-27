@@ -9,7 +9,7 @@ const Home = () => {
 
     // state
     const [fake] = useState(new Audio('fake.mp3'));
-    const [allFake] = useState(new Audio('all-fake.mp3'))
+    const [allFake] = useState(new Audio('all-fake.mp3'));
 
     // const fake = new Audio('fake.mp3');
 
@@ -21,8 +21,6 @@ const Home = () => {
     
     return (
         <PageContainer className="home-earth">
-            <Fake ref={fakeRef} />
-            <Allfake ref={allFakeRef} />
             <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
                 <p>Ready to make Earth great again?</p>
