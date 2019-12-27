@@ -11,10 +11,6 @@ const Home = () => {
     const [fake] = useState(new Audio('fake.mp3'));
     const [allFake] = useState(new Audio('all-fake.mp3'));
 
-    // const fake = new Audio('fake.mp3');
-
-    // const allFake = new Audio('all-fake.mp3');
-
     const numbers = useFizzBuzz(200);
 
     console.log(numbers);

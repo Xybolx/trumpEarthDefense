@@ -26,10 +26,10 @@ const GameContainer = () => {
     const enemy4Ref = useRef();
 
     // audio
-    const laser = new Audio('laser.mp3');
-    const splode = new Audio("splode.mp3");
-    const specialSound = new Audio("special.mp3");
-    const rude = new Audio("rude.mp3");
+    const [laser] = useState(new Audio('laser.mp3'));
+    const [splode] = useState(new Audio("splode.mp3"));
+    const [specialSound] = (new Audio("special.mp3"));
+    const [rude] = (new Audio("rude.mp3"));
 
     // context
     const { setScore } = useContext(ScoreContext);
@@ -41,8 +41,6 @@ const GameContainer = () => {
     const [isFlying, setIsFlying] = useState(false);
     const [charge, setCharge] = useState(3);
     const [specialReset, setSpecialReset] = useState(false);
-    const [aPressed, setAPressed] = useState(false);
-    const [upPressed, setUpPressed] = useState(false);
 
     // handle mouse controls
     // handle wheel events
@@ -192,12 +190,6 @@ const GameContainer = () => {
       };
      
       const buttonDownHandler = buttonName => {
-        if (buttonName === "DPadUp") {
-            upHandler();
-        }
-        if (buttonName === "DPadDown") {
-            downHandler();
-        }
         console.log(buttonName, 'down')
       };
      
@@ -242,32 +234,24 @@ const GameContainer = () => {
     return (
         <div id="game-container">
         <Gamepad
-
             onConnect={connectHandler}
             onDisconnect={disconnectHandler}
-        
             onButtonDown={buttonDownHandler}
             onButtonUp={buttonUpHandler}
             onButtonChange={buttonChangeHandler}
             onAxisChange={axisChangeHandler}
-        
             onA={pressAHandler}
             onB={() => {}}
             onX={() => {}}
             onY={() => {}}
-        
             onStart={() => {}}
             onBack={() => {}}
-        
             onLT={() => {}}
             onRT={pressAHandler}
-        
             onLB={() => {}}
             onRB={() => {}}
-        
             onLS={() => {}}
             onRS={() => {}}
-        
             onUp={upHandler}
             onDown={downHandler}
             onLeft={() => {}}
