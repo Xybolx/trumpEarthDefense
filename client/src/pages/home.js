@@ -18,12 +18,12 @@ const Home = () => {
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
-        setGamepadConnected(true);
+        // setGamepadConnected(true);
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
       };
      
       const disconnectHandler = gamepadIndex => {
-          setGamepadConnected(false);
+        //   setGamepadConnected(false);
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
       };
      
