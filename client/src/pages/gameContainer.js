@@ -230,6 +230,10 @@ const GameContainer = () => {
         }
       };
 
+      const backHandler = () => {
+        window.location = "/instructions";
+      };
+
     if (gameOver) {
         return <Redirect to="/initials" />;
     }
@@ -248,7 +252,7 @@ const GameContainer = () => {
             onX={() => {}}
             onY={() => {}}
             onStart={() => {}}
-            onBack={() => {}}
+            onBack={backHandler}
             onLT={() => {}}
             onRT={pressAHandler}
             onLB={() => {}}
