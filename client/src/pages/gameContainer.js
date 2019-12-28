@@ -27,9 +27,9 @@ const GameContainer = () => {
 
     // audio
     const laser = new Audio('laser.mp3');
-    const [splode] = useState(new Audio("splode.mp3"));
-    const [specialSound] = useState(new Audio("special.mp3"));
-    const [rude] = useState(new Audio("rude.mp3"));
+    const splode = new Audio("splode.mp3");
+    const specialSound = new Audio("special.mp3");
+    const rude = new Audio("rude.mp3");
 
     // context
     const { setScore } = useContext(ScoreContext);

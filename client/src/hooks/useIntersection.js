@@ -13,8 +13,8 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
     const { special, setSpecial, clearSpecial } = useContext(SpecialContext);
 
     // audio elements
-    const [splode] = useState(new Audio("splode.mp3"));
-    const [bong] = useState(new Audio("bing-bong.mp3"));
+    const splode = new Audio("splode.mp3");
+    const bong = new Audio("bing-bong.mp3");
 
     // function to advance player projectile/detect if it reaches the end of the screen/detect intersection
     const missleTick = () => {
