@@ -164,7 +164,6 @@ const GameContainer = () => {
         if (!gameOver && specialReset) {
             const specialResetTimer = setTimeout(enemyReset, 1200);
             const destroyAllTimer = setTimeout(destroyAllEnemies, 800);
-            getRandomInsult();
             return () => {
                 clearTimeout(specialResetTimer);
                 clearTimeout(destroyAllTimer);
@@ -177,7 +176,7 @@ const GameContainer = () => {
         const quiet = new Audio("quiet.mp3");
         const congrats = new Audio("congrats.mp3");
         const insults = [rude, quiet, congrats];
-        const getRandomInsult = insults[Math.floor((Math.random() * insults.length + 1))].play();
+        const getRandomInsult = () => insults[Math.floor(Math.random() * insults.length)].play();
         if (!gameOver && specialReset) {
             getRandomInsult();
         }

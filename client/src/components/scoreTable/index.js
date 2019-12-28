@@ -16,7 +16,7 @@ const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) =>
             {scores.length && !search ?
                         mappedScores :
                         results.length && search ?
-                        mappedResults : <tr className="spinner-grow" role="status" aria-hidden="true"><td className="spinner-text">Loading...</td></tr>}
+                        mappedResults : <tr className="spinner-grow" role="status" aria-hidden="true"><td className="spinner-text"><img className="img-fluid" src="loading.gif" alt="loading..." /></td></tr>}
             </tbody>
         </table>
     );
