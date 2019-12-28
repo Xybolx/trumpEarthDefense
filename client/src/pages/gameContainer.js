@@ -29,9 +29,6 @@ const GameContainer = () => {
     const laser = new Audio('laser.mp3');
     const splode = new Audio("splode.mp3");
     const specialSound = new Audio("special.mp3");
-    const rude = new Audio("rude.mp3");
-    const quiet = new Audio("quiet.mp3");
-    const congrats = new Audio("congrats.mp3");
 
     // context
     const { setScore } = useContext(ScoreContext);
@@ -176,8 +173,11 @@ const GameContainer = () => {
     }, [gameOver, specialReset, clearSpecial, setScore, splode]);
 
     useEffect(() => {
+        const rude = new Audio("rude.mp3");
+        const quiet = new Audio("quiet.mp3");
+        const congrats = new Audio("congrats.mp3");
         const insults = [rude, quiet, congrats];
-        const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 0].play();
+        const getRandomInsult = insults[Math.floor((Math.random() * insults.length + 1))].play();
         if (!gameOver && specialReset) {
             getRandomInsult();
         }
