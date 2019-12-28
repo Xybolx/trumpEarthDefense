@@ -43,6 +43,10 @@ const Home = () => {
         console.log(buttonName, 'up')
       };
 
+      const backHandler = () => {
+        window.location = "/scores";
+      };
+
       const startHandler = () => {
         window.location = "/instructions";
       };
@@ -61,7 +65,7 @@ const Home = () => {
                 onX={() => {}}
                 onY={() => {}}
                 onStart={startHandler}
-                onBack={() => {}}
+                onBack={backHandler}
                 onLT={() => {}}
                 onRT={() => {}}
                 onLB={() => {}}
