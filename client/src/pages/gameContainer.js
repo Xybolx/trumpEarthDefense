@@ -277,7 +277,7 @@ const GameContainer = () => {
                 lives={lives} 
                 gameOver={gameOver}>
                 <div className="progress badge" style={{ height: 30 }}>
-                    <span><i className="fas fa-gamepad fa-fw fa-2x text-white" />{gamepadConnected ? "Detected" : "Not Detected"}</span> 
+                    <span><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
                 </div>
             </Stats>
             <Enemy ref={enemyRef} />
