@@ -33,13 +33,7 @@ const GameContainer = () => {
     const quiet = new Audio("quiet.mp3");
     const congrats = new Audio("congrats.mp3");
 
-    const insults = [
-        rude,
-        quiet,
-        congrats
-    ];
-
-    const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 1].play();
+    const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 0].play();
 
     // context
     const { setScore } = useContext(ScoreContext);
@@ -165,7 +159,6 @@ const GameContainer = () => {
         const destroyAllEnemies = () => {
             splode.volume = .75;
             splode.play();
-            getRandomInsult();
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
             enemy3Ref.current.className = "destroyed";
@@ -176,12 +169,21 @@ const GameContainer = () => {
         if (!gameOver && specialReset) {
             const specialResetTimer = setTimeout(enemyReset, 1200);
             const destroyAllTimer = setTimeout(destroyAllEnemies, 800);
+            getRandomInsult();
             return () => {
                 clearTimeout(specialResetTimer);
                 clearTimeout(destroyAllTimer);
             }
         }
-    }, [gameOver, specialReset, clearSpecial, setScore, splode, rude, getRandomInsult]);
+    }, [gameOver, specialReset, clearSpecial, setScore, splode]);
+
+    useEffect(() => {
+        const insults = [rude, quiet, congrats];
+        const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 0].play();
+        if (!gameOver && specialReset) {
+            getRandomInsult();
+        }
+    }, [gameOver, specialReset]);
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
