@@ -1,19 +1,19 @@
 import React from 'react';
-// import ScoreContext from '../context/scoreContext';
-// import SpecialContext from '../context/specialContext';
+import ScoreContext from '../context/scoreContext';
+import SpecialContext from '../context/specialContext';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import CenteredColumn from '../components/centeredColumn';
 
 const Instructions = () => {
 
-    // const { clearScore } = useContext(ScoreContext);
-    // const { clearSpecial } = useContext(SpecialContext);
+    const { clearScore } = useContext(ScoreContext);
+    const { clearSpecial } = useContext(SpecialContext);
 
-    // useEffect(() => {
-    //     clearScore();
-    //     clearSpecial();
-    // }, [clearScore, clearSpecial]);
+    useEffect(() => {
+        clearScore();
+        clearSpecial();
+    }, [clearScore, clearSpecial]);
 
     return (
         <div className="container text-center home-earth">
