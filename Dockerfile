@@ -13,4 +13,4 @@ COPY . .
 #exposing the endpoint
 EXPOSE 3000
 # running the command
-CMD ["nodemon","server.js", "cd client && npm start"]
+CMD ["npm", "start"]
