@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import Title from '../components/title';
