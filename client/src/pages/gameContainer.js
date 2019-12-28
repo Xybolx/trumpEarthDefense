@@ -30,6 +30,16 @@ const GameContainer = () => {
     const splode = new Audio("splode.mp3");
     const specialSound = new Audio("special.mp3");
     const rude = new Audio("rude.mp3");
+    const quiet = new Audio("quiet.mp3");
+    const congrats = new Audio("congrats.mp3");
+
+    const insults = [
+        rude,
+        quiet,
+        congrats
+    ];
+
+    const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 1].play();
 
     // context
     const { setScore } = useContext(ScoreContext);
@@ -155,7 +165,7 @@ const GameContainer = () => {
         const destroyAllEnemies = () => {
             splode.volume = .75;
             splode.play();
-            rude.play();
+            getRandomInsult();
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
             enemy3Ref.current.className = "destroyed";
@@ -171,7 +181,7 @@ const GameContainer = () => {
                 clearTimeout(destroyAllTimer);
             }
         }
-    }, [gameOver, specialReset, clearSpecial, setScore, splode, rude]);
+    }, [gameOver, specialReset, clearSpecial, setScore, splode, rude, getRandomInsult]);
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
