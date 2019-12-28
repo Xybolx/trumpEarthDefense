@@ -33,8 +33,6 @@ const GameContainer = () => {
     const quiet = new Audio("quiet.mp3");
     const congrats = new Audio("congrats.mp3");
 
-    const getRandomInsult = insults[Math.floor((Math.random() * insults.length)) + 0].play();
-
     // context
     const { setScore } = useContext(ScoreContext);
     const { special, clearSpecial } = useContext(SpecialContext);
