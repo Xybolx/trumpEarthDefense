@@ -152,7 +152,6 @@ const GameContainer = () => {
             clearSpecial();
         };
         const destroyAllEnemies = () => {
-            splode.volume = .75;
             splode.play();
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
@@ -175,7 +174,8 @@ const GameContainer = () => {
         const rude = new Audio("rude.mp3");
         const quiet = new Audio("quiet.mp3");
         const congrats = new Audio("congrats.mp3");
-        const insults = [rude, quiet, congrats];
+        const rocket = new Audio("rocket.mp3");
+        const insults = [rude, quiet, congrats, rocket];
         const getRandomInsult = () => insults[Math.floor(Math.random() * insults.length)].play();
         if (!gameOver && specialReset) {
             getRandomInsult();
