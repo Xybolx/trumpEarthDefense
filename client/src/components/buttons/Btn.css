@@ -6,7 +6,7 @@
   background-size: contain;
   text-decoration-line: none;
   animation: Flash .25s infinite alternate;
-  outline: tomato;
+  outline: double tomato;
 }
 
 .btn-outline-light {
@@ -16,7 +16,6 @@
   margin-bottom: 5px;
   margin-left: 2px;
   margin-right: 2px;
-  border: 1px double whitesmoke;
 }
 
 .btn-outline-light:focus {

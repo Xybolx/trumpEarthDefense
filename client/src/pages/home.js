@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useFizzBuzz from '../hooks/useFizzBuzz';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
@@ -9,6 +9,9 @@ import Gamepad from 'react-gamepad';
 const Home = () => {
 
     // state
+   const [gamepadConnected, setGamepadConnected] = useState(false);
+
+    // audio
     const fake = new Audio('fake.mp3');
     const allFake = new Audio('all-fake.mp3');
 
@@ -18,29 +21,13 @@ const Home = () => {
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
-        // setGamepadConnected(true);
+        setGamepadConnected(true);
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
       };
      
       const disconnectHandler = gamepadIndex => {
-        //   setGamepadConnected(false);
+          setGamepadConnected(false);
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-      };
-     
-      const buttonChangeHandler = (buttonName, down) => {
-        console.log(buttonName, down)
-      };
-     
-      const axisChangeHandler = (axisName, value, previousValue) => {
-        console.log(axisName, value)
-      };
-     
-      const buttonDownHandler = buttonName => {
-        console.log(buttonName, 'down')
-      };
-     
-      const buttonUpHandler = buttonName => { 
-        console.log(buttonName, 'up')
       };
 
       const backHandler = () => {
@@ -56,33 +43,18 @@ const Home = () => {
             <Gamepad
                 onConnect={connectHandler}
                 onDisconnect={disconnectHandler}
-                onButtonDown={buttonDownHandler}
-                onButtonUp={buttonUpHandler}
-                onButtonChange={buttonChangeHandler}
-                onAxisChange={axisChangeHandler}
-                onA={() => {}}
-                onB={() => {}}
-                onX={() => {}}
-                onY={() => {}}
                 onStart={startHandler}
-                onBack={backHandler}
-                onLT={() => {}}
-                onRT={() => {}}
-                onLB={() => {}}
-                onRB={() => {}}
-                onLS={() => {}}
-                onRS={() => {}}
-                onUp={() => {}}
-                onDown={() => {}}
-                onLeft={() => {}}
-                onRight={() => {}}>
+                onBack={backHandler}>
                 <div />
             </Gamepad>
             <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
-                <p>Ready to make Earth great again?</p>
+                <p className="mb-3">Ready to make Earth great again?</p>
                 <NavBtn onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
                 <NavBtn onClick={() => allFake.play()} to="/scores">High Scores</NavBtn>
+                <div className="badge mt-3" style={{ height: 30 }}>
+                    <span style={{ fontSize: "small" }}><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
+                </div>
             </CenteredColumn>
         </PageContainer>
     );

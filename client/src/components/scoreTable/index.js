@@ -1,5 +1,4 @@
 import React from 'react';
-import Spinner from '../spinner';
 
 const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) => {
 

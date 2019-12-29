@@ -12,7 +12,6 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
-import useInterval from '../hooks/useInterval';
 
 const GameContainer = () => {
 
@@ -79,34 +78,6 @@ const GameContainer = () => {
 
     // useEventListener for mouse down
     useEventListener("mousedown", mouseDownHandler, window);
-
-    // handle keyboard controls
-    const keyHandler = useCallback(({ key }) => {
-        if (!gameOver && key === "ArrowUp") {
-            planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
-        }
-        if (!gameOver && key === "ArrowDown") {
-            planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
-        }
-        if (!gameOver && key === " " && !isFlying && charge === 3 && special < 5) {
-            setIsFlying(true);
-            setCharge(0);
-            laser.volume = .50;
-            laser.play();
-            missleRef.current.style.visibility = "visible";
-        }
-        if (key === " " && !gameOver && charge === 3 && !isFlying && special === 5) {
-            specialSound.volume = 1;
-            specialSound.play();
-            setSpecialReset(true);
-            missleRef.current.style.visibility = "hidden";
-            missleRef.current.style.top = 0 + "px";
-            specialMissleRef.current.style.visibility = "visible";
-        }
-    }, [laser, isFlying, charge, gameOver, special, specialSound]);
-
-    // useEventListener for key down events
-    useEventListener("keydown", keyHandler, document);
 
     // useIntersection for detecting collision and screen width
     useIntersection(missleRef, enemyRef, isFlying, setIsFlying, setLives, gameOver);

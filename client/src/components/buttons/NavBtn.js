@@ -6,7 +6,7 @@ const NavBtn = props => {
 
     return (
         <Link
-            className="btn btn-outline-light"
+            className="btn btn-outline-light btn-sm"
             onClick={props.onClick}
             to={props.to}>
             &nbsp;&nbsp;{props.children}&nbsp;&nbsp;

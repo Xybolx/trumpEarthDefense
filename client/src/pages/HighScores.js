@@ -57,22 +57,6 @@ const HighScores = () => {
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
       };
      
-      const buttonChangeHandler = (buttonName, down) => {
-        console.log(buttonName, down)
-      };
-     
-      const axisChangeHandler = (axisName, value, previousValue) => {
-        console.log(axisName, value)
-      };
-     
-      const buttonDownHandler = buttonName => {
-        console.log(buttonName, 'down')
-      };
-     
-      const buttonUpHandler = buttonName => { 
-        console.log(buttonName, 'up')
-      };
-
       const backHandler = () => {
         window.location = "/";
       };
@@ -86,26 +70,8 @@ const HighScores = () => {
             <Gamepad
                 onConnect={connectHandler}
                 onDisconnect={disconnectHandler}
-                onButtonDown={buttonDownHandler}
-                onButtonUp={buttonUpHandler}
-                onButtonChange={buttonChangeHandler}
-                onAxisChange={axisChangeHandler}
-                onA={() => {}}
-                onB={() => {}}
-                onX={() => {}}
-                onY={() => {}}
                 onStart={startHandler}
-                onBack={backHandler}
-                onLT={() => {}}
-                onRT={() => {}}
-                onLB={() => {}}
-                onRB={() => {}}
-                onLS={() => {}}
-                onRS={() => {}}
-                onUp={() => {}}
-                onDown={() => {}}
-                onLeft={() => {}}
-                onRight={() => {}}>
+                onBack={backHandler}>
                 <div />
             </Gamepad>
             <Title>High Scores</Title>
