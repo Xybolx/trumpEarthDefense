@@ -12,6 +12,7 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
+import useInterval from '../hooks/useInterval';
 
 const GameContainer = () => {
 
@@ -46,7 +47,7 @@ const GameContainer = () => {
     // handle wheel events
     const wheelHandler = useCallback(
         ({ deltaY }) => {
-            if (deltaY < 0 ) {
+            if (deltaY < 0) {
                 planeRef.current.style.top = parseInt(planeRef.current.style.top) - 7 + "px";
             }
             if (deltaY > 0) {
@@ -172,11 +173,17 @@ const GameContainer = () => {
 
     useEffect(() => {
         const rude = new Audio("rude.mp3");
+
         const quiet = new Audio("quiet.mp3");
+
         const congrats = new Audio("congrats.mp3");
+
         const rocket = new Audio("rocket.mp3");
+
         const insults = [rude, quiet, congrats, rocket];
+
         const getRandomInsult = () => insults[Math.floor(Math.random() * insults.length)].play();
+
         if (!gameOver && specialReset) {
             getRandomInsult();
         }
@@ -186,30 +193,30 @@ const GameContainer = () => {
     const connectHandler = gamepadIndex => {
         setGamepadConnected(true);
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-      };
-     
-      const disconnectHandler = gamepadIndex => {
-          setGamepadConnected(false);
-        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-      };
-     
-      const buttonChangeHandler = (buttonName, down) => {
-        console.log(buttonName, down)
-      };
-     
-      const axisChangeHandler = (axisName, value, previousValue) => {
-        console.log(axisName, value)
-      };
-     
-      const buttonDownHandler = buttonName => {
-        console.log(buttonName, 'down')
-      };
-     
-      const buttonUpHandler = buttonName => { 
-        console.log(buttonName, 'up')
-      };
+    };
 
-      const pressAHandler = () => {
+    const disconnectHandler = gamepadIndex => {
+        setGamepadConnected(false);
+        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
+    };
+
+    const buttonChangeHandler = (buttonName, down) => {
+        console.log(buttonName, down);
+    };
+
+    const axisChangeHandler = (axisName, value, previousValue) => {
+        console.log(axisName, value);
+    };
+
+    const buttonDownHandler = buttonName => {
+        console.log(buttonName, 'down');
+    };
+
+    const buttonUpHandler = buttonName => {
+        console.log(buttonName, 'up');
+    };
+
+    const pressAHandler = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
@@ -225,23 +232,23 @@ const GameContainer = () => {
             missleRef.current.style.top = 0 + "px";
             specialMissleRef.current.style.visibility = "visible";
         }
-      };
+    };
 
-      const upHandler = () => {
+    const upHandler = () => {
         if (!gameOver) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
         } 
-      };
+    };
 
-      const downHandler = () => {
+    const downHandler = () => {
         if (!gameOver) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
-        }
-      };
+        } 
+    };
 
-      const backHandler = () => {
+    const backHandler = () => {
         window.location = "/instructions";
-      };
+    };
 
     if (gameOver) {
         return <Redirect to="/initials" />;
@@ -249,44 +256,44 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-        <Gamepad
-            onConnect={connectHandler}
-            onDisconnect={disconnectHandler}
-            onButtonDown={buttonDownHandler}
-            onButtonUp={buttonUpHandler}
-            onButtonChange={buttonChangeHandler}
-            onAxisChange={axisChangeHandler}
-            onA={pressAHandler}
-            onB={() => {}}
-            onX={() => {}}
-            onY={() => {}}
-            onStart={() => {}}
-            onBack={backHandler}
-            onLT={() => {}}
-            onRT={pressAHandler}
-            onLB={() => {}}
-            onRB={() => {}}
-            onLS={() => {}}
-            onRS={() => {}}
-            onUp={upHandler}
-            onDown={downHandler}
-            onLeft={() => {}}
-            onRight={() => {}}>
+            <Gamepad
+                onConnect={connectHandler}
+                onDisconnect={disconnectHandler}
+                onButtonDown={buttonDownHandler}
+                onButtonUp={buttonUpHandler}
+                onButtonChange={buttonChangeHandler}
+                onAxisChange={axisChangeHandler}
+                onA={pressAHandler}
+                onB={() => { }}
+                onX={() => { }}
+                onY={() => { }}
+                onStart={() => { }}
+                onBack={backHandler}
+                onLT={() => { }}
+                onRT={pressAHandler}
+                onLB={() => { }}
+                onRB={() => { }}
+                onLS={() => { }}
+                onRS={() => { }}
+                onUp={upHandler}
+                onDown={downHandler}
+                onLeft={() => { }}
+                onRight={() => { }}>
                 <div />
-        </Gamepad>
+            </Gamepad>
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />
             </Lightning>
             <EarthShield className={
-                lives === 3 ? 
-                "earth border-success" : 
-                lives === 2 ? "earth border-warning" : 
-                "earth border-danger"
-                } 
+                lives === 3 ?
+                    "earth border-success" :
+                    lives === 2 ? "earth border-warning" :
+                        "earth border-danger"
+            }
             />
-            <Stats 
-                charge={charge} 
+            <Stats
+                charge={charge}
                 lives={lives}
                 gamepadConnected={gamepadConnected}
                 gameOver={gameOver}

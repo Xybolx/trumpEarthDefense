@@ -81,8 +81,8 @@ const Home = () => {
             <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
                 <p>Ready to make Earth great again?</p>
-                <NavBtn to="/instructions"><span onClick={() => fake.play()}>I'm Ready!</span></NavBtn>
-                <NavBtn to="/scores"><span onClick={() => allFake.play()}>High Scores</span></NavBtn>
+                <NavBtn onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
+                <NavBtn onClick={() => allFake.play()} to="/scores">High Scores</NavBtn>
             </CenteredColumn>
         </PageContainer>
     );
