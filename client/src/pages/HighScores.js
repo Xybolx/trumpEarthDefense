@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
 import PageContainer from '../components/pageContainer';
@@ -6,6 +6,7 @@ import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import Gamepad from 'react-gamepad';
 import './HighScores.css';
+import ScoreContext from '../context/scoreContext';
 
 const ScoreTable = React.lazy(() => (
     import('../components/scoreTable')
@@ -15,6 +16,9 @@ const HighScores = () => {
 
     // input ref
     const input = useRef();
+
+    // context
+    const { score, clearScore } = useContext(ScoreContext);
 
     // useForm custom hook
     const [values, handleChange, handleClearForm] = useForm();
@@ -41,6 +45,8 @@ const HighScores = () => {
             <td>{result.score}</td>
         </tr>
     ));
+
+    const scoreRank = scores.filter(highScore => highScore.score > score);
 
     useEffect(() => {
         input.current.focus();
@@ -75,6 +81,7 @@ const HighScores = () => {
                 <div />
             </Gamepad>
             <Title>High Scores</Title>
+            <div className="text-white">{ score !== 0 ? scoreRank.length + " players had a better score than you..." : ""}</div>
             <div className="col-md-6 offset-md-3 table-responsive">
                 <div>
                     <small>
@@ -98,7 +105,7 @@ const HighScores = () => {
                 </React.Suspense>
             </div>
             <div style={{ marginTop: 10 }}>
-                <NavBtn to="/">Home</NavBtn>
+                <NavBtn onClick={() => clearScore} to="/">Home</NavBtn>
             </div>
         </PageContainer>
     );

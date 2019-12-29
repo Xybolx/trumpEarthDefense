@@ -20,7 +20,7 @@ const Initials = () => {
     const form = useRef();
 
     // context
-    const { score, clearScore } = useContext(ScoreContext);
+    const { score } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
 
     // useForm
@@ -38,7 +38,6 @@ const Initials = () => {
     // local state
     const [isLoaded, setIsLoaded] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    // const [trumpSRC, setTrumpSRC] = useState(false);
 
     // audio
     const splode = new Audio('splode.mp3');
@@ -54,7 +53,6 @@ const Initials = () => {
         API.saveScore(initialsAndScore)       
           .then(() => resetValidate())
           .then(() => handleClearForm())
-          .then(() => clearScore())
           .then(() => clearSpecial())
           .then(() => setIsSubmitted(true))
           .catch(err => console.log(err));
@@ -87,13 +85,6 @@ const Initials = () => {
             };
         }
     }, [isLoaded, splode, rich]);
-
-    // useEffect(() => {
-    //     const srcInterval = setInterval(setTrumpSRC(true), 1000);
-    //     return () => {
-    //         clearInterval(srcInterval);
-    //     };
-    // }, []);
 
     if (isSubmitted) {
         return <Redirect to="/scores" />

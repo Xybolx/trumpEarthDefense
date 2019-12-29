@@ -73,8 +73,8 @@ const Instructions = () => {
                     <div className="progress-bar bg-warning" role="progressbar" style={{ width: "33%" }} aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Charging!</div>
                     <div className="progress-bar bg-success" role="progressbar" style={{ width: "33%" }} aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Fire!</div>
                 </div>
-                <NavBtn to="/"><i className="fas fa-chevron-left fa-fw fa-2x" /></NavBtn>
-                <NavBtn to="/game"><i className="fas fa-forward fa-fw fa-2x" /></NavBtn>
+                <NavBtn to="/">Back</NavBtn>
+                <NavBtn to="/game">Start</NavBtn>
             </CenteredColumn>
         </div>
     );

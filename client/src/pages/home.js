@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useFizzBuzz from '../hooks/useFizzBuzz';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import PageContainer from '../components/pageContainer';
 import CenteredColumn from '../components/centeredColumn';
 import Gamepad from 'react-gamepad';
+import ScoreContext from '../context/scoreContext';
 
 const Home = () => {
+
+    // context
+    const { clearScore } = useContext(ScoreContext);
+
+    // clear score on mount
+    useEffect(() => {
+      clearScore();
+    }, [clearScore]);
 
     // state
    const [gamepadConnected, setGamepadConnected] = useState(false);
