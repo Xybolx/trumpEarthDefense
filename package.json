@@ -10,7 +10,6 @@
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
-
   },
   "repository": "https://github.com/Xybolx/billboard.git",
   "author": "Xybolx <xybolx@gmail.com>",
@@ -28,5 +27,6 @@
   "devDependencies": {
     "concurrently": "^4.1.2",
     "nodemon": "^1.19.2"
-  }
+  },
+  "peerDependencies": {}
 }

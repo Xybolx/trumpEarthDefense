@@ -130,6 +130,12 @@
   animation: InputFlash .25s infinite;
 }
 
+#shame-alert {
+  background: black;
+  border: yellow double;
+  color: tomato;
+}
+
 /* #search {
   text-align: center;
   background: transparent;

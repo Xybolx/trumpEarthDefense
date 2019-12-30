@@ -56,20 +56,20 @@ const HighScores = () => {
     const connectHandler = gamepadIndex => {
         // setGamepadConnected(true);
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-      };
-     
-      const disconnectHandler = gamepadIndex => {
+    };
+
+    const disconnectHandler = gamepadIndex => {
         //   setGamepadConnected(false);
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-      };
-     
-      const backHandler = () => {
-        window.location = "/";
-      };
+    };
 
-      const startHandler = () => {
+    const backHandler = () => {
+        window.location = "/";
+    };
+
+    const startHandler = () => {
         window.location = "/instructions";
-      };
+    };
 
     return (
         <PageContainer className="home-earth">
@@ -81,12 +81,16 @@ const HighScores = () => {
                 <div />
             </Gamepad>
             <Title>High Scores</Title>
-            <div className="text-white">{ score !== 0 ? scoreRank.length + " players had a better score than you..." : ""}</div>
+            <div className="text-white"></div>
             <div className="col-md-6 offset-md-3 table-responsive">
                 <div>
                     <small>
                         <label className="text-white" htmlFor="search">Search by minimum score or initials...</label>
                     </small>
+                </div>
+                <div style={score !== 0 && scoreRank.length > 0 ? { display: "block" } : { display: "none" }} id="shame-alert" className="alert alert-warning alert-dismissible fade show" role="alert">
+                    <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
+                    {score !== 0 ? scoreRank.length + " players had a better score than you... YOU'RE FIRED!" : ""}
                 </div>
                 <div className="input-group sticky-top bg-dark">
                     <input ref={input} id="search" name="search" value={search || ""} onChange={handleChange} type="search" className="form-control" placeholder="search..." aria-label="Search Scores" aria-describedby="button-search" autoComplete="off" />
@@ -95,12 +99,12 @@ const HighScores = () => {
                     </div>
                 </div>
                 <React.Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                    <ScoreTable 
-                        scores={scores} 
-                        results={results} 
-                        mappedScores={mappedScores} 
+                    <ScoreTable
+                        scores={scores}
+                        results={results}
+                        mappedScores={mappedScores}
                         mappedResults={mappedResults}
-                        search={search} 
+                        search={search}
                     />
                 </React.Suspense>
             </div>
