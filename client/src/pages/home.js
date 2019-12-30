@@ -22,7 +22,6 @@ const Home = () => {
 
     // audio
     const fake = new Audio('fake.mp3');
-    const allFake = new Audio('all-fake.mp3');
 
     const numbers = useFizzBuzz(200);
 
@@ -60,7 +59,7 @@ const Home = () => {
             <CenteredColumn className="home-controls">
                 <p className="mb-3">Ready to make Earth great again?</p>
                 <NavBtn onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
-                <NavBtn onClick={() => allFake.play()} to="/scores">High Scores</NavBtn>
+                <NavBtn onClick={() => fake.play()} to="/scores">High Scores</NavBtn>
                 <div className="badge mt-3" style={{ height: 30 }}>
                     <span style={{ fontSize: "small" }}><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
                 </div>

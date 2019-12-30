@@ -14,6 +14,10 @@ const ScoreTable = React.lazy(() => (
 
 const HighScores = () => {
 
+    // audio
+    const out = new Audio('fired.wav');
+    const allFake = new Audio('all-fake.mp3');
+
     // input ref
     const input = useRef();
 
@@ -52,6 +56,15 @@ const HighScores = () => {
         input.current.focus();
     }, []);
 
+    useEffect(() => {
+        if (score !== 0 && scoreRank.length) {
+            out.play()
+        }
+        if (score !== 0 && !scoreRank.length) {
+            allFake.play();
+        }
+    }, [out, allFake, score, scoreRank.length]);
+
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
         // setGamepadConnected(true);
@@ -88,9 +101,15 @@ const HighScores = () => {
                         <label className="text-white" htmlFor="search">Search by minimum score or initials...</label>
                     </small>
                 </div>
-                <div style={score !== 0 && scoreRank.length > 0 ? { display: "block" } : { display: "none" }} id="shame-alert" className="alert alert-warning alert-dismissible fade show" role="alert">
-                    <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
-                    {score !== 0 ? scoreRank.length + " players had a better score than you... YOU'RE FIRED!" : ""}
+                <div style={score !== 0 && scoreRank.length ? { display: "block" } : { display: "none" }} id="shame-alert" className="alert alert-warning alert-dismissible fade show container" role="alert">
+                    <div className="row">
+                        <div className="col">
+                            <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
+                        </div>
+                        <div className="col">
+                            {score !== 0 ? scoreRank.length + " players had a better score than you... YOU'RE FIRED!" : score !== 0 && !scoreRank.Length ? "It's all fake news. It never happened. Totally phony..." : ""}
+                        </div>
+                    </div>
                 </div>
                 <div className="input-group sticky-top bg-dark">
                     <input ref={input} id="search" name="search" value={search || ""} onChange={handleChange} type="search" className="form-control" placeholder="search..." aria-label="Search Scores" aria-describedby="button-search" autoComplete="off" />
