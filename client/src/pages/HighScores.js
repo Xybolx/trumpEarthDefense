@@ -7,6 +7,7 @@ import NavBtn from '../components/buttons/NavBtn';
 import Gamepad from 'react-gamepad';
 import './HighScores.css';
 import ScoreContext from '../context/scoreContext';
+import useArray from '../hooks/useArray';
 
 const ScoreTable = lazy(() => (
     import('../components/scoreTable')
@@ -33,10 +34,8 @@ const HighScores = () => {
     // useScores custom hook
     const [scores, results] = useScores(search);
 
-    const filteredScores = scores.filter(highScore => highScore.score > score)
-
     // state
-    const [scoreRank, setScoreRank] = useState(filteredScores);
+    const [scoreRank, setScoreRank] = useArray([]);
 
     // map the scores array we returned from our useScores custom hook
     const mappedScores = scores.map((score, index) => (
@@ -56,14 +55,16 @@ const HighScores = () => {
     ));
 
     useEffect(() => {
+        const filteredScores = scores.filter(item => item.score >= score);
+        setScoreRank(filteredScores);
         input.current.focus();
-    }, []);
+    }, [score, scores, setScoreRank]);
 
     useEffect(() => {
-        if (scores[0] && score !== 0 && score <= scores[0].score) {
+        if (scores[1] && score !== 0 && score < scores[1].score) {
             out.play()
         }
-        if (scores[0] && score !== 0 && score > scores[0].score) {
+        if (scores[1] && score !== 0 && score > scores[1].score) {
             allFake.play();
         }
     }, [out, allFake, score, scores]);
@@ -98,9 +99,13 @@ const HighScores = () => {
             </Gamepad>
             <Title>{
                 score !== 0 && 
-                scores[0] &&
-                score > scores[0].score ? 
+                scores[1] &&
+                score > scores[1].score ? 
                 "New High Score!" :
+                score !== 0 && 
+                scores[1] &&
+                score < scores[1].score ?
+                "You're Fired!!!" : 
                 "High Scores"
             }
             </Title>
@@ -127,7 +132,9 @@ const HighScores = () => {
                             <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
                         </div>
                         <div className="col">
-                            {score !== 0 && scores[0] && score < scores[0].score ? " \"At least one player had a better score than you... YOU'RE FIRED!\"" : score !== 0 && scores[0] && score > scores[0].score ? "\"It's all fake news. It never happened. Totally phony...\"" : ""}
+                            <small>
+                                {score !== 0 && scores[1] && score <= scores[1].score ? `"${scoreRank.length} people scored better than you. I don't do business with losers... YOU'RE FIRED!"` : score !== 0 && scores[1] && score > scores[1].score ? "\"It's all fake news. Nobody wins but me...\"" : ""}
+                            </small>
                         </div>
                     </div>
                 </div>

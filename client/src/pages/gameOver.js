@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useContext, lazy, Suspense } from 'react';
-import useForm from '../hooks/useForm';
-import useScores from '../hooks/useScores';
+import React, { useEffect, useContext } from 'react';
+import API from '../utils/API';
+import useArray from '../hooks/useArray';
 import PageContainer from '../components/pageContainer';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
@@ -8,38 +8,24 @@ import Gamepad from 'react-gamepad';
 import './HighScores.css';
 import ScoreContext from '../context/scoreContext';
 
-const ScoreTable = lazy(() => (
-    import('../components/scoreTable')
-));
-
 const GameOver = () => {
 
     // audio
     const out = new Audio('fired.wav');
     const allFake = new Audio('all-fake.mp3');
 
-    // input ref
-    const input = useRef();
-
-    // useForm custom hook
-    const [values, handleChange, handleClearForm] = useForm();
-
-    // de-structure values object
-    const { search } = values;
-
     // context
     const { score, clearScore } = useContext(ScoreContext);
 
-    // useScores custom hook
-    const [scores, results] = useScores(search);
+    const [scores, setScores] = useArray([]);
 
     const filteredScores = scores.filter(highScore => highScore.score > score)
 
     // state
-    const [scoreRank, setScoreRank] = useState(filteredScores);
+    const [scoreRank, setScoreRank] = useArray(filteredScores);
 
     // map the scores array we returned from our useScores custom hook
-    const mappedScores = scores.map((score, index) => (
+    const mappedScores = scoreRank.map((score, index) => (
         <tr key={score._id}>
             <th scope="row">{index + 1}</th>
             <td>{score.initials}</td>
@@ -47,26 +33,22 @@ const GameOver = () => {
         </tr>
     ));
 
-    const mappedResults = results.map((result, index) => (
-        <tr key={result._id}>
-            <th scope="row">{index + 1}</th>
-            <td>{result.initials}</td>
-            <td>{result.score}</td>
-        </tr>
-    ));
-
+    // get all scores on mount
     useEffect(() => {
-        input.current.focus();
+        API.getScores()
+            .then(res => setScores(res.data))
+            .then(() => setScoreRank(filteredScores))
+            .catch(err => console.log(err));
     }, []);
 
-    useEffect(() => {
-        if (scores[0] && score !== 0 && score <= scores[0].score) {
-            out.play()
-        }
-        if (scores[0] && score !== 0 && score > scores[0].score) {
-            allFake.play();
-        }
-    }, [out, allFake, score, scores]);
+    // useEffect(() => {
+    //     if (scoreRank.length) {
+    //         out.play()
+    //     }
+    //     if (!scoreRank.length) {
+    //         allFake.play();
+    //     }
+    // }, [out, allFake, scoreRank.length, scores]);
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
@@ -88,8 +70,7 @@ const GameOver = () => {
             <Gamepad
                 onConnect={connectHandler}
                 onDisconnect={disconnectHandler}
-                onStart={startHandler}
-                onBack={backHandler}>
+                onStart={startHandler}>
                 <div />
             </Gamepad>
             <Title>{
@@ -113,25 +94,22 @@ const GameOver = () => {
                             <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
                         </div>
                         <div className="col">
-                            {score !== 0 && scores[0] && score < scores[0].score ? " \"At least one player had a better score than you... YOU'RE FIRED!\"" : score !== 0 && scores[0] && score > scores[0].score ? "\"It's all fake news. It never happened. Totally phony...\"" : ""}
+                            {scoreRank.length ? scoreRank.length + " \"player(s) had a better score than you... YOU'RE FIRED!\"" : !scoreRank.length ? "\"It's all fake news. It never happened. Totally phony...\"" : ""}
                         </div>
                     </div>
                 </div>
-                <div className="input-group sticky-top bg-dark">
-                    <input ref={input} id="search" name="search" value={search || ""} onChange={handleChange} type="search" className="form-control" placeholder="search..." aria-label="Search Scores" aria-describedby="button-search" autoComplete="off" />
-                    <div className="input-group-append">
-                        <button onClick={handleClearForm} className="btn btn-outline-light" type="button" id="button-addon2">&nbsp;&nbsp;Reset&nbsp;&nbsp;</button>
-                    </div>
-                </div>
-                <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                    <ScoreTable
-                        scores={scores}
-                        results={results}
-                        mappedScores={mappedScores}
-                        mappedResults={mappedResults}
-                        search={search}
-                    />
-                </Suspense>
+            <table style={ scoreRank.length ? { display: "block" } : { display: "none" }} className="table table-borderless">
+            <thead className="th-row">
+                <tr className="text-white">
+                    <th>#</th>
+                    <th>Initials</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody style={{ color: "yellow" }}>
+                {mappedScores}
+            </tbody>
+        </table>
             </div>
             <div style={{ marginTop: 10 }}>
                 <NavBtn onClick={() => clearScore} to="/">Home</NavBtn>

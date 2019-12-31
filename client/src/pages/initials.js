@@ -20,7 +20,7 @@ const Initials = () => {
     const form = useRef();
 
     // context
-    const { score } = useContext(ScoreContext);
+    const { score, incScore400 } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
 
     // useForm
@@ -115,6 +115,7 @@ const Initials = () => {
                         required
                     />
                     <SubmitBtn />
+                    <button onClick={incScore400} className="btn btn-outline-light">Score + 1000</button>
                 </form>
             </div>
         </PageContainer>
