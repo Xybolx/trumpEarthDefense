@@ -58,8 +58,8 @@ const Home = () => {
             <Title>Trump Earth Defense</Title>
             <CenteredColumn className="home-controls">
                 <p className="mb-3">Ready to make Earth great again?</p>
-                <NavBtn onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
-                <NavBtn onClick={() => fake.play()} to="/scores">High Scores</NavBtn>
+                <NavBtn className="mt-3" onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
+                <NavBtn className="mt-3" onClick={() => fake.play()} to="/scores">High Scores</NavBtn>
                 <div className="badge mt-3" style={{ height: 30 }}>
                     <span style={{ fontSize: "small" }}><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
                 </div>

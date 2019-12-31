@@ -5,7 +5,7 @@ const Btn = props => {
 
     return (
         <button
-            className="btn btn-outline-light"
+            className={`btn btn-outline-light ${props.className}`}
             onClick={props.onClick}>
             &nbsp;&nbsp;{props.children}&nbsp;&nbsp;
         </button>

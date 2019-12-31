@@ -4,7 +4,7 @@ import "./Title.css";
 const Title = ({ children }) => {
 
     return (
-        <h2 className='title'>{ children }</h2>
+        <h4 className='title'>{ children }</h4>
     );
 };
 

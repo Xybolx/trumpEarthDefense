@@ -22,8 +22,9 @@ const HighScores = () => {
     const fired = new Audio('fired.wav');
     const allFake = new Audio('all-fake.mp3');
 
-    // input ref
+    // refs
     const input = useRef();
+    const alert = useRef();
 
     // useForm custom hook
     const [values, handleChange, handleClearForm] = useForm();
@@ -37,7 +38,7 @@ const HighScores = () => {
     // useScores custom hook
     const [scores, results] = useScores(search);
 
-    // state
+    // useArray custom hook
     const [scoreRank, setScoreRank] = useArray([]);
 
     // map the scores array we returned from our useScores custom hook
@@ -67,10 +68,10 @@ const HighScores = () => {
 
     // play a sound based on if the player has the highest score or not 
     useEffect(() => {
-        if (scores[1] && score !== 0 && score < scores[1].score) {
+        if (scores[0] && score !== 0 && score < scores[1].score) {
             fired.play()
         }
-        if (scores[1] && score !== 0 && score > scores[1].score) {
+        if (scores[0] && score !== 0 && score > scores[1].score) {
             allFake.play();
         }
     }, [fired, allFake, score, scores]);
@@ -105,22 +106,17 @@ const HighScores = () => {
             </Gamepad>
             <Title>{
                 score !== 0 &&
-                    scores[1] &&
-                    score > scores[1].score ?
+                    scores[0] &&
+                    score >= scores[0].score ?
                     "New High Score!" :
                     score !== 0 &&
-                        scores[1] &&
-                        score < scores[1].score ?
+                        scores[0] &&
+                        score < scores[0].score ?
                         "You're Fired!!!" :
                         "High Scores"
             }
             </Title>
             <CenteredColumn>
-                <div>
-                    <small>
-                        <label className="text-white" htmlFor="search">Search by minimum score or initials...</label>
-                    </small>
-                </div>
                 <div style={
                     score !== 0 &&
                         scoreRank.length ?
@@ -130,21 +126,26 @@ const HighScores = () => {
                             { display: "block" } :
                             { display: "none" }
                 }
+                    ref={alert}
                     id="shame-alert"
-                    className="alert alert-warning alert-dismissible fade show container" role="alert">
+                    role="alert"
+                    className="alert alert-warning alert-dismissible fade show container">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     <div className="row">
                         <div className="col">
-                            <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
+                            <img style={{ width: 80, height: 80 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
                         </div>
                         <div className="col">
-                            <small>{
+                            <small style={{ width: 80, height: 80 }}>{
                                 score !== 0 &&
-                                    scores[1] &&
-                                    score <= scores[1].score ?
-                                    `"${scoreRank.length} people scored better than you. I don't do business with losers... YOU'RE FIRED!"` :
+                                    scores[0] &&
+                                    score < scores[0].score ? 
+                                    `"${scoreRank.length - 1} player(s) had a better score...YOU'RE FIRED"` :
                                     score !== 0 &&
-                                        scores[1] &&
-                                        score > scores[1].score ?
+                                    scores[0] &&
+                                    score >= scores[0].score ?
                                         "\"It's all fake news. Nobody wins but me...\"" : ""
                             }
                             </small>
@@ -153,35 +154,51 @@ const HighScores = () => {
                 </div>
                 <div className="input-group sticky-top bg-dark">
                     <input
+                        style={
+                            score !== 0 &&
+                            scoreRank.length ?
+                            { display: "none" } :
+                            { display: "block" }
+                        }
                         ref={input}
                         id="search"
                         name="search"
                         value={search || ""}
                         onChange={handleChange}
                         type="search"
-                        className="form-control"
-                        placeholder="search..."
+                        className="form-control form-inline"
+                        placeholder="initials or minimum score"
                         aria-label="Search Scores"
                         aria-describedby="button-search"
                         autoComplete="off"
                     />
-                    <div className="input-group-append">
-                        <Btn onClick={handleClearForm} id="button-addon2">
+                    <div style={
+                            score !== 0 &&
+                            scoreRank.length ?
+                            { display: "none" } :
+                            { display: "block" }
+                        }
+                        className="input-group-append">
+                        <Btn 
+                            id="button-addon2"
+                            onClick={handleClearForm}>
                             Reset
                         </Btn>
                     </div>
                 </div>
-                <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                    <ScoreTable
-                        scores={scores}
-                        results={results}
-                        mappedScores={mappedScores}
-                        mappedResults={mappedResults}
-                        search={search}
-                    />
-                </Suspense>
+                <div className="score-table">
+                    <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
+                        <ScoreTable
+                            scores={scores}
+                            results={results}
+                            mappedScores={mappedScores}
+                            mappedResults={mappedResults}
+                            search={search}
+                        />
+                    </Suspense>
+                </div>
+            <NavBtn className="mt-3" onClick={() => clearScore} to="/">Home</NavBtn>
             </CenteredColumn>
-            <NavBtn onClick={() => clearScore} to="/">Home</NavBtn>
         </PageContainer>
     );
 };
