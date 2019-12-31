@@ -12,7 +12,7 @@ const ScoreTable = lazy(() => (
     import('../components/scoreTable')
 ));
 
-const HighScores = () => {
+const GameOver = () => {
 
     // audio
     const out = new Audio('fired.wav');
@@ -79,12 +79,8 @@ const HighScores = () => {
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
     };
 
-    const backHandler = () => {
-        window.location = "/";
-    };
-
     const startHandler = () => {
-        window.location = "/instructions";
+        window.location = "/";
     };
 
     return (
@@ -111,17 +107,7 @@ const HighScores = () => {
                         <label className="text-white" htmlFor="search">Search by minimum score or initials...</label>
                     </small>
                 </div>
-                <div style={
-                        score !== 0 && 
-                        scoreRank.length ? 
-                        { display: "block" } : 
-                        score !== 0 && 
-                        !scoreRank.length ? 
-                        { display: "block" } : 
-                        { display: "none" }
-                    } 
-                        id="shame-alert" 
-                        className="alert alert-warning alert-dismissible fade show container" role="alert">
+                <div id="shame-alert" className="alert alert-warning alert-dismissible fade show container" role="alert">
                     <div className="row">
                         <div className="col">
                             <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
@@ -154,4 +140,4 @@ const HighScores = () => {
     );
 };
 
-export default HighScores;
+export default GameOver;
