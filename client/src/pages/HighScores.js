@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, lazy, Suspense } from 'react';
 import useForm from '../hooks/useForm';
 import useScores from '../hooks/useScores';
 import PageContainer from '../components/pageContainer';
@@ -8,7 +8,7 @@ import Gamepad from 'react-gamepad';
 import './HighScores.css';
 import ScoreContext from '../context/scoreContext';
 
-const ScoreTable = React.lazy(() => (
+const ScoreTable = lazy(() => (
     import('../components/scoreTable')
 ));
 
@@ -21,17 +21,20 @@ const HighScores = () => {
     // input ref
     const input = useRef();
 
-    // context
-    const { score, clearScore } = useContext(ScoreContext);
-
     // useForm custom hook
     const [values, handleChange, handleClearForm] = useForm();
 
     // de-structure values object
     const { search } = values;
 
+    // context
+    const { score, clearScore } = useContext(ScoreContext);
+
     // useScores custom hook
     const [scores, results] = useScores(search);
+
+    // state
+    const [scoreRank, setScoreRank] = useState(scores.filter(highScore => highScore.score > score));
 
     // map the scores array we returned from our useScores custom hook
     const mappedScores = scores.map((score, index) => (
@@ -50,20 +53,18 @@ const HighScores = () => {
         </tr>
     ));
 
-    const scoreRank = scores.filter(highScore => highScore.score > score);
-
     useEffect(() => {
         input.current.focus();
     }, []);
 
     useEffect(() => {
-        if (score !== 0 && scoreRank.length) {
+        if (scores[0] && score !== 0 && score <= scores[0].score) {
             out.play()
         }
-        if (score !== 0 && !scoreRank.length) {
+        if (scores[0] && score !== 0 && score > scores[0].score) {
             allFake.play();
         }
-    }, [out, allFake, score, scoreRank.length]);
+    }, [out, allFake, score, scores]);
 
     // handle gamepad controls
     const connectHandler = gamepadIndex => {
@@ -93,7 +94,14 @@ const HighScores = () => {
                 onBack={backHandler}>
                 <div />
             </Gamepad>
-            <Title>High Scores</Title>
+            <Title>{
+                score !== 0 && 
+                scores[0] &&
+                score > scores[0].score ? 
+                "New High Score!" :
+                "High Scores"
+            }
+            </Title>
             <div className="text-white"></div>
             <div className="col-md-6 offset-md-3 table-responsive">
                 <div>
@@ -101,13 +109,23 @@ const HighScores = () => {
                         <label className="text-white" htmlFor="search">Search by minimum score or initials...</label>
                     </small>
                 </div>
-                <div style={score !== 0 && scoreRank.length ? { display: "block" } : { display: "none" }} id="shame-alert" className="alert alert-warning alert-dismissible fade show container" role="alert">
+                <div style={
+                        score !== 0 && 
+                        scoreRank.length ? 
+                        { display: "block" } : 
+                        score !== 0 && 
+                        !scoreRank.length ? 
+                        { display: "block" } : 
+                        { display: "none" }
+                    } 
+                        id="shame-alert" 
+                        className="alert alert-warning alert-dismissible fade show container" role="alert">
                     <div className="row">
                         <div className="col">
                             <img style={{ width: 150, height: 150 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
                         </div>
                         <div className="col">
-                            {score !== 0 ? scoreRank.length + " players had a better score than you... YOU'RE FIRED!" : score !== 0 && !scoreRank.Length ? "It's all fake news. It never happened. Totally phony..." : ""}
+                            {score !== 0 && scores[0] && score <= scores[0].score ? scoreRank.length + " \"players had a better score than you... YOU'RE FIRED!\"" : score !== 0 && scores[0] && score > scores[0].score ? "\"It's all fake news. It never happened. Totally phony...\"" : ""}
                         </div>
                     </div>
                 </div>
@@ -117,7 +135,7 @@ const HighScores = () => {
                         <button onClick={handleClearForm} className="btn btn-outline-light" type="button" id="button-addon2">&nbsp;&nbsp;Reset&nbsp;&nbsp;</button>
                     </div>
                 </div>
-                <React.Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
+                <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
                     <ScoreTable
                         scores={scores}
                         results={results}
@@ -125,7 +143,7 @@ const HighScores = () => {
                         mappedResults={mappedResults}
                         search={search}
                     />
-                </React.Suspense>
+                </Suspense>
             </div>
             <div style={{ marginTop: 10 }}>
                 <NavBtn onClick={() => clearScore} to="/">Home</NavBtn>

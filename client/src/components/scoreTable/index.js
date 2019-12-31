@@ -11,7 +11,7 @@ const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) =>
                     <th>Score</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style={{ color: "yellow" }}>
             {scores.length && !search ?
                         mappedScores :
                         results.length && search ?
