@@ -115,7 +115,7 @@ const Initials = () => {
                         required
                     />
                     <SubmitBtn />
-                    <button onClick={incScore400} className="btn btn-outline-light">Score + 1000</button>
+                    {/* <button onClick={incScore400} className="btn btn-outline-light">Score + 1000</button> */}
                 </form>
             </div>
         </PageContainer>
