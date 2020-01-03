@@ -20,7 +20,7 @@ const Initials = () => {
     const form = useRef();
 
     // context
-    const { score, incScore400 } = useContext(ScoreContext);
+    const { score } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
 
     // useForm
@@ -97,7 +97,6 @@ const Initials = () => {
             <div style={{ width: 400, height: 400 }} className="container-fluid">
                 <img ref={earth} className="img-fluid" alt="EARTH" src={isLoaded ? "splode.gif" : "earth.png"} />
                 <img ref={trump} className="img-fluid" alt="trump" src="trump-kiss.png" />
-                <div className="initials">{initials}</div>
             </div>
             <div ref={form} className="form-group">
                     <label htmlFor="initials-input">Enter Initials</label>
@@ -115,7 +114,6 @@ const Initials = () => {
                         required
                     />
                     <SubmitBtn />
-                    {/* <button onClick={incScore400} className="btn btn-outline-light">Score + 1000</button> */}
                 </form>
             </div>
         </PageContainer>

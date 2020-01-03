@@ -14,13 +14,13 @@
     border: unset;
   }
   
-  .table-responsive {
+  /* .table-responsive {
     overflow-y: auto;
     max-height: 550px;
-  }
+  } */
 
   .score-table {
-    background: rgba(0, 0, 0, 0.589);
-    max-height: 500px;
+    background: rgba(0, 0, 0, 0.637);
+    max-height: 450px;
     overflow: auto;
   }

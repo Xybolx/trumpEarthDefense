@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from '../spinner';
 
 const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) => {
 
@@ -15,7 +16,7 @@ const ScoreTable = ({ scores, results, mappedScores, mappedResults, search }) =>
             {scores.length && !search ?
                         mappedScores :
                         results.length && search ?
-                        mappedResults : <tr className="spinner-grow" role="status" aria-hidden="true"><td className="spinner-text"><img className="img-fluid" src="red_cloud.gif" alt="loading..." /></td></tr>}
+                        mappedResults : <Spinner text="Loading..." />}
             </tbody>
         </table>
     );

@@ -10,6 +10,7 @@
 .title {
   animation: Flash .75s infinite;
   color: yellow;
+  background: rgba(0, 0, 0, 0.705);
 }
 
 .home-title {

@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import ScoreProvider from './context/ScoreProvider';
 import SpecialProvider from './context/SpecialProvider';
+import ConnectedProvider from './context/ConnectedProvider';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <ScoreProvider>
         <SpecialProvider>
-            <App />
+            <ConnectedProvider>
+                <App />
+            </ConnectedProvider>
         </SpecialProvider>
     </ScoreProvider>,
     document.getElementById('root')

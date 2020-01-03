@@ -40,7 +40,6 @@ const GameContainer = () => {
     const [isFlying, setIsFlying] = useState(false);
     const [charge, setCharge] = useState(3);
     const [specialReset, setSpecialReset] = useState(false);
-    const [gamepadConnected, setGamepadConnected] = useState(false);
 
     // handle mouse controls
     // handle wheel events
@@ -161,16 +160,6 @@ const GameContainer = () => {
     }, [gameOver, specialReset]);
 
     // handle gamepad controls
-    const connectHandler = gamepadIndex => {
-        setGamepadConnected(true);
-        console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-    };
-
-    const disconnectHandler = gamepadIndex => {
-        setGamepadConnected(false);
-        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-    };
-
     const buttonChangeHandler = (buttonName, down) => {
         console.log(buttonName, down);
     };
@@ -228,8 +217,6 @@ const GameContainer = () => {
     return (
         <div id="game-container">
             <Gamepad
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
                 onButtonDown={buttonDownHandler}
                 onButtonUp={buttonUpHandler}
                 onButtonChange={buttonChangeHandler}
@@ -266,7 +253,6 @@ const GameContainer = () => {
             <Stats
                 charge={charge}
                 lives={lives}
-                gamepadConnected={gamepadConnected}
                 gameOver={gameOver}
             />
             <Enemy ref={enemyRef} />

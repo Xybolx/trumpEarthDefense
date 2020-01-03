@@ -3,7 +3,7 @@ import ScoreContext from '../../context/scoreContext';
 import SpecialContext from '../../context/specialContext';
 import "./stats.css";
 
-const Stats = ({ charge, lives, gamepadConnected }) => {
+const Stats = ({ charge, lives }) => {
 
     // context
     const { score } = useContext(ScoreContext);
@@ -12,9 +12,6 @@ const Stats = ({ charge, lives, gamepadConnected }) => {
     return (
         <div className="col-md-6 text-left">
                 Score <span className="text-white">{score}</span>
-                <div className="progress badge" style={{ height: 30 }}>
-                    <span><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
-                </div>
                 <div className="progress badge" style={{ height: 30 }}>
                     <i className="fas fa-globe-americas fa-fw fa-2x text-light" />
                     <div className={lives === 3 ? "progress-bar bg-success" : lives === 2 ? "progress-bar bg-warning" : "progress-bar bg-danger"} role="progressbar" style={{ width: `${lives}` / 3 * 100 + "%" }} aria-valuenow={lives / 3 * 100} aria-valuemin="0" aria-valuemax="100" />

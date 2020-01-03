@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import Title from '../components/title';
@@ -13,25 +13,12 @@ const Instructions = () => {
     const { clearScore } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
 
-    // state
-    const [gamepadConnected, setGamepadConnected] = useState(false);
-
     useEffect(() => {
         clearScore();
         clearSpecial();
     }, [clearScore, clearSpecial]);
 
     // handle gamepad controls
-    const connectHandler = gamepadIndex => {
-        setGamepadConnected(true);
-        console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-      };
-     
-      const disconnectHandler = gamepadIndex => {
-          setGamepadConnected(false);
-        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-      };
-     
       const startHandler = () => {
         window.location = "/game";
       };
@@ -43,8 +30,6 @@ const Instructions = () => {
     return (
         <div className="container text-center home-earth">
             <Gamepad
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
                 onStart={startHandler}
                 onBack={backHandler}>
                 <div />
@@ -58,10 +43,6 @@ const Instructions = () => {
                     <p style={{ fontSize: "small" }} className="mt-2 text-white">Fire <span style={{ color: "yellow" }}>=</span> <small className="text-white">Mouse Click or RT</small></p>
                     <p style={{ fontSize: "small" }} className="text-white">(fires special when bar is full)</p>
                     <p style={{ fontSize: "small" }} className="text-white border-bottom"><i className="fas fa-poll-h fa-fw fa-2x" /> Stat Bars</p>
-                    <p style={{ fontSize: "small" }} className="text-white border-bottom"><i className="fas fa-gamepad fa-fw fa-2x text-white" /> Gamepad</p>
-                    <div className="badge mb-3" style={{ height: 30 }}>
-                        <span style={{ fontSize: "small" }}><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
-                    </div>
                     <p style={{ fontSize: "small" }} className="text-white border-bottom">Earth</p>
                     <div className="progress mb-3">
                         <i className="fas fa-globe-americas fa-fw fa-2x text-white" />

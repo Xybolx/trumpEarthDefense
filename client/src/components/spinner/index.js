@@ -4,8 +4,11 @@ const Spinner = ({ text }) => {
 
     return (
         <>
-            {text}
-            <tr className="spinner-border text-white" role="status" aria-hidden="true" />
+            <tr className="spinner-grow text-white" role="status" aria-hidden="true">
+                <th>
+                    {text}
+                </th>
+            </tr>
         </>
     );
 };

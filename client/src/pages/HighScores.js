@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useContext, lazy, Suspense } from 'react';
+import { useHistory } from 'react-router-dom';
 import useForm from '../hooks/useForm';
 import useArray from '../hooks/useArray';
 import useScores from '../hooks/useScores';
@@ -17,6 +18,8 @@ const ScoreTable = lazy(() => (
 ));
 
 const HighScores = () => {
+
+    let history = useHistory();
 
     // audio
     const fired = new Audio('fired.wav');
@@ -68,25 +71,15 @@ const HighScores = () => {
 
     // play a sound based on if the player has the highest score or not 
     useEffect(() => {
-        if (scores[0] && score !== 0 && score < scores[1].score) {
+        if (scores[0] && score !== 0 && score < scores[0].score) {
             fired.play()
         }
-        if (scores[0] && score !== 0 && score > scores[1].score) {
+        if (scores[0] && score !== 0 && score >= scores[0].score) {
             allFake.play();
         }
     }, [fired, allFake, score, scores]);
 
     // handle gamepad controls
-    const connectHandler = gamepadIndex => {
-        // setGamepadConnected(true);
-        console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-    };
-
-    const disconnectHandler = gamepadIndex => {
-        //   setGamepadConnected(false);
-        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-    };
-
     const backHandler = () => {
         window.location = "/";
     };
@@ -104,19 +97,19 @@ const HighScores = () => {
                 onBack={backHandler}>
                 <div />
             </Gamepad>
-            <Title>{
-                score !== 0 &&
-                    scores[0] &&
-                    score >= scores[0].score ?
-                    "New High Score!" :
+            <CenteredColumn>
+                <Title>{
                     score !== 0 &&
                         scores[0] &&
-                        score < scores[0].score ?
-                        "You're Fired!!!" :
-                        "High Scores"
-            }
-            </Title>
-            <CenteredColumn>
+                        score >= scores[0].score ?
+                        "New High Score!" :
+                        score !== 0 &&
+                            scores[0] &&
+                            score < scores[0].score ?
+                            "You're Fired!!!" :
+                            "High Scores"
+                }
+                </Title>
                 <div style={
                     score !== 0 &&
                         scoreRank.length ?
@@ -135,14 +128,14 @@ const HighScores = () => {
                         </button>
                     <div className="row">
                         <div className="col">
-                            <img style={{ width: 80, height: 80 }} className="img-fluid" src="trump-kiss.png" alt="Trump" />
+                            <img style={{ width: 80, height: 80 }} className="img-fluid" src="suprise.png" alt="Trump" />
                         </div>
                         <div className="col">
                             <small style={{ width: 80, height: 80 }}>{
                                 score !== 0 &&
                                     scores[0] &&
                                     score < scores[0].score ? 
-                                    `"${scoreRank.length - 1} player(s) had a better score...YOU'RE FIRED"` :
+                                    `"${scoreRank.length - 1} player(s) had a better score...YOU'RE FIRED!"` :
                                     score !== 0 &&
                                     scores[0] &&
                                     score >= scores[0].score ?
@@ -152,7 +145,7 @@ const HighScores = () => {
                         </div>
                     </div>
                 </div>
-                <div className="input-group sticky-top bg-dark">
+                <div className="input-group input-group-sm sticky-top bg-dark">
                     <input
                         style={
                             score !== 0 &&
@@ -166,7 +159,7 @@ const HighScores = () => {
                         value={search || ""}
                         onChange={handleChange}
                         type="search"
-                        className="form-control form-inline"
+                        className="form-control"
                         placeholder="initials or minimum score"
                         aria-label="Search Scores"
                         aria-describedby="button-search"

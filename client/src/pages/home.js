@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import useFizzBuzz from '../hooks/useFizzBuzz';
+import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import PageContainer from '../components/pageContainer';
@@ -9,6 +9,8 @@ import ScoreContext from '../context/scoreContext';
 
 const Home = () => {
 
+    let history = useHistory();
+
     // context
     const { clearScore } = useContext(ScoreContext);
 
@@ -17,52 +19,34 @@ const Home = () => {
       clearScore();
     }, [clearScore]);
 
-    // state
-   const [gamepadConnected, setGamepadConnected] = useState(false);
-
     // audio
     const fake = new Audio('fake.mp3');
 
-    const numbers = useFizzBuzz(200);
-
-    console.log(numbers);
-
     // handle gamepad controls
-    const connectHandler = gamepadIndex => {
-        setGamepadConnected(true);
-        console.log(`Gamepad ${gamepadIndex + 1} connected !`);
-      };
-     
-      const disconnectHandler = gamepadIndex => {
-          setGamepadConnected(false);
-        console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
-      };
-
       const backHandler = () => {
-        window.location = "/scores";
+        history.push("/scores");
+        fake.play();
       };
 
       const startHandler = () => {
-        window.location = "/instructions";
+        history.push("/instructions");
+        fake.play();
       };
     
     return (
         <PageContainer className="home-earth">
             <Gamepad
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
-                onStart={startHandler}
-                onBack={backHandler}>
+                onRB={startHandler}
+                onLB={backHandler}>
                 <div />
             </Gamepad>
-            <Title>Trump Earth Defense</Title>
+            <CenteredColumn>
+              <Title>Trump Earth Defense</Title>
+            </CenteredColumn>
             <CenteredColumn className="home-controls">
-                <p className="mb-3">Ready to make Earth great again?</p>
-                <NavBtn className="mt-3" onClick={() => fake.play()} to="/instructions">I'm Ready!</NavBtn>
-                <NavBtn className="mt-3" onClick={() => fake.play()} to="/scores">High Scores</NavBtn>
-                <div className="badge mt-3" style={{ height: 30 }}>
-                    <span style={{ fontSize: "small" }}><i className="fas fa-gamepad fa-fw fa-2x text-white" /> {gamepadConnected ? "Connected" : "Not Connected"}</span> 
-                </div>
+                <p className="m-3">Ready to make Earth great again?</p>
+                <NavBtn className="mt-3" onClick={startHandler}>I'm Ready!</NavBtn>
+                <NavBtn className="mt-3" onClick={backHandler}>High Scores</NavBtn>
             </CenteredColumn>
         </PageContainer>
     );
