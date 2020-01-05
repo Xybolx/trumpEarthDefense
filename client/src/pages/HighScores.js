@@ -5,12 +5,13 @@ import useArray from '../hooks/useArray';
 import useScores from '../hooks/useScores';
 import ScoreContext from '../context/scoreContext';
 import PageContainer from '../components/pageContainer';
-import Gamepad from 'react-gamepad';
+import ShameAlert from '../components/alerts/ShameAlert';
+import useGamepad from '../hooks/useGamepad';
 import Title from '../components/title';
 import CenteredColumn from '../components/centeredColumn';
 import NavBtn from '../components/buttons/NavBtn';
+import HighScoresForm from '../components/forms/HighScoresForm';
 import './HighScores.css';
-import Btn from '../components/buttons/Btn';
 
 // lazy loaded component
 const ScoreTable = lazy(() => (
@@ -19,6 +20,18 @@ const ScoreTable = lazy(() => (
 
 const HighScores = () => {
 
+    // handle gamepad controls
+    const backHandler = () => {
+        history.goBack("/");
+      };
+      
+      const startHandler = () => {
+        history.push("/instructions");
+      };
+
+    const { gamepad } = useGamepad(startHandler, backHandler);
+
+    // new useHistory hook from react router
     let history = useHistory();
 
     // audio
@@ -26,11 +39,10 @@ const HighScores = () => {
     const allFake = new Audio('all-fake.mp3');
 
     // refs
-    const input = useRef();
-    const alert = useRef();
+    const inputRef = useRef();
 
     // useForm custom hook
-    const [values, handleChange, handleClearForm] = useForm();
+    const [values, handleChange, handleSubmit, handleClearForm] = useForm();
 
     // de-structure values object
     const { search } = values;
@@ -62,135 +74,101 @@ const HighScores = () => {
         </tr>
     ));
 
-    // filter the scores to return all scores that are less than or equal to the current player score
+    // map the results array we returned from our useScores custom hook
+    const mappedScoreRank = scoreRank.map((result, index) => (
+        <tr key={result._id}>
+            <th scope="row">{index + 1}</th>
+            <td>{result.initials}</td>
+            <td>{result.score}</td>
+        </tr>
+    ));
+
+    // focus on the search input on mount
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
+
+    // filter the scores to find the scores that are higher than the current player score
     useEffect(() => {
         const filteredScores = scores.filter(item => item.score >= score);
         setScoreRank(filteredScores);
-        input.current.focus();
     }, [score, scores, setScoreRank]);
 
     // play a sound based on if the player has the highest score or not 
     useEffect(() => {
-        if (scores[0] && score !== 0 && score < scores[0].score) {
+        if (scores[0] && score !== null && score < scores[0].score) {
             fired.play()
         }
-        if (scores[0] && score !== 0 && score >= scores[0].score) {
+        if (scores[0] && score !== null && score >= scores[0].score) {
             allFake.play();
         }
     }, [fired, allFake, score, scores]);
 
-    // handle gamepad controls
-    const backHandler = () => {
-        window.location = "/";
-    };
+    // useEffect(() => {
+    //     if (scores && score === null) {
+    //         fake.play();
+    //     }
+    // }, [fake, score, scores]);
 
-    const startHandler = () => {
-        window.location = "/instructions";
+    // function to redirect when the back button is clicked
+    const redirect = () => {
+        clearScore();
+        history.replace("/");
     };
 
     return (
         <PageContainer className="home-earth">
-            <Gamepad
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
-                onStart={startHandler}
-                onBack={backHandler}>
-                <div />
-            </Gamepad>
+            {gamepad}
             <CenteredColumn>
                 <Title>{
-                    score !== 0 &&
+                    score !== null &&
                         scores[0] &&
                         score >= scores[0].score ?
                         "New High Score!" :
-                        score !== 0 &&
+                        score !== null &&
                             scores[0] &&
                             score < scores[0].score ?
                             "You're Fired!!!" :
                             "High Scores"
                 }
                 </Title>
-                <div style={
-                    score !== 0 &&
+                <ShameAlert
+                    scores={scores}
+                    scoreRank={scoreRank}
+                />
+                <HighScoresForm
+                    style={
+                        score === null &&
                         scoreRank.length ?
-                        { display: "block" } :
-                        score !== 0 &&
-                            !scoreRank.length ?
-                            { display: "block" } :
-                            { display: "none" }
-                }
-                    ref={alert}
-                    id="shame-alert"
-                    role="alert"
-                    className="alert alert-warning alert-dismissible fade show container">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    <div className="row">
-                        <div className="col">
-                            <img style={{ width: 80, height: 80 }} className="img-fluid" src="suprise.png" alt="Trump" />
-                        </div>
-                        <div className="col">
-                            <small style={{ width: 80, height: 80 }}>{
-                                score !== 0 &&
-                                    scores[0] &&
-                                    score < scores[0].score ? 
-                                    `"${scoreRank.length - 1} player(s) had a better score...YOU'RE FIRED!"` :
-                                    score !== 0 &&
-                                    scores[0] &&
-                                    score >= scores[0].score ?
-                                        "\"It's all fake news. Nobody wins but me...\"" : ""
-                            }
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <div className="input-group input-group-sm sticky-top bg-dark">
-                    <input
-                        style={
-                            score !== 0 &&
-                            scoreRank.length ?
-                            { display: "none" } :
-                            { display: "block" }
-                        }
-                        ref={input}
-                        id="search"
-                        name="search"
-                        value={search || ""}
-                        onChange={handleChange}
-                        type="search"
-                        className="form-control"
-                        placeholder="initials or minimum score"
-                        aria-label="Search Scores"
-                        aria-describedby="button-search"
-                        autoComplete="off"
+                        { display: "none" } :
+                        { display: "block" }
+                    }
+                    ref={inputRef}
+                    scoreRank={scoreRank}
+                    search={search}
+                    handleChange={handleChange}
+                    handleClearForm={handleClearForm} 
+                />
+                <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
+                    <ScoreTable
+                        scores={scores}
+                        results={results}
+                        mappedScores={mappedScores}
+                        mappedResults={mappedResults}
+                        mappedScoreRank={mappedScoreRank}
+                        search={search}
                     />
-                    <div style={
-                            score !== 0 &&
-                            scoreRank.length ?
-                            { display: "none" } :
-                            { display: "block" }
-                        }
-                        className="input-group-append">
-                        <Btn 
-                            id="button-addon2"
-                            onClick={handleClearForm}>
-                            Reset
-                        </Btn>
-                    </div>
-                </div>
-                <div className="score-table">
-                    <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                        <ScoreTable
-                            scores={scores}
-                            results={results}
-                            mappedScores={mappedScores}
-                            mappedResults={mappedResults}
-                            search={search}
-                        />
-                    </Suspense>
-                </div>
-            <NavBtn className="mt-3" onClick={() => clearScore} to="/">Home</NavBtn>
+                </Suspense>
+                <NavBtn 
+                    className="mt-3" 
+                    onClick={redirect}>
+                    Back
+                </NavBtn>
+                <NavBtn 
+                    className="mt-3" 
+                    onClick={() => history.push("/instructions")}>
+                    I'm Ready!
+                </NavBtn> 
             </CenteredColumn>
         </PageContainer>
     );

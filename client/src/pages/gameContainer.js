@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
-import Gamepad from 'react-gamepad';
+import { Redirect, useHistory } from 'react-router-dom';
 import ScoreContext from '../context/scoreContext';
 import SpecialContext from '../context/specialContext';
 import useEventListener from '../hooks/useEventListener';
@@ -12,8 +11,11 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
+import useGamepad from '../hooks/useGamepad';
 
 const GameContainer = () => {
+
+    let history = useHistory();
 
     // refs
     const planeRef = useRef();
@@ -53,9 +55,6 @@ const GameContainer = () => {
             }
         }, []);
 
-    // useEventListener for wheel
-    useEventListener("wheel", wheelHandler, window);
-
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
@@ -75,6 +74,8 @@ const GameContainer = () => {
         }
     }, [laser, isFlying, charge, gameOver, special, specialSound]);
 
+    // useEventListener for wheel
+    useEventListener("wheel", wheelHandler, window);
     // useEventListener for mouse down
     useEventListener("mousedown", mouseDownHandler, window);
 
@@ -142,12 +143,10 @@ const GameContainer = () => {
     }, [gameOver, specialReset, clearSpecial, setScore, splode]);
 
     useEffect(() => {
+
         const rude = new Audio("rude.mp3");
-
         const quiet = new Audio("quiet.mp3");
-
         const congrats = new Audio("congrats.mp3");
-
         const rocket = new Audio("rocket.mp3");
 
         const insults = [rude, quiet, congrats, rocket];
@@ -160,23 +159,26 @@ const GameContainer = () => {
     }, [gameOver, specialReset]);
 
     // handle gamepad controls
-    const buttonChangeHandler = (buttonName, down) => {
-        console.log(buttonName, down);
-    };
 
-    const axisChangeHandler = (axisName, value, previousValue) => {
-        console.log(axisName, value);
-    };
+    const startHandler = () => {};
 
-    const buttonDownHandler = buttonName => {
-        console.log(buttonName, 'down');
-    };
+    // const buttonChangeHandler = (buttonName, down) => {
+    //     console.log(buttonName, down);
+    // };
 
-    const buttonUpHandler = buttonName => {
-        console.log(buttonName, 'up');
-    };
+    // const axisChangeHandler = (axisName, value, previousValue) => {
+    //     console.log(axisName, value, previousValue);
+    // };
 
-    const pressAHandler = () => {
+    // const buttonDownHandler = buttonName => {
+    //     console.log(buttonName, 'down');
+    // };
+
+    // const buttonUpHandler = buttonName => {
+    //     console.log(buttonName, 'up');
+    // };
+
+    const aHandler = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
@@ -207,8 +209,10 @@ const GameContainer = () => {
     };
 
     const backHandler = () => {
-        window.location = "/instructions";
+        history.push("/");
     };
+
+    const { gamepad } = useGamepad(startHandler, backHandler, aHandler, upHandler, downHandler);
 
     if (gameOver) {
         return <Redirect to="/initials" />;
@@ -216,29 +220,7 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-            <Gamepad
-                onButtonDown={buttonDownHandler}
-                onButtonUp={buttonUpHandler}
-                onButtonChange={buttonChangeHandler}
-                onAxisChange={axisChangeHandler}
-                onA={pressAHandler}
-                onB={() => { }}
-                onX={() => { }}
-                onY={() => { }}
-                onStart={() => { }}
-                onBack={backHandler}
-                onLT={() => { }}
-                onRT={pressAHandler}
-                onLB={() => { }}
-                onRB={() => { }}
-                onLS={() => { }}
-                onRS={() => { }}
-                onUp={upHandler}
-                onDown={downHandler}
-                onLeft={() => { }}
-                onRight={() => { }}>
-                <div />
-            </Gamepad>
+            {gamepad}
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />

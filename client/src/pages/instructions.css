@@ -2,3 +2,7 @@
     height: 500px;
     overflow: auto;
 }
+
+.p-head {
+    text-decoration: underline;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useForm = () => {
+const useForm = cb => {
 
     // state
     const [state, setState] = useState({});
@@ -12,12 +12,20 @@ const useForm = () => {
         setState(state => ({ ...state, [name]: value }))
     };
 
+    // handle submit
+    const handleSubmit = ev => {
+        if (ev) {
+          ev.preventDefault();
+        }
+        cb();
+      }
+
     // handle clear form
     const handleClearForm = () => {
         setState({});
     };
 
-    return [state, handleChange, handleClearForm];
+    return [state, handleChange, handleSubmit, handleClearForm];
 
 }
 

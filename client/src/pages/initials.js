@@ -23,8 +23,23 @@ const Initials = () => {
     const { score } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
 
+    // handleSubmit
+    const submitInitials = () => {
+        
+        const initialsAndScore = {
+            initials,
+            score
+        }
+        API.saveScore(initialsAndScore)       
+          .then(() => resetValidate())
+          .then(() => handleClearForm())
+          .then(() => clearSpecial())
+          .then(() => setIsSubmitted(true))
+          .catch(err => console.log(err));
+    };
+
     // useForm
-    const [values, handleChange, handleClearForm] = useForm();
+    const [values, handleChange, handleSubmit, handleClearForm] = useForm(submitInitials);
 
     // de-structure values object
    const { initials } = values;
@@ -42,21 +57,6 @@ const Initials = () => {
     // audio
     const splode = new Audio('splode.mp3');
     const rich = new Audio('rich.mp3');
-
-    // handleSubmit
-    const handleSubmit = ev => {
-        ev.preventDefault();
-        const initialsAndScore = {
-            initials,
-            score
-        }
-        API.saveScore(initialsAndScore)       
-          .then(() => resetValidate())
-          .then(() => handleClearForm())
-          .then(() => clearSpecial())
-          .then(() => setIsSubmitted(true))
-          .catch(err => console.log(err));
-    };
 
     // useTimeout
     useTimeout(() => {

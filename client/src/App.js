@@ -1,21 +1,31 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import routes from './components/routes';
+import useGamepad from './hooks/useGamepad';
 import GamepadConnected from './components/GamepadConnected';
 import './App.css';
 
 const App = () => {
 
+  const { gamepad, connected } = useGamepad();
+
+  const mappedRoutes = routes.map(route => (
+    <Route 
+      key={route.id} 
+      exact path={route.path} 
+      component={route.component} 
+    />
+  ));
+
   return (
     <Router>
       <div className="App">
         <div className="text-left ml-3">
-          <GamepadConnected />
+          {gamepad}
+          <GamepadConnected connected={connected} />
         </div>
         <Switch>
-          {routes.map((route, index) => (
-              <Route key={index} exact path={route.path} component={route.component} />
-            ))}
+            {mappedRoutes}
         </Switch>
       </div>
     </Router>

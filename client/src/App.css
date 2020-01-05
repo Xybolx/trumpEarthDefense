@@ -126,32 +126,13 @@
   background-size: cover;
 }
 
-.spinner-text {
-  animation: InputFlash .25s infinite;
-}
-
 #shame-alert {
   background: black;
   border: yellow double;
-  color: tomato;
+  color: whitesmoke;
 }
 
-/* #search {
-  text-align: center;
-  background: transparent;
-  border: solid yellow;
-  animation: InputFlash .5s infinite alternate;
+.score-table-head {
+  text-decoration: underline;
+  text-decoration-color: tomato;
 }
-
-#search::placeholder {
-  color: rgba(255, 255, 255, 0.486);
-}
-
-input:focus {
-  border: unset;
-}
-
-.table-responsive {
-  overflow-y: auto;
-  max-height: 550px;
-} */

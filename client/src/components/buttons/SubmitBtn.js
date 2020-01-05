@@ -7,7 +7,9 @@ const SubmitBtn = () => {
         <button
             type="submit"
             className="btn btn-outline-light btn-sm">
-            &nbsp;&nbsp;Submit
+                <small>
+                    &nbsp;&nbsp;Submit&nbsp;&nbsp;
+                </small>
         </button>
     );
 };

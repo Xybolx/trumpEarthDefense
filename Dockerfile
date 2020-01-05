@@ -5,7 +5,7 @@ WORKDIR usr/src/app
 COPY package*.json ./
 # installing dependencies
 RUN npm install
-# copying all files - except node_modules (exempted through via .dockerignore) 
+# copying all files - except if exempted through .dockerignore) 
 COPY . .
 #exposing the endpoint
 EXPOSE 3000

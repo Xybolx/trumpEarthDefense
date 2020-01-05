@@ -4,49 +4,47 @@ import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import PageContainer from '../components/pageContainer';
 import CenteredColumn from '../components/centeredColumn';
-import Gamepad from 'react-gamepad';
 import ScoreContext from '../context/scoreContext';
+import useGamepad from '../hooks/useGamepad';
 
 const Home = () => {
 
     let history = useHistory();
 
+    const fake = new Audio("fake.mp3");
+
     // context
     const { clearScore } = useContext(ScoreContext);
-
+    
     // clear score on mount
     useEffect(() => {
       clearScore();
     }, [clearScore]);
-
-    // audio
-    const fake = new Audio('fake.mp3');
-
+    
     // handle gamepad controls
-      const backHandler = () => {
-        history.push("/scores");
-        fake.play();
-      };
+    const startHandler = () => {
+      history.push("/scores");
+    };
 
-      const startHandler = () => {
-        history.push("/instructions");
-        fake.play();
-      };
+    const redirect = () => {
+      fake.play();
+      history.push("/scores");
+    };
+    
+    const { gamepad } = useGamepad(startHandler);
     
     return (
         <PageContainer className="home-earth">
-            <Gamepad
-                onRB={startHandler}
-                onLB={backHandler}>
-                <div />
-            </Gamepad>
+            {gamepad}
             <CenteredColumn>
               <Title>Trump Earth Defense</Title>
             </CenteredColumn>
             <CenteredColumn className="home-controls">
-                <p className="m-3">Ready to make Earth great again?</p>
-                <NavBtn className="mt-3" onClick={startHandler}>I'm Ready!</NavBtn>
-                <NavBtn className="mt-3" onClick={backHandler}>High Scores</NavBtn>
+                <small className="m-3">Ready to make Earth great again?</small>
+                <div className="text-center">
+                  <NavBtn className="mt-3" onClick={startHandler}>I'm Ready!</NavBtn>
+                  <NavBtn className="mt-3" onClick={redirect}>High Scores</NavBtn>
+                </div>
             </CenteredColumn>
         </PageContainer>
     );

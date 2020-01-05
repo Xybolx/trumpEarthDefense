@@ -31,7 +31,7 @@
 
   .bg-flash {
     background: linear-gradient(darkgreen, lawngreen, darkgreen);
-    animation: SpecialFlash .25s infinite;
+    animation: SpecialFlash .25s infinite alternate;
   }
 
   /* .fa-star.fa-fw.fa-2x.text-light {

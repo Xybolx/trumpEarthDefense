@@ -4,8 +4,8 @@ import useToggle from '../hooks/useToggle';
 
 const ConnectedProvider = ({ children }) => {
 
-    const [gamepadConnected, toggleGamepadConnected] = useToggle(false);
-    const connectedValue = useMemo(() => ({ gamepadConnected, toggleGamepadConnected }), [gamepadConnected, toggleGamepadConnected]);
+    const [connected, toggleConnected, toggleTrue, toggleFalse] = useToggle(false);
+    const connectedValue = useMemo(() => ({ connected, toggleConnected, toggleTrue, toggleFalse }), [connected, toggleConnected, toggleTrue, toggleFalse]);
 
     return (
         <ConnectedContext.Provider value={connectedValue}>

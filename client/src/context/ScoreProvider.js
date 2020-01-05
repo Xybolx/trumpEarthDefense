@@ -4,7 +4,7 @@ import useCounter from '../hooks/useCounter';
 
 const ScoreProvider = ({ children }) => {
 
-    const [score, setScore, incScore, incScore100, incScore400, clearScore] = useCounter(0);
+    const [score, setScore, incScore, incScore100, incScore400, clearScore] = useCounter(null);
     const scoreValue = useMemo(() => ({ score, setScore, incScore, incScore100, incScore400, clearScore }), [score, setScore, incScore, incScore100, incScore400, clearScore]);
 
     return (

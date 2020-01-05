@@ -1,13 +1,15 @@
 import React from "react";
 import "./Btn.css";
 
-const Btn = props => {
+const Btn = ({ className, onClick, children }) => {
 
     return (
         <button
-            className={`btn btn-outline-light ${props.className}`}
-            onClick={props.onClick}>
-            &nbsp;&nbsp;{props.children}
+            className={`btn btn-outline-light btn-sm ${className}`}
+            onClick={onClick}>
+            <small>
+                &nbsp;&nbsp;{children}&nbsp;&nbsp;
+            </small>
         </button>
     );
 };

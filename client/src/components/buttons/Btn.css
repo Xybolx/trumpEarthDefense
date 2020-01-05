@@ -6,12 +6,13 @@
   background-size: contain;
   text-decoration-line: none;
   animation: Flash .25s infinite alternate;
-  outline: double tomato;
+  outline: double whitesmoke;
 }
 
 .btn-outline-light {
   color: whitesmoke;
   text-decoration-color: transparent !important;
+  border: unset;
   background: transparent;
   margin-bottom: 5px;
   margin-left: 2px;

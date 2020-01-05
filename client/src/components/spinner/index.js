@@ -4,7 +4,8 @@ const Spinner = ({ text }) => {
 
     return (
         <>
-            <tr className="spinner-grow text-white" role="status" aria-hidden="true">
+            <tr style={{ height: 100, width: 100 }} className="spinner-grow text-white" role="status" aria-hidden="true">
+                <th className="spinner-border spinner-text text-white"></th>
                 <th>
                     {text}
                 </th>
