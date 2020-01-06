@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import useCounter from './useCounter';
+import useCounter from '../hooks/useCounter';
 // import { act } from 'react-dom/test-utils';
 
 const Counter = ({ children, ...rest }) => children(useCounter(rest));

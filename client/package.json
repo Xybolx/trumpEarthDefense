@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "core-js": "3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-gamepad": "SBRK/react-gamepad",
@@ -38,6 +39,7 @@
     "@testing-library/react": "^9.3.2"
   },
   "peerDependencies": {
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "typescript": "^3.8.0-dev.20200104"
   }
 }

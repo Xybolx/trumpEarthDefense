@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:12.3.1-alpine
 # assigning working dir
 WORKDIR usr/src/app
 # copying package.json & package-lock.json

@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-const useForm = cb => {
+const useForm = callback => {
 
-    // state
-    const [state, setState] = useState({});
+    // values
+    const [values, setValues] = useState({});
 
     // handle change
     const handleChange = ev => {
         ev.persist();
         const { name, value } = ev.target;
-        setState(state => ({ ...state, [name]: value }))
+        setValues(values => ({ ...values, [name]: value }));
     };
 
     // handle submit
@@ -17,16 +17,21 @@ const useForm = cb => {
         if (ev) {
           ev.preventDefault();
         }
-        cb();
-      }
+        callback();
+      };
 
     // handle clear form
     const handleClearForm = () => {
-        setState({});
+        setValues({});
     };
 
-    return [state, handleChange, handleSubmit, handleClearForm];
+    return {
+      values, 
+      handleChange, 
+      handleSubmit, 
+      handleClearForm
+    };
 
-}
+};
 
 export default useForm;

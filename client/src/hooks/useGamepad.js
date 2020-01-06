@@ -38,10 +38,7 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
                         <div />
                     </Gamepad>
 
-    return {
-        gamepad, 
-        connected
-    };
+    return { gamepad, connected };
 };
 
 export default useGamepad;

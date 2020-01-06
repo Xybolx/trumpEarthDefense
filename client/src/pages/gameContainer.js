@@ -159,24 +159,7 @@ const GameContainer = () => {
     }, [gameOver, specialReset]);
 
     // handle gamepad controls
-
     const startHandler = () => {};
-
-    // const buttonChangeHandler = (buttonName, down) => {
-    //     console.log(buttonName, down);
-    // };
-
-    // const axisChangeHandler = (axisName, value, previousValue) => {
-    //     console.log(axisName, value, previousValue);
-    // };
-
-    // const buttonDownHandler = buttonName => {
-    //     console.log(buttonName, 'down');
-    // };
-
-    // const buttonUpHandler = buttonName => {
-    //     console.log(buttonName, 'up');
-    // };
 
     const aHandler = () => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {

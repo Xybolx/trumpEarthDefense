@@ -41,9 +41,9 @@ const Instructions = () => {
     return (
         <div className="container text-center home-earth">
             {gamepad}
-            <Title>How To Play</Title>
             <div className="instructions-wrapper">    
                 <CenteredColumn className="instructions">
+                    <Title>How To Play</Title>
                     <p style={{ fontSize: "small" }} className="text-white"><i className="fas fa-gamepad fa-fw fa-2x border" /> Controls</p>
                     <p style={{ fontSize: "small", color: "yellow" }} className="mt-2"><span className="fas fa-long-arrow-alt-up fa-fw fa-2x text-white"></span>= <small className="text-white">Scroll Wheel Up or DpadUp</small></p>
                     <p style={{ fontSize: "small", color: "yellow" }} className="mt-2"><span className="fas fa-long-arrow-alt-down fa-fw fa-2x text-white"></span>= <small className="text-white">Scroll Wheel Down or DpadDown</small></p>

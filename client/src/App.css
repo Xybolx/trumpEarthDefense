@@ -82,9 +82,22 @@
   height: 400px;
   margin-top: 50px;
   width: auto;
-  background: url("./imgs/earth.png");
+  background: url("./imgs/earth.png"), url("./imgs/suprise.png");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: overlay;
+}
+
+.alternate {
+  height: 400px;
+  margin-top: 50px;
+  width: auto;
+  background: url("./imgs/earth.png"), url("./imgs/trump-kiss.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: overlay;
 }
 
 .home-controls {

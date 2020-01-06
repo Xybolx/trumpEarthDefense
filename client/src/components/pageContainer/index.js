@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-const PageContainer = ({ id, className, children }) => {
+const PageContainer = forwardRef(({ id, className, children }, earthRef) => {
 
     return (
-        <div id={`${id}`} className={`${className} text-center container`}>
+        <div ref={earthRef} id={`${id}`} className={`${className} text-center container`}>
             { children }
         </div>
     );
-};
+});
 
 export default PageContainer;

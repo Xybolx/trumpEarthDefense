@@ -26,20 +26,19 @@ const Initials = () => {
     // handleSubmit
     const submitInitials = () => {
         
-        const initialsAndScore = {
-            initials,
-            score
-        }
+        const initialsAndScore = {initials, score};
+
         API.saveScore(initialsAndScore)       
           .then(() => resetValidate())
           .then(() => handleClearForm())
           .then(() => clearSpecial())
           .then(() => setIsSubmitted(true))
           .catch(err => console.log(err));
+
     };
 
     // useForm
-    const [values, handleChange, handleSubmit, handleClearForm] = useForm(submitInitials);
+    const { values, handleChange, handleSubmit, handleClearForm } = useForm(submitInitials);
 
     // de-structure values object
    const { initials } = values;

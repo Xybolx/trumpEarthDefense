@@ -30,21 +30,28 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
             rect1.y < rect2.y + rect2.height &&
             rect1.height + rect1.y > rect2.y;
 
-        if (!gameOver && rect1.right > (winWidth || docWidth)) {
-            clearSpecial();
-            setIsFlying(false);
-            missleStyle.top = 0 + "px";
-            missleStyle.visibility = "hidden";
-        }
-        if (!gameOver && enemyIntersect && special < 5) {
-            splode.volume = .50;
-            splode.play();
-            setScore(score => score + 100);
-            setSpecial(special => special + 1);
-            setIsFlying(false);
-            setIsIntersecting(true);
-        }
-        missleStyle.top = parseInt(missleStyle.top) - 10 + "px";        
+        switch (true) {
+
+            case !gameOver && rect1.right > (winWidth || docWidth):
+                clearSpecial();
+                setIsFlying(false);
+                missleStyle.top = 0 + "px";
+                missleStyle.visibility = "hidden";
+                break;
+                
+            case !gameOver && enemyIntersect && special < 5:
+                splode.volume = .50;
+                splode.play();
+                setScore(score => score + 100);
+                setSpecial(special => special + 1);
+                setIsFlying(false);
+                setIsIntersecting(true);
+                break;
+
+            default: 
+                missleStyle.top = parseInt(missleStyle.top) - 10 + "px";
+                break;
+        }      
     };
 
     // function to advance enemies across screen/
@@ -55,6 +62,10 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
             bong.play();
             setLives(lives => lives - 1);
             enemyStyle.right = 0 + "px";
+        }
+
+        if (!gameOver && enemy.current !== null) {
+            enemyStyle.right = parseInt(enemyStyle.right) + 15 + "px";
         }
     };
 
@@ -83,9 +94,6 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
     useInterval(() => {
         enemyTick();
-        if (!gameOver && enemy.current !== null) {
-            enemy.current.style.right = parseInt(enemy.current.style.right) + 15 + "px";
-        }
     }, !gameOver ? 250 : null);
 
     useInterval(() => {

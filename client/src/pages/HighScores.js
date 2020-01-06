@@ -42,7 +42,7 @@ const HighScores = () => {
     const inputRef = useRef();
 
     // useForm custom hook
-    const [values, handleChange, handleSubmit, handleClearForm] = useForm();
+    const {values, handleChange, handleClearForm} = useForm();
 
     // de-structure values object
     const { search } = values;
@@ -104,12 +104,6 @@ const HighScores = () => {
         }
     }, [fired, allFake, score, scores]);
 
-    // useEffect(() => {
-    //     if (scores && score === null) {
-    //         fake.play();
-    //     }
-    // }, [fake, score, scores]);
-
     // function to redirect when the back button is clicked
     const redirect = () => {
         clearScore();
@@ -122,33 +116,36 @@ const HighScores = () => {
             <CenteredColumn>
                 <Title>{
                     score !== null &&
-                        scores[0] &&
-                        score >= scores[0].score ?
-                        "New High Score!" :
-                        score !== null &&
-                            scores[0] &&
-                            score < scores[0].score ?
-                            "You're Fired!!!" :
-                            "High Scores"
+                    scores[0] &&
+                    score >= scores[0].score ?
+                    "New High Score!" :
+                    score !== null &&
+                    scores[0] &&
+                    score < scores[0].score ?
+                    "You're Fired!!!" :
+                    "High Scores"
                 }
                 </Title>
+            </CenteredColumn>
+            <CenteredColumn>
                 <ShameAlert
                     scores={scores}
                     scoreRank={scoreRank}
                 />
-                <HighScoresForm
-                    style={
-                        score === null &&
-                        scoreRank.length ?
-                        { display: "none" } :
-                        { display: "block" }
-                    }
-                    ref={inputRef}
-                    scoreRank={scoreRank}
-                    search={search}
-                    handleChange={handleChange}
-                    handleClearForm={handleClearForm} 
-                />
+                <div style={
+                            score !== null &&
+                            scoreRank.length ?
+                            { display: "none" } :
+                            { display: "block" }
+                        }>
+                    <HighScoresForm
+                        ref={inputRef}
+                        scoreRank={scoreRank}
+                        search={search}
+                        handleChange={handleChange}
+                        handleClearForm={handleClearForm} 
+                    />
+                </div>
                 <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
                     <ScoreTable
                         scores={scores}
