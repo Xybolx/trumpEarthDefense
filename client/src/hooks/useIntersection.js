@@ -19,8 +19,6 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
     // function to advance player projectile/detect if it reaches the end of the screen/detect intersection
     const missleTick = () => {
         const missleStyle = missle.current.style;
-        const winWidth = window.innerWidth;
-        const docWidth = document.documentElement.clientWidth;
         const rect1 = missle.current.getBoundingClientRect();
         const rect2 = enemy.current.getBoundingClientRect();
 
@@ -32,7 +30,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
         switch (true) {
 
-            case !gameOver && rect1.right > (winWidth || docWidth):
+            case !gameOver && rect1.right > (window.innerWidth || document.documentElement.clientWidth):
                 clearSpecial();
                 setIsFlying(false);
                 missleStyle.top = 0 + "px";

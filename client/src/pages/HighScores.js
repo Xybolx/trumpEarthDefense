@@ -29,7 +29,7 @@ const HighScores = () => {
         history.push("/instructions");
       };
 
-    const { gamepad } = useGamepad(startHandler, backHandler);
+    useGamepad(startHandler, backHandler);
 
     // new useHistory hook from react router
     let history = useHistory();
@@ -112,7 +112,6 @@ const HighScores = () => {
 
     return (
         <PageContainer className="home-earth">
-            {gamepad}
             <CenteredColumn>
                 <Title>{
                     score !== null &&
@@ -161,11 +160,6 @@ const HighScores = () => {
                     onClick={redirect}>
                     Back
                 </NavBtn>
-                <NavBtn 
-                    className="mt-3" 
-                    onClick={() => history.push("/instructions")}>
-                    I'm Ready!
-                </NavBtn> 
             </CenteredColumn>
         </PageContainer>
     );

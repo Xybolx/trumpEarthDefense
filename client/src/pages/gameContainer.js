@@ -47,16 +47,20 @@ const GameContainer = () => {
     // handle wheel events
     const wheelHandler = useCallback(
         ({ deltaY }) => {
-            if (deltaY < 0) {
+            if (deltaY < 0 && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
                 planeRef.current.style.top = parseInt(planeRef.current.style.top) - 7 + "px";
             }
-            if (deltaY > 0) {
+
+            if (deltaY < 0 && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
+                console.log("Max Height!");
+            }
+
+            if (deltaY > 0 && planeRef.current.getBoundingClientRect().y !== 0) {
                 planeRef.current.style.top = parseInt(planeRef.current.style.top) + 7 + "px";
             }
         }, []);
 
-    // handle mouse down event
-    const mouseDownHandler = useCallback(() => {
+    const handleFire = useCallback(() => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
@@ -72,7 +76,12 @@ const GameContainer = () => {
             missleRef.current.style.top = 0 + "px";
             specialMissleRef.current.style.visibility = "visible";
         }
-    }, [laser, isFlying, charge, gameOver, special, specialSound]);
+    }, [charge, gameOver, isFlying, laser, special, specialSound]);
+
+    // handle mouse down event
+    const mouseDownHandler = useCallback(() => {
+        handleFire();
+    }, [handleFire]);
 
     // useEventListener for wheel
     useEventListener("wheel", wheelHandler, window);
@@ -119,7 +128,7 @@ const GameContainer = () => {
             enemy4Ref.current.style.right = 0 + "%";
             specialMissleRef.current.style.visibility = "hidden";
             lightningRef.current.style.visibility = "hidden";
-            setScore(score => score + 400);
+            setScore(score => score + 500);
             setSpecialReset(false);
             clearSpecial();
         };
@@ -150,8 +159,9 @@ const GameContainer = () => {
         const rocket = new Audio("rocket.mp3");
 
         const insults = [rude, quiet, congrats, rocket];
+        const indexOfInsult = Math.floor(Math.random() * insults.length);
 
-        const getRandomInsult = () => insults[Math.floor(Math.random() * insults.length)].play();
+        const getRandomInsult = () => insults[indexOfInsult].play();
 
         if (!gameOver && specialReset) {
             getRandomInsult();
@@ -162,21 +172,7 @@ const GameContainer = () => {
     const startHandler = () => {};
 
     const aHandler = () => {
-        if (!gameOver && !isFlying && charge === 3 && special < 5) {
-            setIsFlying(true);
-            setCharge(0);
-            laser.volume = .50;
-            laser.play();
-            missleRef.current.style.visibility = "visible";
-        }
-        if (!gameOver && charge === 3 && !isFlying && special === 5) {
-            specialSound.volume = 1;
-            specialSound.play();
-            setSpecialReset(true);
-            missleRef.current.style.visibility = "hidden";
-            missleRef.current.style.top = 0 + "px";
-            specialMissleRef.current.style.visibility = "visible";
-        }
+        handleFire();
     };
 
     const upHandler = () => {

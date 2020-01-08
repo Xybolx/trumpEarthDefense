@@ -11,14 +11,34 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
       };
      
-      const disconnectHandler = gamepadIndex => {
+    const disconnectHandler = gamepadIndex => {
         toggleFalse();
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
       };
+    
+    const buttonDownHandler = buttonName => {
+      console.log(buttonName, 'down');
+    };
+    
+    const buttonUpHandler = buttonName => {
+      console.log(buttonName, 'up');
+    };
+
+    const buttonChangeHandler = (buttonName, down) => {
+      console.log(buttonName, down);
+    };
+    
+    const axisChangeHandler = (axisName, value, previousValue) => {
+        console.log(axisName, value, previousValue);
+    };
 
     const gamepad = <Gamepad
                         onConnect={connectHandler}
                         onDisconnect={disconnectHandler}
+                        onButtonDown={buttonDownHandler}
+                        onButtonUp={buttonUpHandler}
+                        onButtonChange={buttonChangeHandler}
+                        onAxisChange={axisChangeHandler}
                         onA={aHandler}
                         onB={() => { }}
                         onX={() => { }}

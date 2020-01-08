@@ -34,7 +34,11 @@ const Home = () => {
     
     // handle gamepad controls
     const startHandler = () => {
-      history.push("/scores");
+      history.push("/instructions");
+    };
+
+    const aHandler = () => {
+      console.log('home a press!');
     };
 
     const redirect = () => {
@@ -42,11 +46,11 @@ const Home = () => {
       history.push("/scores");
     };
     
-    const { gamepad } = useGamepad(startHandler);
+    const { gamepad } = useGamepad(startHandler, aHandler);
     
     return (
         <PageContainer ref={earthRef} className="home-earth">
-            {gamepad}
+          {gamepad}
             <CenteredColumn>
               <Title>Trump Earth Defense</Title>
             </CenteredColumn>

@@ -1,12 +1,13 @@
 @keyframes SpecialRotate {
-  33% {
-    opacity: .3;
+  from {
+    transform: rotateY(0deg);
+    width: 0px;
+    height: 0px;
   }
-  66% {
-    opacity: 0;   
-  }
-  100% {
-    opacity: 1;
+  to {
+    transform: rotateY(720deg);
+    width: 150px;
+    height: 150px;
   }
 }
 
@@ -17,9 +18,9 @@
     background-repeat: round;
     height: 150px;
     width: 150px;
-    top: 35%;
+    top: 37%;
     left: 40%;
     position: absolute;
     visibility: hidden;
-    animation: SpecialRotate 2s;
+    animation: SpecialRotate .5s infinite;
   }
