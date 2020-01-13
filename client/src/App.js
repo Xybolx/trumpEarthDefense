@@ -21,7 +21,7 @@ const App = () => {
     <Router>
       <div className="App">
         <div className="text-left ml-3">
-          {gamepad}
+          {/* {gamepad} */}
           <GamepadConnected connected={connected} />
         </div>
         <Switch>

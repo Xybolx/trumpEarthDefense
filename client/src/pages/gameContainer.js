@@ -60,7 +60,7 @@ const GameContainer = () => {
             }
         }, []);
 
-    const handleFire = useCallback(() => {
+    const fireHandler = useCallback(() => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
             setIsFlying(true);
             setCharge(0);
@@ -80,8 +80,8 @@ const GameContainer = () => {
 
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
-        handleFire();
-    }, [handleFire]);
+        fireHandler();
+    }, [fireHandler]);
 
     // useEventListener for wheel
     useEventListener("wheel", wheelHandler, window);
@@ -171,9 +171,6 @@ const GameContainer = () => {
     // handle gamepad controls
     const startHandler = () => {};
 
-    const aHandler = () => {
-        handleFire();
-    };
 
     const upHandler = () => {
         if (!gameOver) {
@@ -191,7 +188,7 @@ const GameContainer = () => {
         history.push("/");
     };
 
-    const { gamepad } = useGamepad(startHandler, backHandler, aHandler, upHandler, downHandler);
+    const { gamepad } = useGamepad(startHandler, backHandler, fireHandler, upHandler, downHandler);
 
     if (gameOver) {
         return <Redirect to="/initials" />;
