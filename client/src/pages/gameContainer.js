@@ -11,7 +11,7 @@ import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissle from '../components/specialMissle';
 import Lightning from '../components/lightning';
-import useGamepad from '../hooks/useGamepad';
+// import useGamepad from '../hooks/useGamepad';
 
 const GameContainer = () => {
 
@@ -188,7 +188,7 @@ const GameContainer = () => {
         history.push("/");
     };
 
-    const { gamepad } = useGamepad(startHandler, backHandler, fireHandler, upHandler, downHandler);
+    // const { gamepad } = useGamepad(startHandler, backHandler, fireHandler, upHandler, downHandler);
 
     if (gameOver) {
         return <Redirect to="/initials" />;
@@ -196,7 +196,7 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-            {gamepad}
+            {/* {gamepad} */}
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
                 <SpecialMissle ref={specialMissleRef} />

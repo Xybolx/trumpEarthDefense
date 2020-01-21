@@ -1,13 +1,12 @@
 FROM node:12.3.1-alpine
 # assigning working dir
-WORKDIR /billboard
+WORKDIR /client
 # copying package.json & package-lock.json
-COPY package*.json ./
+COPY package*.json /client/
 # installing dependencies
-RUN yarn install || npm install
-RUN yarn install || npm install
+RUN npm install
 # copying all files - except if exempted through .dockerignore) 
-COPY . .
+COPY . /client/
 # exposing the endpoint
 EXPOSE 3000
 # running the command

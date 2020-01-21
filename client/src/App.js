@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import routes from './components/routes';
-import useGamepad from './hooks/useGamepad';
-import GamepadConnected from './components/GamepadConnected';
+// import useGamepad from './hooks/useGamepad';
+// import GamepadConnected from './components/GamepadConnected';
 import './App.css';
 
 const App = () => {
 
-  const { gamepad, connected } = useGamepad();
+  // const { gamepad, connected } = useGamepad();
 
   const mappedRoutes = routes.map(route => (
     <Route 
@@ -22,7 +22,7 @@ const App = () => {
       <div className="App">
         <div className="text-left ml-3">
           {/* {gamepad} */}
-          <GamepadConnected connected={connected} />
+          {/* <GamepadConnected connected={connected} /> */}
         </div>
         <Switch>
             {mappedRoutes}

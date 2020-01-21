@@ -1,19 +1,43 @@
 version: '3'
 services:
-  app:
-    container_name: billboard
+  server:
+    image: billboard-server
     restart: always
-    build: .
-    volumes:
-      - .:/billboard
-      - /billboard/node_modules
-      - /billboard/client/node_modules
     ports:
-      - '80:3000'
-    links:
+      - '9000:9000'
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    depends_on:
       - mongo
+    networks: 
+      - billboardnetwork
+  client:
+    image: billboard-client
+    restart: always
+    ports:
+      - '3000:3000'
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/client 
+      - /client/node_modules
+    links:
+      - server
+    networks: 
+      - billboardnetwork
   mongo:
-    container_name: mongo
     image: mongo
+    restart: always
+    container_name: mongo
     ports:
       - '27017:27017'
+    networks: 
+      - billboardnetwork
+networks:
+  billboardnetwork:
+    driver: bridge

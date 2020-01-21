@@ -6,7 +6,7 @@ import useScores from '../hooks/useScores';
 import ScoreContext from '../context/scoreContext';
 import PageContainer from '../components/pageContainer';
 import ShameAlert from '../components/alerts/ShameAlert';
-import useGamepad from '../hooks/useGamepad';
+// import useGamepad from '../hooks/useGamepad';
 import Title from '../components/title';
 import CenteredColumn from '../components/centeredColumn';
 import NavBtn from '../components/buttons/NavBtn';
@@ -29,7 +29,7 @@ const HighScores = () => {
         history.push("/instructions");
       };
 
-    useGamepad(startHandler, backHandler);
+    // useGamepad(startHandler, backHandler);
 
     // new useHistory hook from react router
     let history = useHistory();

@@ -5,7 +5,7 @@ import NavBtn from '../components/buttons/NavBtn';
 import PageContainer from '../components/pageContainer';
 import CenteredColumn from '../components/centeredColumn';
 import ScoreContext from '../context/scoreContext';
-import useGamepad from '../hooks/useGamepad';
+// import useGamepad from '../hooks/useGamepad';
 import useInterval from '../hooks/useInterval';
 
 const Home = () => {
@@ -46,11 +46,11 @@ const Home = () => {
       history.push("/scores");
     };
     
-    const { gamepad } = useGamepad(startHandler, aHandler);
+    // const { gamepad } = useGamepad(startHandler, aHandler);
     
     return (
         <PageContainer ref={earthRef} className="home-earth">
-          {gamepad}
+          {/* {gamepad} */}
             <CenteredColumn>
               <Title>Trump Earth Defense</Title>
             </CenteredColumn>
