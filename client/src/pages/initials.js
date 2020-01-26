@@ -9,7 +9,6 @@ import useValidate from '../hooks/useValidate';
 import PageContainer from '../components/pageContainer';
 import Title from '../components/title';
 import SubmitBtn from '../components/buttons/SubmitBtn';
-import Btn from '../components/buttons/Btn';
 import "./initials.css";
 
 const Initials = () => {
@@ -23,19 +22,6 @@ const Initials = () => {
     // context
     const { score } = useContext(ScoreContext);
     const { clearSpecial } = useContext(SpecialContext);
-
-    // populate DB
-    const populate = () => {
-        API.saveScore({initials: "XXX", score: Math.floor(Math.random() * 10000) + 500})       
-          .catch(err => console.log(err));
-    };
-
-    // useEffect(() => {
-    //     const insertInterval = setInterval(populate, 100);
-    //     return () => {
-    //         clearInterval(insertInterval);
-    //     };
-    // }, []);
 
     // handleSubmit
     const submitInitials = () => {
@@ -125,7 +111,6 @@ const Initials = () => {
                         autoComplete="off"
                         required
                     />
-                    <Btn onClick={populate}>Populate</Btn>
                     <SubmitBtn />
                 </form>
             </div>

@@ -5,13 +5,14 @@ import SpecialContext from '../context/specialContext';
 import useEventListener from '../hooks/useEventListener';
 import useIntersection from '../hooks/useIntersection';
 import Plane from '../components/plane/index';
-import Missle from '../components/missle/index';
-import { Enemy, Enemy2, Enemy3, Enemy4 } from '../components/enemies';
+import Missile from '../components/missile/index';
+import { Enemy, Enemy2, Enemy3 } from '../components/enemies';
 import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
-import SpecialMissle from '../components/specialMissle';
+import SpecialMissile from '../components/specialMissile';
 import Lightning from '../components/lightning';
-// import useGamepad from '../hooks/useGamepad';
+import useGamepad from '../hooks/useGamepad';
+import useWidthObserver from '../hooks/useWidthObserver';
 
 const GameContainer = () => {
 
@@ -19,13 +20,12 @@ const GameContainer = () => {
 
     // refs
     const planeRef = useRef();
-    const missleRef = useRef();
-    const specialMissleRef = useRef();
+    const missileRef = useRef();
+    const specialMissileRef = useRef();
     const lightningRef = useRef();
     const enemyRef = useRef();
     const enemy2Ref = useRef();
     const enemy3Ref = useRef();
-    const enemy4Ref = useRef();
 
     // audio
     const laser = new Audio('laser.mp3');
@@ -66,15 +66,15 @@ const GameContainer = () => {
             setCharge(0);
             laser.volume = .50;
             laser.play();
-            missleRef.current.style.visibility = "visible";
+            missileRef.current.style.visibility = "visible";
         }
         if (!gameOver && !isFlying && charge === 3 && special === 5) {
             specialSound.volume = 1;
             specialSound.play();
             setSpecialReset(true);
-            missleRef.current.style.visibility = "hidden";
-            missleRef.current.style.top = 0 + "px";
-            specialMissleRef.current.style.visibility = "visible";
+            missileRef.current.style.visibility = "hidden";
+            missileRef.current.style.top = 0 + "px";
+            specialMissileRef.current.style.visibility = "visible";
         }
     }, [charge, gameOver, isFlying, laser, special, specialSound]);
 
@@ -89,10 +89,10 @@ const GameContainer = () => {
     useEventListener("mousedown", mouseDownHandler, window);
 
     // useIntersection for detecting collision and screen width
-    useIntersection(missleRef, enemyRef, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missleRef, enemy2Ref, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missleRef, enemy3Ref, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missleRef, enemy4Ref, isFlying, setIsFlying, setLives, gameOver);
+    useWidthObserver(missileRef, gameOver, isFlying, setIsFlying);
+    useIntersection(missileRef, enemyRef, isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy2Ref, isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy3Ref, isFlying, setIsFlying, setLives, gameOver);
 
     useEffect(() => {
         if (lives === 0) {
@@ -124,9 +124,7 @@ const GameContainer = () => {
             enemy2Ref.current.style.right = -200 + "px";
             enemy3Ref.current.className = "target3";
             enemy3Ref.current.style.right = -100 + "px";
-            enemy4Ref.current.className = "target4";
-            enemy4Ref.current.style.right = 0 + "%";
-            specialMissleRef.current.style.visibility = "hidden";
+            specialMissileRef.current.style.visibility = "hidden";
             lightningRef.current.style.visibility = "hidden";
             setScore(score => score + 500);
             setSpecialReset(false);
@@ -137,9 +135,8 @@ const GameContainer = () => {
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
             enemy3Ref.current.className = "destroyed";
-            enemy4Ref.current.className = "destroyed";
             lightningRef.current.style.visibility = "visible";
-            specialMissleRef.current.style.visibility = "hidden";
+            specialMissileRef.current.style.visibility = "hidden";
         };
         if (!gameOver && specialReset) {
             const specialResetTimer = setTimeout(enemyReset, 1200);
@@ -188,7 +185,7 @@ const GameContainer = () => {
         history.push("/");
     };
 
-    // const { gamepad } = useGamepad(startHandler, backHandler, fireHandler, upHandler, downHandler);
+    const { gamepad } = useGamepad(startHandler, backHandler, fireHandler, upHandler, downHandler);
 
     if (gameOver) {
         return <Redirect to="/initials" />;
@@ -196,10 +193,10 @@ const GameContainer = () => {
 
     return (
         <div id="game-container">
-            {/* {gamepad} */}
+            {gamepad}
             <audio id="bgMusic" src="bg.mp3" loop />
             <Lightning ref={lightningRef}>
-                <SpecialMissle ref={specialMissleRef} />
+                <SpecialMissile ref={specialMissileRef} />
             </Lightning>
             <EarthShield className={
                 lives === 3 ?
@@ -216,9 +213,8 @@ const GameContainer = () => {
             <Enemy ref={enemyRef} />
             <Enemy2 ref={enemy2Ref} />
             <Enemy3 ref={enemy3Ref} />
-            <Enemy4 ref={enemy4Ref} />
             <Plane ref={planeRef}>
-                <Missle ref={missleRef} />
+                <Missile ref={missileRef} />
             </Plane>
         </div>
     );

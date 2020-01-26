@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ConnectedContext from '../context/connectedContext';
-// import Gamepad from 'react-gamepad';
+import Gamepad from '../components/Gamepad';
 
 const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler) => {
 

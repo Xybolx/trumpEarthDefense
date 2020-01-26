@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Missle from '../components/missle';
+import Missile from '../components/missile';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Missle />, div);
+  ReactDOM.render(<Missile />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

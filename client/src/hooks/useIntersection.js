@@ -29,16 +29,8 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
             rect1.height + rect1.y > rect2.y;
 
         switch (true) {
-
-            case !gameOver && rect1.right > (window.innerWidth || document.documentElement.clientWidth):
-                clearSpecial();
-                setIsFlying(false);
-                missleStyle.top = 0 + "px";
-                missleStyle.visibility = "hidden";
-                break;
                 
             case !gameOver && enemyIntersect && special < 5:
-                splode.volume = .50;
                 splode.play();
                 setScore(score => score + 100);
                 setSpecial(special => special + 1);
@@ -63,7 +55,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
         }
 
         if (!gameOver && enemy.current !== null) {
-            enemyStyle.right = parseInt(enemyStyle.right) + 15 + "px";
+            enemyStyle.right = parseInt(enemyStyle.right) + 10 + "px";
         }
     };
 

@@ -19,8 +19,8 @@ export const Enemy3 = forwardRef(({ children }, enemy3Ref) => (
     </div>
 ));
 
-export const Enemy4 = forwardRef(({ children }, enemy4Ref) => (
-    <div ref={enemy4Ref} style={{ right: "0%", height: 150, width: 150 }} className="target4">
-        { children }
-    </div>
-));
+// export const Enemy4 = forwardRef(({ children }, enemy4Ref) => (
+//     <div ref={enemy4Ref} style={{ right: "0%", height: 150, width: 150 }} className="target4">
+//         { children }
+//     </div>
+// ));

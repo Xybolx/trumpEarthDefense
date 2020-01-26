@@ -4,7 +4,7 @@ WORKDIR /client
 # copying package.json & package-lock.json
 COPY package*.json /client/
 # installing dependencies
-RUN npm install
+RUN npm install --no-optional
 # copying all files - except if exempted through .dockerignore) 
 COPY . /client/
 # exposing the endpoint

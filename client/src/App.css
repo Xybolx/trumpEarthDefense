@@ -80,7 +80,7 @@
 
 .home-earth {
   height: 400px;
-  margin-top: 50px;
+  margin-top: 10px;
   width: auto;
   background: url("./imgs/earth.png"), url("./imgs/suprise.png");
   background-position: center;
@@ -91,7 +91,7 @@
 
 .alternate {
   height: 400px;
-  margin-top: 50px;
+  margin-top: 10px;
   width: auto;
   background: url("./imgs/earth.png"), url("./imgs/trump-kiss.png");
   background-position: center;

@@ -30,11 +30,11 @@ const ShameAlert = props => {
                         score !== null &&
                             props.scores[0] &&
                             score < props.scores[0].score ? 
-                            `"${props.scoreRank.length - 1} player(s) had a better score...YOU'RE FIRED!"` :
+                            `"You didn't get the top score!...YOU'RE FIRED!"` :
                             score !== null &&
                             props.scores[0] &&
                             score >= props.scores[0].score ?
-                                "\"It's all fake news. Nobody wins but me...\"" : ""
+                                "\"It's all fake news. Noboby wins but me...\"" : ""
                     }
                     </small>
                 </div>

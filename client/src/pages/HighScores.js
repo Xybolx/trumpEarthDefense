@@ -6,7 +6,7 @@ import useScores from '../hooks/useScores';
 import ScoreContext from '../context/scoreContext';
 import PageContainer from '../components/pageContainer';
 import ShameAlert from '../components/alerts/ShameAlert';
-// import useGamepad from '../hooks/useGamepad';
+import useGamepad from '../hooks/useGamepad';
 import Title from '../components/title';
 import CenteredColumn from '../components/centeredColumn';
 import NavBtn from '../components/buttons/NavBtn';
@@ -59,7 +59,7 @@ const HighScores = () => {
     // map the scores array we returned from our useScores custom hook
     const mappedScores = scores.map((score, index) => (
         <tr key={score._id}>
-            <th scope="row">{index + 1}</th>
+            <th scope="row">{index + 2}</th>
             <td>{score.initials}</td>
             <td>{score.score}</td>
         </tr>
@@ -68,7 +68,7 @@ const HighScores = () => {
     // map the results array we returned from our useScores custom hook
     const mappedResults = results.map((result, index) => (
         <tr key={result._id}>
-            <th scope="row">{index + 1}</th>
+            <th scope="row">{index + 2}</th>
             <td>{result.initials}</td>
             <td>{result.score}</td>
         </tr>
@@ -77,7 +77,7 @@ const HighScores = () => {
     // map the results array we returned from our useScores custom hook
     const mappedScoreRank = scoreRank.map((result, index) => (
         <tr key={result._id}>
-            <th scope="row">{index + 1}</th>
+            <th scope="row">{index + 2}</th>
             <td>{result.initials}</td>
             <td>{result.score}</td>
         </tr>

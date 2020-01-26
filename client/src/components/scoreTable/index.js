@@ -13,6 +13,11 @@ const ScoreTable = ({ scores, results, mappedScores, mappedResults, mappedScoreR
                         <th className="score-table-head">Initials</th>
                         <th className="score-table-head">Score</th>
                     </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>DJT</td>
+                        <td><i className="fas fa-infinity" /></td>
+                    </tr>
                 </thead>
                 <tbody style={{ color: "yellow" }}>
                 {
