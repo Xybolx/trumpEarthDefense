@@ -10,7 +10,7 @@ const useIntersection = (missle, enemy, enemyRightStyle, isFlying, setIsFlying, 
 
     // context
     const { setScore } = useContext(ScoreContext);
-    const { special, setSpecial } = useContext(SpecialContext);
+    const { setSpecial } = useContext(SpecialContext);
 
     // audio elements
     const splode = new Audio("splode.mp3");
