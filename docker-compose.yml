@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   server:
-    image: billboard-server
+    image: trump_earth_defense-server
     restart: always
     ports:
       - '9000:9000'
@@ -14,9 +14,9 @@ services:
     depends_on:
       - mongo
     networks: 
-      - billboardnetwork
+      - trump_earth_defense-network
   client:
-    image: billboard-client
+    image: trump_earth_defense-client
     restart: always
     ports:
       - '3000:3000'
@@ -29,7 +29,7 @@ services:
     links:
       - server
     networks: 
-      - billboardnetwork
+      - trump_earth_defense-network
   mongo:
     image: mongo
     restart: always
@@ -37,7 +37,7 @@ services:
     ports:
       - '27017:27017'
     networks: 
-      - billboardnetwork
+      - trump_earth_defense-network
 networks:
   billboardnetwork:
     driver: bridge
