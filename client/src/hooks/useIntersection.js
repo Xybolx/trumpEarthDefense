@@ -3,14 +3,14 @@ import ScoreContext from "../context/scoreContext";
 import SpecialContext from "../context/specialContext";
 import useInterval from "./useInterval";
 
-const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOver) => {
+const useIntersection = (missle, enemy, enemyRightStyle, isFlying, setIsFlying, setLives, gameOver) => {
 
     // state
     const [isIntersecting, setIsIntersecting] = useState(false);
 
     // context
     const { setScore } = useContext(ScoreContext);
-    const { special, setSpecial, clearSpecial } = useContext(SpecialContext);
+    const { special, setSpecial } = useContext(SpecialContext);
 
     // audio elements
     const splode = new Audio("splode.mp3");
@@ -30,7 +30,7 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
 
         switch (true) {
                 
-            case !gameOver && enemyIntersect && special < 5:
+            case !gameOver && enemyIntersect:
                 splode.play();
                 setScore(score => score + 100);
                 setSpecial(special => special + 1);
@@ -67,10 +67,10 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
         const resetEnemy = () => {
             setIsIntersecting(false);
             enemy.current.className = "target";
-            enemyStyle.right = 0 + "px";
+            enemyStyle.right = enemyRightStyle + "px";
         };
 
-        if (isIntersecting) {
+        if (isIntersecting && enemy.current !== null) {
             const destroyTimer = setTimeout(resetEnemy, 750);
             missleStyle.top = 0 + "px";
             missleStyle.visibility = "hidden";
@@ -80,11 +80,11 @@ const useIntersection = (missle, enemy, isFlying, setIsFlying, setLives, gameOve
                 clearTimeout(destroyTimer);
             };
         }
-    }, [missle, enemy, isIntersecting]);
+    }, [missle, enemy, isIntersecting, enemyRightStyle]);
 
     useInterval(() => {
         enemyTick();
-    }, !gameOver ? 250 : null);
+    }, !gameOver ? 100 : null);
 
     useInterval(() => {
         missleTick();

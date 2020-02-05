@@ -90,9 +90,9 @@ const GameContainer = () => {
 
     // useIntersection for detecting collision and screen width
     useWidthObserver(missileRef, gameOver, isFlying, setIsFlying);
-    useIntersection(missileRef, enemyRef, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy2Ref, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy3Ref, isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemyRef, -100, isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy2Ref, -200, isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy3Ref, -300, isFlying, setIsFlying, setLives, gameOver);
 
     useEffect(() => {
         if (lives === 0) {

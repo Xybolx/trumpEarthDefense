@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="App jumbotron">
+      <div className="App">
         <div className="text-left ml-3">
           {gamepad}
           <GamepadConnected connected={connected} />

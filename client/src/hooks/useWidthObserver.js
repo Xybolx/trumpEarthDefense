@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import SpecialContext from '../context/specialContext';
 import useInterval from '../hooks/useInterval';
 
