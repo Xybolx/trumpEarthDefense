@@ -29,8 +29,9 @@ const Instructions = () => {
 
     useEffect(() => {
         // audio
-        const fake = new Audio('fake.mp3');
-        fake.play();
+        const cheer = new Audio('trump-cheer.mp3');
+        cheer.volume = .40;
+        cheer.play();
     }, []);
 
     useEffect(() => {
@@ -145,8 +146,8 @@ const Instructions = () => {
                     </div>
                 </CenteredColumn>
             </div>
-            <NavBtn className="mt-3" onClick={() => history.replace("/scores")}>Back</NavBtn>
-            <NavBtn className="mt-3" onClick={() => history.replace("/game")}>I'm Ready!</NavBtn>
+            <NavBtn className="mt-3" onClick={backHandler}>Back</NavBtn>
+            <NavBtn className="mt-3" onClick={() => history.push("/game")}>I'm Ready!</NavBtn>
         </div>
     );
 };

@@ -14,7 +14,7 @@ services:
     depends_on:
       - mongo
     networks: 
-      - trump_earth_defense-network
+      - trumpEarthDefense-network
   client:
     image: trump_earth_defense-client
     restart: always
@@ -29,7 +29,7 @@ services:
     links:
       - server
     networks: 
-      - trump_earth_defense-network
+      - trumpEarthDefense-network
   mongo:
     image: mongo
     restart: always
@@ -37,7 +37,7 @@ services:
     ports:
       - '27017:27017'
     networks: 
-      - trump_earth_defense-network
+      - trumpEarthDefense-network
 networks:
-  billboardnetwork:
+  trumpEarthDefense-network:
     driver: bridge

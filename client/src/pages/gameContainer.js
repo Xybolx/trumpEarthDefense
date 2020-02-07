@@ -154,8 +154,9 @@ const GameContainer = () => {
         const quiet = new Audio("quiet.mp3");
         const congrats = new Audio("congrats.mp3");
         const rocket = new Audio("rocket.mp3");
+        const wall = new Audio("wall.mp3");
 
-        const insults = [rude, quiet, congrats, rocket];
+        const insults = [rude, quiet, congrats, rocket, wall];
         const indexOfInsult = Math.floor(Math.random() * insults.length);
 
         const getRandomInsult = () => insults[indexOfInsult].play();

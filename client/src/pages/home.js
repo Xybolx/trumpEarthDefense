@@ -14,11 +14,11 @@ const Home = () => {
 
     useInterval(() => {
       earthRef.current.className = "alternate";
-  }, 2500);
+  }, 1500);
 
     useInterval(() => {
       earthRef.current.className = "home-earth";
-  }, 5000);
+  }, 3500);
 
     let history = useHistory();
 
@@ -31,6 +31,12 @@ const Home = () => {
     useEffect(() => {
       clearScore();
     }, [clearScore]);
+
+    useEffect(() => {
+      // audio
+      const whatever = new Audio('whatever.mp3');
+      whatever.play();
+  }, []);
     
     // handle gamepad controls
     const startHandler = () => {
