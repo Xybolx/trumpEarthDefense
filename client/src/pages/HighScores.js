@@ -38,6 +38,7 @@ const HighScores = () => {
     const fired = new Audio('fired.wav');
     const allFake = new Audio('all-fake.mp3');
     const fakeSong = new Audio('fake-song.mp3');
+    const traitor = new Audio('traitor.mp3');
 
     // refs
     const inputRef = useRef();
@@ -101,7 +102,7 @@ const HighScores = () => {
             fakeSong.play()
         }
         if (scores[0] && score !== null && score >= scores[0].score) {
-            allFake.play();
+            traitor.play()
         }
     }, [fired, allFake, score, scores]);
 
