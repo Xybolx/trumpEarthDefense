@@ -29,9 +29,8 @@ const Instructions = () => {
 
     useEffect(() => {
         // audio
-        const cheer = new Audio('trump-cheer.mp3');
-        cheer.volume = .40;
-        cheer.play();
+        const whatever = new Audio('whatever.mp3');
+        whatever.play();
     }, []);
 
     useEffect(() => {

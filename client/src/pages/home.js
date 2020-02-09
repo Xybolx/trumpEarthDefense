@@ -31,12 +31,6 @@ const Home = () => {
     useEffect(() => {
       clearScore();
     }, [clearScore]);
-
-    useEffect(() => {
-      // audio
-      const whatever = new Audio('whatever.mp3');
-      whatever.play();
-  }, []);
     
     // handle gamepad controls
     const startHandler = () => {

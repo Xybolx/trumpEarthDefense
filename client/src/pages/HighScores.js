@@ -99,10 +99,12 @@ const HighScores = () => {
     // play a sound based on if the player has the highest score or not 
     useEffect(() => {
         if (scores[0] && score !== null && score < scores[0].score) {
-            fakeSong.play()
+            const cheer = new Audio('trump-cheer.mp3');
+            cheer.volume = .40;
+            cheer.play();
         }
         if (scores[0] && score !== null && score >= scores[0].score) {
-            traitor.play()
+            fakeSong.play()
         }
     }, [fired, allFake, score, scores]);
 
