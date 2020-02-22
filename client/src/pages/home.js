@@ -49,7 +49,8 @@ const Home = () => {
     // const { gamepad } = useGamepad(startHandler, aHandler);
     
     return (
-        <PageContainer ref={earthRef} className="home-earth">
+        <PageContainer className="home-earth-wrapper">
+          <div ref={earthRef} className="home-earth">
           {/* {gamepad} */}
             <CenteredColumn>
               <Title>Trump Earth Defense</Title>
@@ -61,6 +62,7 @@ const Home = () => {
                   <NavBtn className="mt-3" onClick={redirect}>High Scores</NavBtn>
                 </div>
             </CenteredColumn>
+          </div>
         </PageContainer>
     );
 };

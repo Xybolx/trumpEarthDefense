@@ -7,6 +7,7 @@ import useIntersection from '../hooks/useIntersection';
 import Plane from '../components/plane/index';
 import Missile from '../components/missile/index';
 import { Enemy, Enemy2, Enemy3 } from '../components/enemies';
+import { Wall, Wall2 } from '../components/wall';
 import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissile from '../components/specialMissile';
@@ -21,6 +22,8 @@ const GameContainer = () => {
     // refs
     const planeRef = useRef();
     const missileRef = useRef();
+    const wallRef = useRef();
+    const wall2Ref = useRef();
     const specialMissileRef = useRef();
     const lightningRef = useRef();
     const enemyRef = useRef();
@@ -89,10 +92,10 @@ const GameContainer = () => {
     useEventListener("mousedown", mouseDownHandler, window);
 
     // useIntersection for detecting collision and screen width
-    useWidthObserver(missileRef, gameOver, isFlying, setIsFlying);
-    useIntersection(missileRef, enemyRef, -100, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy2Ref, -200, isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy3Ref, -300, isFlying, setIsFlying, setLives, gameOver);
+    useWidthObserver(missileRef, wallRef, wall2Ref, gameOver, isFlying, setIsFlying);
+    useIntersection(missileRef, enemyRef, -100, "target", isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy2Ref, -200, "target2", isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missileRef, enemy3Ref, -300, "target3", isFlying, setIsFlying, setLives, gameOver);
 
     useEffect(() => {
         if (lives === 0) {
@@ -217,6 +220,8 @@ const GameContainer = () => {
             <Plane ref={planeRef}>
                 <Missile ref={missileRef} />
             </Plane>
+            <Wall ref={wallRef} />
+            <Wall2 ref={wall2Ref} />
         </div>
     );
 };

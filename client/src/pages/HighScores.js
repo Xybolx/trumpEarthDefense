@@ -106,7 +106,7 @@ const HighScores = () => {
         if (scores[0] && score !== null && score >= scores[0].score) {
             fakeSong.play()
         }
-    }, [fired, allFake, score, scores]);
+    }, [fired, fakeSong, score, scores]);
 
     // function to redirect when the back button is clicked
     const redirect = () => {
@@ -115,57 +115,59 @@ const HighScores = () => {
     };
 
     return (
-        <PageContainer className="home-earth">
-            {gamepad}
-            <CenteredColumn>
-                <Title>{
-                    score !== null &&
-                    scores[0] &&
-                    score >= scores[0].score ?
-                    "New High Score!" :
-                    score !== null &&
-                    scores[0] &&
-                    score < scores[0].score ?
-                    "You're Fired!!!" :
-                    "High Scores"
-                }
-                </Title>
-            </CenteredColumn>
-            <CenteredColumn>
-                <ShameAlert
-                    scores={scores}
-                    scoreRank={scoreRank}
-                />
-                <div style={
-                            score !== null &&
-                            scoreRank.length ?
-                            { display: "none" } :
-                            { display: "block" }
-                        }>
-                    <HighScoresForm
-                        ref={inputRef}
-                        scoreRank={scoreRank}
-                        search={search}
-                        handleChange={handleChange}
-                        handleClearForm={handleClearForm} 
-                    />
-                </div>
-                <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
-                    <ScoreTable
+        <PageContainer className="home-earth-wrapper">
+            <div className="home-earth">
+                {gamepad}
+                <CenteredColumn>
+                    <Title>{
+                        score !== null &&
+                        scores[0] &&
+                        score >= scores[0].score ?
+                        "New High Score!" :
+                        score !== null &&
+                        scores[0] &&
+                        score < scores[0].score ?
+                        "You're Fired!!!" :
+                        "High Scores"
+                    }
+                    </Title>
+                </CenteredColumn>
+                <CenteredColumn>
+                    <ShameAlert
                         scores={scores}
-                        results={results}
-                        mappedScores={mappedScores}
-                        mappedResults={mappedResults}
-                        mappedScoreRank={mappedScoreRank}
-                        search={search}
-                    />
-                </Suspense>
-                <NavBtn 
-                    className="mt-3" 
-                    onClick={redirect}>
-                    Home
-                </NavBtn>
-            </CenteredColumn>
+                        scoreRank={scoreRank}
+                        />
+                    <div style={
+                        score !== null &&
+                        scoreRank.length ?
+                        { display: "none" } :
+                        { display: "block" }
+                    }>
+                        <HighScoresForm
+                            ref={inputRef}
+                            scoreRank={scoreRank}
+                            search={search}
+                            handleChange={handleChange}
+                            handleClearForm={handleClearForm} 
+                            />
+                    </div>
+                    <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
+                        <ScoreTable
+                            scores={scores}
+                            results={results}
+                            mappedScores={mappedScores}
+                            mappedResults={mappedResults}
+                            mappedScoreRank={mappedScoreRank}
+                            search={search}
+                            />
+                    </Suspense>
+                    <NavBtn 
+                        className="mt-3" 
+                        onClick={redirect}>
+                        Home
+                    </NavBtn>
+                </CenteredColumn>
+            </div>
         </PageContainer>
     );
 };

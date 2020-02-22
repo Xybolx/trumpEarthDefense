@@ -1,7 +1,20 @@
 .instructions-wrapper {
+    background: url("../imgs/flag2.gif");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    opacity: .8;
     height: 500px;
     overflow: auto;
 }
+
+.instructions {
+    background: rgba(0, 0, 0, 0.541);
+    border: double whitesmoke;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+  }
 
 .p-head {
     text-decoration: underline;

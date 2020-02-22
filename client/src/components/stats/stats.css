@@ -13,9 +13,9 @@
     height: 25px;
   }
   
-  .progress-bar {
+  /* .progress-bar {
     text-shadow: .5px .5px black;
-  }
+  } */
   
   .bg-danger, .badge-danger {
     background: linear-gradient(darkred, tomato, darkred);

@@ -1,0 +1,30 @@
+@keyframes WallMotion {
+    from {
+      top: 0%;
+    }
+    to {
+      top: 75%;
+    }
+  }
+
+.wall {
+    background: url("../../imgs/red_cloud.gif");
+    background-size: contain;
+    background-repeat: repeat-y;
+    /* background-color: tomato; */
+    animation: WallMotion infinite alternate 3s;
+    position: absolute;
+    /* top: 50%; */
+    right: 35%;
+}
+
+.wall2 {
+    background: url("../../imgs/red_cloud.gif");
+    background-size: contain;
+    background-repeat: repeat-y;
+    /* background-color: tomato; */
+    animation: WallMotion infinite alternate-reverse 3s;
+    position: absolute;
+    /* top: 50%; */
+    right: 60%;
+}

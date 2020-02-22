@@ -1,9 +1,9 @@
 @keyframes Motion {
   from {
-    top: -10%;
+    top: 10%;
   }
   to {
-    top: 100%;
+    top: 80%;
   }
 }
 
@@ -50,7 +50,7 @@
 }
 
 .target {
-  background: url("../../imgs/trump.png");
+  background: url("../../imgs/suprise.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -71,7 +71,7 @@
 }
 
 .target3 {
-  background: url("../../imgs/trump.png");
+  background: url("../../imgs/trump-kiss.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

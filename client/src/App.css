@@ -87,6 +87,18 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode: overlay;
+  /* opacity: .9; */
+}
+
+.home-earth-wrapper {
+  height: 400px;
+  margin-top: 10px;
+  width: auto;
+  background: url("./imgs/flag2.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* opacity: .7; */
 }
 
 .alternate {
@@ -98,14 +110,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode: overlay;
+  /* opacity: .9; */
 }
 
 .home-controls {
   margin-top: 400px;
-}
-
-.instructions {
-  background: rgba(0, 0, 0, 0.801);
 }
 
 .bg-dark {
@@ -116,7 +125,7 @@
 }
 
 .stats {
-  color: white;
+  color: red;
 }
 
 .lightning {
@@ -145,8 +154,15 @@
   color: whitesmoke;
 }
 
-.score-table-head {
+/* .score-table-head {
   border: 2px double tomato;
   text-decoration: underline;
   text-decoration-color: tomato;
+} */
+
+.col-md-6.alert-img {
+  background: url("./imgs/flag2.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }

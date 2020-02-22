@@ -22,10 +22,10 @@ const ShameAlert = props => {
                     <span aria-hidden="true">&times;</span>
                 </button>
             <div className="row">
-                <div className="col">
+                <div className="col-md-6 alert-img">
                     <img style={{ width: 80, height: 80 }} className="img-fluid" src="suprise.png" alt="Trump" />
                 </div>
-                <div className="col">
+                <div className="col-md-6">
                     <small style={{ width: 80, height: 80 }}>{
                         score !== null &&
                             props.scores[0] &&
@@ -34,7 +34,7 @@ const ShameAlert = props => {
                             score !== null &&
                             props.scores[0] &&
                             score >= props.scores[0].score ?
-                                "\"It's all fake news. Noboby wins but me...\"" : ""
+                                "\"It's all fake news. Nobody wins but me...\"" : ""
                     }
                     </small>
                 </div>

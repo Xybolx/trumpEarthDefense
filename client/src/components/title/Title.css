@@ -11,6 +11,10 @@
   animation: Flash .75s infinite;
   color: yellow;
   background: rgba(0, 0, 0, 0.705);
+  /* background-image: url("../../imgs/suprise.png");
+  background-size: contain;
+  background-repeat: round;
+  background-position: left; */
 }
 
 .home-title {

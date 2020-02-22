@@ -1,5 +1,14 @@
 .score-table {
-    background: rgba(0, 0, 0, 0.637);
-    max-height: 425px;
-    overflow: auto;
-  }
+  animation: FadeIn 3s;
+  background: rgba(0, 0, 0, 0.637);
+  max-height: 450px;
+  /* min-height: 300px; */
+  overflow: auto;
+  border: double whitesmoke;
+}
+
+.score-table-head {
+  border: 2px double tomato;
+  text-decoration: underline;
+  text-decoration-color: tomato;
+}
