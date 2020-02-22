@@ -9,11 +9,13 @@
 }
 
 .instructions {
-    background: rgba(0, 0, 0, 0.541);
+    background: rgba(0, 0, 0, 0.596);
     border: double whitesmoke;
+    border-radius: 1%;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
+    text-shadow: 1px 1px 1px tomato; 
   }
 
 .p-head {

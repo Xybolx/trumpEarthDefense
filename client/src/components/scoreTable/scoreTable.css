@@ -5,6 +5,7 @@
   /* min-height: 300px; */
   overflow: auto;
   border: double whitesmoke;
+  border-radius: 1%;
 }
 
 .score-table-head {
