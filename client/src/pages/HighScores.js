@@ -34,12 +34,6 @@ const HighScores = () => {
     // new useHistory hook from react router
     let history = useHistory();
 
-    // audio
-    const fired = new Audio('fired.wav');
-    const allFake = new Audio('all-fake.mp3');
-    const fakeSong = new Audio('fake-song.mp3');
-    const traitor = new Audio('traitor.mp3');
-
     // refs
     const inputRef = useRef();
 
@@ -104,9 +98,10 @@ const HighScores = () => {
             cheer.play();
         }
         if (scores[0] && score !== null && score >= scores[0].score) {
+            const fakeSong = new Audio('fake-song.mp3');
             fakeSong.play()
         }
-    }, [fired, fakeSong, score, scores]);
+    }, [score, scores]);
 
     // function to redirect when the back button is clicked
     const redirect = () => {
@@ -123,12 +118,12 @@ const HighScores = () => {
                         score !== null &&
                         scores[0] &&
                         score >= scores[0].score ?
-                        "New High Score!" :
+                        "New Fake High Score!" :
                         score !== null &&
                         scores[0] &&
                         score < scores[0].score ?
                         "You're Fired!!!" :
-                        "High Scores"
+                        "Fake High Scores"
                     }
                     </Title>
                 </CenteredColumn>

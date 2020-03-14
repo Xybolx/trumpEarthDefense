@@ -7,13 +7,15 @@ import useIntersection from '../hooks/useIntersection';
 import Plane from '../components/plane/index';
 import Missile from '../components/missile/index';
 import { Enemy, Enemy2, Enemy3 } from '../components/enemies';
-import { Wall, Wall2 } from '../components/wall';
+import { BossMissile, Boss2Missile, Boss3Missile } from '../components/bossMissile';
+import { Wall } from '../components/wall';
 import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissile from '../components/specialMissile';
 import Lightning from '../components/lightning';
 import useGamepad from '../hooks/useGamepad';
 import useWidthObserver from '../hooks/useWidthObserver';
+import useInterval from '../hooks/useInterval';
 
 const GameContainer = () => {
 
@@ -29,6 +31,9 @@ const GameContainer = () => {
     const enemyRef = useRef();
     const enemy2Ref = useRef();
     const enemy3Ref = useRef();
+    const bossMissileRef = useRef();
+    const boss2MissileRef = useRef();
+    const boss3MissileRef = useRef();
 
     // audio
     const laser = new Audio('laser.mp3');
@@ -43,6 +48,7 @@ const GameContainer = () => {
     const [gameOver, setGameOver] = useState(false);
     const [lives, setLives] = useState(3);
     const [isFlying, setIsFlying] = useState(false);
+    const [isFlyingBoss, setIsFlyingBoss] = useState(false);
     const [charge, setCharge] = useState(3);
     const [specialReset, setSpecialReset] = useState(false);
 
@@ -65,10 +71,12 @@ const GameContainer = () => {
 
     const fireHandler = useCallback(() => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
+            setIsFlyingBoss(true);
             setIsFlying(true);
             setCharge(0);
             laser.volume = .50;
             laser.play();
+            bossMissileRef.current.style.visibility = "visible";
             missileRef.current.style.visibility = "visible";
         }
         if (!gameOver && !isFlying && charge === 3 && special === 5) {
@@ -81,6 +89,10 @@ const GameContainer = () => {
         }
     }, [charge, gameOver, isFlying, laser, special, specialSound]);
 
+    useInterval(() => {
+        bossMissileRef.current.style.right = parseInt(bossMissileRef.current.style.right) + 10 + "px";
+    }, isFlyingBoss ? 50 : null);
+
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
         fireHandler();
@@ -92,7 +104,7 @@ const GameContainer = () => {
     useEventListener("mousedown", mouseDownHandler, window);
 
     // useIntersection for detecting collision and screen width
-    useWidthObserver(missileRef, wallRef, wall2Ref, gameOver, isFlying, setIsFlying);
+    const wallClass = useWidthObserver(missileRef, wallRef, gameOver, isFlying, setIsFlying);
     useIntersection(missileRef, enemyRef, -100, "target", isFlying, setIsFlying, setLives, gameOver);
     useIntersection(missileRef, enemy2Ref, -200, "target2", isFlying, setIsFlying, setLives, gameOver);
     useIntersection(missileRef, enemy3Ref, -300, "target3", isFlying, setIsFlying, setLives, gameOver);
@@ -134,6 +146,7 @@ const GameContainer = () => {
             clearSpecial();
         };
         const destroyAllEnemies = () => {
+            splode.volume = .5;
             splode.play();
             enemyRef.current.className = "destroyed";
             enemy2Ref.current.className = "destroyed";
@@ -171,7 +184,6 @@ const GameContainer = () => {
 
     // handle gamepad controls
     const startHandler = () => {};
-
 
     const upHandler = () => {
         if (!gameOver) {
@@ -214,14 +226,20 @@ const GameContainer = () => {
                 lives={lives}
                 gameOver={gameOver}
             />
-            <Enemy ref={enemyRef} />
-            <Enemy2 ref={enemy2Ref} />
-            <Enemy3 ref={enemy3Ref} />
+            <Enemy ref={enemyRef}>
+                <BossMissile ref={bossMissileRef} />
+            </Enemy>
+            <Enemy2 ref={enemy2Ref}>
+                <Boss2Missile ref={boss2MissileRef} />
+            </Enemy2>
+            <Enemy3 ref={enemy3Ref}>
+                <Boss3Missile ref={boss3MissileRef} />
+            </Enemy3>
             <Plane ref={planeRef}>
                 <Missile ref={missileRef} />
             </Plane>
-            <Wall ref={wallRef} />
-            <Wall2 ref={wall2Ref} />
+            <Wall ref={wallRef} className={wallClass} />
+            {/* <Wall2 ref={wall2Ref} /> */}
         </div>
     );
 };

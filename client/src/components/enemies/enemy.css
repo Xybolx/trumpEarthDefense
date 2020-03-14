@@ -1,9 +1,9 @@
 @keyframes Motion {
   from {
-    top: 10%;
+    top: 20%;
   }
   to {
-    top: 80%;
+    top: 70%;
   }
 }
 

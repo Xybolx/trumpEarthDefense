@@ -166,3 +166,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+#game-container {
+  height: 100%;
+}

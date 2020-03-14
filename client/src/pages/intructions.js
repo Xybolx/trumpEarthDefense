@@ -5,7 +5,7 @@ import SpecialContext from '../context/specialContext';
 import Title from '../components/title';
 import NavBtn from '../components/buttons/NavBtn';
 import CenteredColumn from '../components/centeredColumn';
-// import useGamepad from '../hooks/useGamepad';
+import useGamepad from '../hooks/useGamepad';
 import './instructions.css';
 
 const Instructions = () => {
@@ -21,7 +21,7 @@ const Instructions = () => {
         history.push("/game");
       };
 
-    // const { gamepad } = useGamepad(startHandler, backHandler);
+    const { gamepad } = useGamepad(startHandler, backHandler);
 
     // context
     const { clearScore } = useContext(ScoreContext);
@@ -40,7 +40,7 @@ const Instructions = () => {
 
     return (
         <div className="container text-center home-earth">
-            {/* {gamepad} */}
+            {gamepad}
             <div className="home-earth-wrapper">    
                 <CenteredColumn className="home-earth">
                     <Title className="alert-img">How To Play</Title>
