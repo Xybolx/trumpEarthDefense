@@ -11,6 +11,9 @@ function makeGreatAgain(Earth) {
    }
 };
 ```
+# :bar_chart: A Brief Survey
+## Finish This Sentence: *Earth is...*
+
 |:grinning: 68%              |:goberserk: 25%          |:expressionless: 7%       |
 |:--------------------:|:----------------:|:-------:|
-|Earth is great already|Earth is not great|Undecided|
+|*...already great.*|*...not great.*|*...undecided*|
