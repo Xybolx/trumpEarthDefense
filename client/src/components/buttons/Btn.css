@@ -1,29 +1,69 @@
 
-.btn-outline-light:hover {
-  background: url("../../imgs/ship6.png");
+.light:hover {
+  background: url("../../imgs/arcade-button.png");
+  background-size: contain;
   background-position: left;
   background-repeat: no-repeat;
-  background-size: contain;
   text-decoration-line: none;
   animation: Flash .25s infinite alternate;
-  outline: double whitesmoke;
 }
 
-.btn-outline-light {
-  color: whitesmoke;
-  text-decoration-color: transparent !important;
-  border: unset;
-  background: transparent;
+.btn-outline-light.two {
+  background: url("../../imgs/arcade-button.png");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  text-decoration-line: none;
   margin-bottom: 5px;
   margin-left: 2px;
   margin-right: 2px;
 }
 
-.btn-outline-light:focus {
-  background: url("../../imgs/ship6.png");
+.light {
+  background: url("../../imgs/arcade-button.png");
+  background-size: contain;
   background-position: left;
   background-repeat: no-repeat;
+  text-decoration-line: none;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border: unset;
+  color: white;
+}
+
+.light.pressed {
+  background: url("../../imgs/arcade-pressed.png");
   background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  text-decoration-line: none;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border: unset;
+  color: white;
+}
+
+.btn-outline-light.pressed.two {
+  background: url("../../imgs/arcade-pressed.png");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  text-decoration-line: none;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/* .btn-outline-light:focus {
+  background: url("../../imgs/arcade-button.png");
+  background-blend-mode: difference;
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
   text-decoration-line: none;
   animation: Flash .25s infinite alternate;
-}
+} */

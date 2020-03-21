@@ -60,20 +60,6 @@ const useIntersection = (missile, enemy, enemyRightStyle, enemyClassName, isFlyi
         
     };
 
-    const bossMissileTick = () => {
-        const rect = enemy.current.getBoundingClientRect();
-        const enemyStyle = enemy.current.style;
-        if (!gameOver && rect.left <= 0) {
-            bong.play();
-            setLives(lives => lives - 1);
-            enemyStyle.right = 0 + "px";
-        }
-
-        if (!gameOver && enemy.current !== null) {
-            enemyStyle.right = parseInt(enemyStyle.right) + 10 + "px";
-        }
-    };
-
     useEffect(() => {
         const missileStyle = missile.current.style;
         const enemyStyle = enemy.current.style;
@@ -104,10 +90,6 @@ const useIntersection = (missile, enemy, enemyRightStyle, enemyClassName, isFlyi
     useInterval(() => {
         missileTick();
     }, !gameOver && isFlying ? 25 : null);
-
-    // useInterval(() => {
-    //     bossMissileTick();
-    // }, !gameOver && isFlying ? 25 : null);
 
 };
 

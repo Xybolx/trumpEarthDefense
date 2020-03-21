@@ -19,20 +19,21 @@
   }
 
 .wall {
-    background: repeating-linear-gradient(red, orange, tomato);
+    background: repeating-linear-gradient(black, silver, black);
     /* background-size: contain;
     background-repeat: round; */
     /* background-color: tomato; */
-    animation: WallMotion infinite alternate 2s;
+    animation: WallMotion infinite alternate 4s;
     position: absolute;
     top: 50%;
     right: 50%;
     height: 300px;
+    border: solid 7px whitesmoke;
 }
 
 .wallAlternate {
   background: repeating-linear-gradient(rgb(47, 0, 255), rgb(229, 255, 0), rgb(71, 197, 255));
-  animation: WallMotion infinite alternate 2s,
+  animation: WallMotion infinite alternate 4s,
              WallFlash infinite .25s;
   position: absolute;
   top: 50%;

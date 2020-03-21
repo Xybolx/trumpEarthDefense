@@ -7,33 +7,35 @@ import useIntersection from '../hooks/useIntersection';
 import Plane from '../components/plane/index';
 import Missile from '../components/missile/index';
 import { Enemy, Enemy2, Enemy3 } from '../components/enemies';
-import { BossMissile, Boss2Missile, Boss3Missile } from '../components/bossMissile';
 import { Wall } from '../components/wall';
 import Stats from '../components/stats';
 import EarthShield from '../components/earthShield/EarthShield';
 import SpecialMissile from '../components/specialMissile';
 import Lightning from '../components/lightning';
 import useGamepad from '../hooks/useGamepad';
+import SpecialAlert from '../components/alerts/SpecialAlert';
 import useWidthObserver from '../hooks/useWidthObserver';
 import useInterval from '../hooks/useInterval';
+import useCounter from '../hooks/useCounter';
+import useToggle from '../hooks/useToggle';
 
 const GameContainer = () => {
 
     let history = useHistory();
 
+    const [message, setMessage] = useState("");
+
+    const [isOpen, setIsOpen] = useState(false);
+
     // refs
     const planeRef = useRef();
     const missileRef = useRef();
     const wallRef = useRef();
-    const wall2Ref = useRef();
     const specialMissileRef = useRef();
     const lightningRef = useRef();
     const enemyRef = useRef();
     const enemy2Ref = useRef();
     const enemy3Ref = useRef();
-    const bossMissileRef = useRef();
-    const boss2MissileRef = useRef();
-    const boss3MissileRef = useRef();
 
     // audio
     const laser = new Audio('laser.mp3');
@@ -45,12 +47,12 @@ const GameContainer = () => {
     const { special, clearSpecial } = useContext(SpecialContext);
 
     // state
-    const [gameOver, setGameOver] = useState(false);
-    const [lives, setLives] = useState(3);
-    const [isFlying, setIsFlying] = useState(false);
-    const [isFlyingBoss, setIsFlyingBoss] = useState(false);
-    const [charge, setCharge] = useState(3);
-    const [specialReset, setSpecialReset] = useState(false);
+    const [gameOver, setGameOver] = useToggle(false);
+    const [lives, setLives] = useCounter(3);
+    const [isFlying, setIsFlying] = useToggle(false);
+    const [isFlyingBoss, setIsFlyingBoss] = useToggle(false);
+    const [charge, setCharge] = useCounter(3);
+    const [specialReset, setSpecialReset] = useToggle(false);
 
     // handle mouse controls
     // handle wheel events
@@ -60,7 +62,7 @@ const GameContainer = () => {
                 planeRef.current.style.top = parseInt(planeRef.current.style.top) - 7 + "px";
             }
 
-            if (deltaY < 0 && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
+            if (planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
                 console.log("Max Height!");
             }
 
@@ -71,27 +73,22 @@ const GameContainer = () => {
 
     const fireHandler = useCallback(() => {
         if (!gameOver && !isFlying && charge === 3 && special < 5) {
-            setIsFlyingBoss(true);
             setIsFlying(true);
             setCharge(0);
             laser.volume = .50;
             laser.play();
-            bossMissileRef.current.style.visibility = "visible";
             missileRef.current.style.visibility = "visible";
         }
         if (!gameOver && !isFlying && charge === 3 && special === 5) {
             specialSound.volume = 1;
             specialSound.play();
+            setCharge(0);
             setSpecialReset(true);
             missileRef.current.style.visibility = "hidden";
             missileRef.current.style.top = 0 + "px";
             specialMissileRef.current.style.visibility = "visible";
         }
-    }, [charge, gameOver, isFlying, laser, special, specialSound]);
-
-    useInterval(() => {
-        bossMissileRef.current.style.right = parseInt(bossMissileRef.current.style.right) + 10 + "px";
-    }, isFlyingBoss ? 50 : null);
+    }, [charge, setCharge, setIsFlying, setIsFlyingBoss, setSpecialReset, gameOver, isFlying, laser, special, specialSound,]);
 
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
@@ -103,6 +100,35 @@ const GameContainer = () => {
     // useEventListener for mouse down
     useEventListener("mousedown", mouseDownHandler, window);
 
+    // handle key down events
+    const keyHandler = useCallback(({ key }) => {
+        if (!gameOver && key === "ArrowUp") {
+            planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
+        }
+        if (!gameOver && key === "ArrowDown") {
+            planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
+        }
+        if (!gameOver && key === " " && !isFlying && charge === 3 && special < 5) {
+            setIsFlying(true);
+            setCharge(0);
+            laser.volume = .25;
+            laser.play();
+            missileRef.current.style.visibility = "visible";
+        }
+        if (key === " " && !gameOver && charge === 3 && !isFlying && special === 5) {
+            specialSound.volume = 1;
+            specialSound.play();
+            clearSpecial();
+            setSpecialReset(true);
+            missileRef.current.style.visibility = "hidden";
+            missileRef.current.style.top = 0 + "px";
+            specialMissileRef.current.style.visibility = "visible";
+        }
+    }, [laser, isFlying, setIsFlying, charge, setCharge, setSpecialReset, clearSpecial, gameOver, special, specialSound]);
+
+    // useEventListener for key down events
+    useEventListener("keydown", keyHandler, window);
+
     // useIntersection for detecting collision and screen width
     const wallClass = useWidthObserver(missileRef, wallRef, gameOver, isFlying, setIsFlying);
     useIntersection(missileRef, enemyRef, -100, "target", isFlying, setIsFlying, setLives, gameOver);
@@ -113,7 +139,7 @@ const GameContainer = () => {
         if (lives === 0) {
             setGameOver(true);
         }
-    }, [lives]);
+    }, [lives, setGameOver]);
 
     useEffect(() => {
         if (!gameOver && charge < 3) {
@@ -122,7 +148,7 @@ const GameContainer = () => {
                 clearInterval(chargeTimer);
             };
         }
-    }, [charge, gameOver]);
+    }, [charge, gameOver, setCharge]);
 
     useEffect(() => {
         if (!gameOver) {
@@ -132,7 +158,8 @@ const GameContainer = () => {
     }, [gameOver]);
 
     useEffect(() => {
-        const enemyReset = () => {
+        const enemyReset = async () => {
+            await clearSpecial;
             enemyRef.current.className = "target";
             enemyRef.current.style.right = -300 + "px";
             enemy2Ref.current.className = "target2";
@@ -143,9 +170,8 @@ const GameContainer = () => {
             lightningRef.current.style.visibility = "hidden";
             setScore(score => score + 500);
             setSpecialReset(false);
-            clearSpecial();
         };
-        const destroyAllEnemies = () => {
+        const destroyAllEnemies = async () => {
             splode.volume = .5;
             splode.play();
             enemyRef.current.className = "destroyed";
@@ -153,16 +179,17 @@ const GameContainer = () => {
             enemy3Ref.current.className = "destroyed";
             lightningRef.current.style.visibility = "visible";
             specialMissileRef.current.style.visibility = "hidden";
+            clearSpecial();
         };
         if (!gameOver && specialReset) {
-            const specialResetTimer = setTimeout(enemyReset, 1200);
-            const destroyAllTimer = setTimeout(destroyAllEnemies, 800);
+            const specialResetTimer = setTimeout(enemyReset, 800);
+            const destroyAllTimer = setTimeout(destroyAllEnemies, 500);
             return () => {
                 clearTimeout(specialResetTimer);
                 clearTimeout(destroyAllTimer);
             }
         }
-    }, [gameOver, specialReset, clearSpecial, setScore, splode]);
+    }, [gameOver, specialReset, setSpecialReset, clearSpecial, setScore, splode]);
 
     useEffect(() => {
 
@@ -174,11 +201,35 @@ const GameContainer = () => {
 
         const insults = [rude, quiet, congrats, rocket, wall];
         const indexOfInsult = Math.floor(Math.random() * insults.length);
+        const randomInsult = insults[indexOfInsult];
 
-        const getRandomInsult = () => insults[indexOfInsult].play();
-
-        if (!gameOver && specialReset) {
-            getRandomInsult();
+        if (!gameOver && specialReset && indexOfInsult === 0) {
+            setMessage(`"Don't be rude!"`);
+            setIsOpen(true);
+            randomInsult.play();
+        }
+        if (!gameOver && specialReset && indexOfInsult === 1) {
+            setMessage(`"Quiet! Quiet!"`);
+            setIsOpen(true);
+            randomInsult.play();
+        }
+        if (!gameOver && specialReset && indexOfInsult === 2) {
+            setMessage(`"Congratulations!`);
+            setIsOpen(true);
+            randomInsult.play();
+        }
+        if (!gameOver && specialReset && indexOfInsult === 3) {
+            setMessage(`"Little rocket man!"`);
+            setIsOpen(true);
+            randomInsult.play();
+        }
+        if (!gameOver && specialReset && indexOfInsult === 4) {
+            setMessage(`"The Wall just got ten feet taller!"`);
+            setIsOpen(true);
+            randomInsult.play();
+        }
+        if (!gameOver && !specialReset) {
+            setIsOpen(false);
         }
     }, [gameOver, specialReset]);
 
@@ -186,9 +237,12 @@ const GameContainer = () => {
     const startHandler = () => {};
 
     const upHandler = () => {
-        if (!gameOver) {
+        if (!gameOver && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
-        } 
+        }
+        if (!gameOver && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
+            console.log("MAX HEIGHT!");
+        }  
     };
 
     const downHandler = () => {
@@ -216,30 +270,24 @@ const GameContainer = () => {
             </Lightning>
             <EarthShield className={
                 lives === 3 ?
-                    "earth border-success" :
-                    lives === 2 ? "earth border-warning" :
-                        "earth border-danger"
+                "earth border-success" :
+                lives === 2 ? "earth border-warning" :
+                "earth border-danger"
             }
             />
             <Stats
                 charge={charge}
                 lives={lives}
                 gameOver={gameOver}
-            />
-            <Enemy ref={enemyRef}>
-                <BossMissile ref={bossMissileRef} />
-            </Enemy>
-            <Enemy2 ref={enemy2Ref}>
-                <Boss2Missile ref={boss2MissileRef} />
-            </Enemy2>
-            <Enemy3 ref={enemy3Ref}>
-                <Boss3Missile ref={boss3MissileRef} />
-            </Enemy3>
+            /> 
+            <SpecialAlert message={message} isOpen={isOpen} />
+            <Enemy ref={enemyRef}></Enemy>
+            <Enemy2 ref={enemy2Ref}></Enemy2>
+            <Enemy3 ref={enemy3Ref}></Enemy3>
             <Plane ref={planeRef}>
                 <Missile ref={missileRef} />
             </Plane>
             <Wall ref={wallRef} className={wallClass} />
-            {/* <Wall2 ref={wall2Ref} /> */}
         </div>
     );
 };

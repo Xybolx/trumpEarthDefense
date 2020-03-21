@@ -136,15 +136,14 @@ const HighScores = () => {
                         score !== null &&
                         scoreRank.length ?
                         { display: "none" } :
-                        { display: "block" }
-                    }>
+                        { display: "block" }}>
                         <HighScoresForm
                             ref={inputRef}
                             scoreRank={scoreRank}
                             search={search}
                             handleChange={handleChange}
                             handleClearForm={handleClearForm} 
-                            />
+                        />
                     </div>
                     <Suspense fallback={<div className="spinner-border text-white" role="status" aria-hidden="true" />}>
                         <ScoreTable
