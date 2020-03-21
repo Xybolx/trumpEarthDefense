@@ -11,3 +11,6 @@ function makeGreatAgain(Earth) {
    }
 };
 ```
+|:grinning: 68%              |:goberserk: 25%          |:expressionless: 7%       |
+|:--------------------:|:----------------:|:-------:|
+|Earth is great already|Earth is not great|Undecided|
