@@ -1,8 +1,7 @@
 .missile {
-  background-image: url("../../imgs/laser.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(red, tomato, white, tomato, red);
+  border-radius: 25%;
   transform: rotate(90deg);
   visibility: hidden;
+  max-height: 6px;
 }

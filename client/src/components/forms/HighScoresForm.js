@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import Btn from '../buttons/Btn';
+import NavBtn from '../buttons/NavBtn';
 
 const HighScoresForm = forwardRef((props, inputRef) => {
 
     return (
-        <div className="input-group input-group-sm sticky-top bg-dark">
+        <div className="input-group input-group-sm bg-dark">
             <input
                 ref={inputRef}
                 id="search"
@@ -12,19 +12,17 @@ const HighScoresForm = forwardRef((props, inputRef) => {
                 value={props.search || ""}
                 onChange={props.handleChange}
                 type="search"
-                className="form-control"
                 placeholder="initials or minimum score"
                 aria-label="Search Scores"
                 aria-describedby="button-search"
                 autoComplete="off"
             />
-            <div className="input-group-append">
-                <Btn 
+            <div className="input-group-append mb-3 ml-5 form-inline">
+                <NavBtn 
                     id="button-addon2"
-                    className={"border"}
                     onClick={props.handleClearForm}>
                     Reset
-                </Btn>
+                </NavBtn>
             </div>
             {props.children}
         </div>

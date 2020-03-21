@@ -154,13 +154,7 @@
   color: whitesmoke;
 }
 
-/* .score-table-head {
-  border: 2px double tomato;
-  text-decoration: underline;
-  text-decoration-color: tomato;
-} */
-
-.col-md-6.alert-img {
+.alert-img {
   background: url("./imgs/flag2.gif");
   background-position: center;
   background-repeat: no-repeat;
@@ -169,4 +163,13 @@
 
 #game-container {
   height: 100%;
+}
+
+.jumbotron,
+.card {
+  background: transparent;
+}
+
+.alert {
+  z-index: 9;
 }

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ConnectedContext from '../context/connectedContext';
-import Gamepad from '../components/Gamepad';
+import Gamepad from '../components/gamepad/Gamepad';
 
 const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler) => {
 
@@ -17,11 +17,37 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
       };
     
     const buttonDownHandler = buttonName => {
-      console.log(buttonName, 'down');
+      // console.log(buttonName, 'down');
     };
     
     const buttonUpHandler = buttonName => {
-      console.log(buttonName, 'up');
+      // console.log(buttonName, 'up');
+    };
+
+    const upDownHandler = buttonName => {
+      if (buttonName === 'DpadUp') {
+        upHandler();
+        console.log(buttonName, 'down');
+      }
+    };
+    
+    const upUpHandler = buttonName => {
+      if (buttonName === 'DpadUp') {
+        console.log(buttonName, 'up');
+      }
+    };
+
+    const downUpHandler = buttonName => {
+      if (buttonName === 'DpadDown') {
+        console.log(buttonName, 'up');
+      }
+    };
+    
+    const downDownHandler = buttonName => {
+      if (buttonName === 'DpadDown') {
+        downHandler();
+        console.log(buttonName, 'down');
+      }
     };
 
     const buttonChangeHandler = (buttonName, down) => {
@@ -29,7 +55,14 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
     };
     
     const axisChangeHandler = (axisName, value, previousValue) => {
-        console.log(axisName, value, previousValue);
+        if (value > 0 && axisName === "LeftStickY") {
+
+          console.log(axisName, value, previousValue);
+        }
+
+        if (value < 0 && axisName === "LeftStickY") {
+          console.log(axisName, value, previousValue);
+        }
     };
 
     const gamepad = <Gamepad
@@ -53,6 +86,10 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
                         onRS={() => { }}
                         onUp={upHandler}
                         onDown={downHandler}
+                        onUpDown={upDownHandler}
+                        onUpUp={upUpHandler}
+                        onDownUp={downUpHandler}
+                        onDownDown={downDownHandler}
                         onLeft={() => { }}
                         onRight={() => { }}>
                         <div />

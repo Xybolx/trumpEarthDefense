@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import routes from './components/routes';
 import useGamepad from './hooks/useGamepad';
-import GamepadConnected from './components/GamepadConnected';
+import GamepadConnected from './components/gamepad/GamepadConnected';
 import './App.css';
 
 const App = () => {
