@@ -10,7 +10,7 @@ const useToggle = initial => {
 
     const toggleFalse = useCallback(() => setState(false), []);
 
-    return [state, toggle, toggleTrue, toggleFalse];
+    return [state, setState, toggle, toggleTrue, toggleFalse];
 };
 
 export default useToggle;

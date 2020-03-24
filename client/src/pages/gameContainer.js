@@ -15,7 +15,6 @@ import Lightning from '../components/lightning';
 import useGamepad from '../hooks/useGamepad';
 import SpecialAlert from '../components/alerts/SpecialAlert';
 import useWidthObserver from '../hooks/useWidthObserver';
-import useInterval from '../hooks/useInterval';
 import useCounter from '../hooks/useCounter';
 import useToggle from '../hooks/useToggle';
 
@@ -25,7 +24,7 @@ const GameContainer = () => {
 
     const [message, setMessage] = useState("");
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useToggle(false);
 
     // refs
     const planeRef = useRef();
@@ -50,14 +49,12 @@ const GameContainer = () => {
     const [gameOver, setGameOver] = useToggle(false);
     const [lives, setLives] = useCounter(3);
     const [isFlying, setIsFlying] = useToggle(false);
-    const [isFlyingBoss, setIsFlyingBoss] = useToggle(false);
     const [charge, setCharge] = useCounter(3);
     const [specialReset, setSpecialReset] = useToggle(false);
 
     // handle mouse controls
     // handle wheel events
-    const wheelHandler = useCallback(
-        ({ deltaY }) => {
+    const wheelHandler = useCallback(({ deltaY }) => {
             if (deltaY < 0 && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
                 planeRef.current.style.top = parseInt(planeRef.current.style.top) - 7 + "px";
             }
@@ -88,7 +85,7 @@ const GameContainer = () => {
             missileRef.current.style.top = 0 + "px";
             specialMissileRef.current.style.visibility = "visible";
         }
-    }, [charge, setCharge, setIsFlying, setIsFlyingBoss, setSpecialReset, gameOver, isFlying, laser, special, specialSound,]);
+    }, [charge, setCharge, setIsFlying, setSpecialReset, gameOver, isFlying, laser, special, specialSound,]);
 
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
@@ -100,31 +97,33 @@ const GameContainer = () => {
     // useEventListener for mouse down
     useEventListener("mousedown", mouseDownHandler, window);
 
-    // handle key down events
-    const keyHandler = useCallback(({ key }) => {
-        if (!gameOver && key === "ArrowUp") {
+    const upHandler = useCallback(() => {
+        if (!gameOver && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
         }
-        if (!gameOver && key === "ArrowDown") {
+        if (!gameOver && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
+            console.log("MAX HEIGHT!");
+        }  
+    }, [gameOver]);
+
+    const downHandler = useCallback(() => {
+        if (!gameOver) {
             planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
+        } 
+    }, [gameOver]);
+
+    // handle key down events
+    const keyHandler = useCallback(({ key }) => {
+        if (key === "ArrowUp") {
+            upHandler();
         }
-        if (!gameOver && key === " " && !isFlying && charge === 3 && special < 5) {
-            setIsFlying(true);
-            setCharge(0);
-            laser.volume = .25;
-            laser.play();
-            missileRef.current.style.visibility = "visible";
+        if (key === "ArrowDown") {
+            downHandler();
         }
-        if (key === " " && !gameOver && charge === 3 && !isFlying && special === 5) {
-            specialSound.volume = 1;
-            specialSound.play();
-            clearSpecial();
-            setSpecialReset(true);
-            missileRef.current.style.visibility = "hidden";
-            missileRef.current.style.top = 0 + "px";
-            specialMissileRef.current.style.visibility = "visible";
+        if (key === " ") {
+            fireHandler();
         }
-    }, [laser, isFlying, setIsFlying, charge, setCharge, setSpecialReset, clearSpecial, gameOver, special, specialSound]);
+    }, [fireHandler, upHandler, downHandler]);
 
     // useEventListener for key down events
     useEventListener("keydown", keyHandler, window);
@@ -231,25 +230,25 @@ const GameContainer = () => {
         if (!gameOver && !specialReset) {
             setIsOpen(false);
         }
-    }, [gameOver, specialReset]);
+    }, [gameOver, specialReset, setIsOpen]);
 
     // handle gamepad controls
     const startHandler = () => {};
 
-    const upHandler = () => {
-        if (!gameOver && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
-            planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
-        }
-        if (!gameOver && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
-            console.log("MAX HEIGHT!");
-        }  
-    };
+    // const upHandler = () => {
+    //     if (!gameOver && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
+    //         planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
+    //     }
+    //     if (!gameOver && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
+    //         console.log("MAX HEIGHT!");
+    //     }  
+    // };
 
-    const downHandler = () => {
-        if (!gameOver) {
-            planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
-        } 
-    };
+    // const downHandler = () => {
+    //     if (!gameOver) {
+    //         planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
+    //     } 
+    // };
 
     const backHandler = () => {
         history.push("/");

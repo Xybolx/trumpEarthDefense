@@ -2,9 +2,9 @@ import React from "react";
 import useToggle from "../../hooks/useToggle";
 import "./Btn.css";
 
-const NavBtn = ({ className, onClick, children }) => {
+const NavBtn = ({ onClick, children }) => {
 
-    const [isPressed, toggleIsPressed, toggleTrue, toggleFalse] = useToggle();
+    const [isPressed, setIsPressed, toggleTrue, toggleFalse] = useToggle();
 
     return (
         <button

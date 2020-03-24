@@ -1,6 +1,6 @@
 
 .light:hover {
-  background: url("../../imgs/arcade-button.png");
+  background: url("../../imgs/arcade-pressed.png");
   background-size: contain;
   background-position: left;
   background-repeat: no-repeat;
