@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ConnectedContext from '../../context/connectedContext';
 
-const GamepadConnected = ({ connected }) => {
+const GamepadConnected = props => {
+
+    const { connected } = useContext(ConnectedContext);
 
     return (
         <div className="badge text-left" style={{ height: 35 }}>

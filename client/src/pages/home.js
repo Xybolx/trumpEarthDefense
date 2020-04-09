@@ -75,15 +75,14 @@ const Home = () => {
           <audio id="hail" src="hail.mp3" loop />
           <div ref={earthRef} className={currentClass}>
             {gamepad}
-            <CenteredColumn>
-              <Title>Trump Earth Defense</Title>
-            </CenteredColumn>
+          <CenteredColumn>
+            <Title>Trump Earth Defense</Title>
+          </CenteredColumn>
             <CenteredColumn className="home-controls">
                 <small className="m-3">Ready to make Earth great again?</small>
                 <div className="text-center">
                   <NavBtn className="mt-3" onClick={startHandler}>I'm Ready!</NavBtn>
                   <NavBtn className="mt-3" onClick={redirect}>High Scores</NavBtn>
-                  {/* <RoundBtn isPressed={isPressed} onMouseDown={e => toggleTrue(e)} onMouseUp={e => toggleFalse(e)} /> */}
                 </div>
             </CenteredColumn>
           </div>

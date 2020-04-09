@@ -1,53 +1,28 @@
 import React, { useContext } from 'react';
 import ConnectedContext from '../context/connectedContext';
 import Gamepad from '../components/gamepad/Gamepad';
+import GamepadConnected from '../components/gamepad/GamepadConnected';
 
-const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler) => {
+const useGamepad = (startHandler, backHandler, fireHandler, upHandler, downHandler) => {
 
-    const { connected, toggleTrue, toggleFalse } = useContext(ConnectedContext);
+    const { toggleTrue, toggleFalse } = useContext(ConnectedContext);
 
     const connectHandler = gamepadIndex => {
-        toggleTrue();
+      toggleTrue();
         console.log(`Gamepad ${gamepadIndex + 1} connected !`);
       };
      
     const disconnectHandler = gamepadIndex => {
-        toggleFalse();
+      toggleFalse();
         console.log(`Gamepad ${gamepadIndex + 1} disconnected !`);
       };
     
     const buttonDownHandler = buttonName => {
-      // console.log(buttonName, 'down');
+      console.log(buttonName, 'down');
     };
     
     const buttonUpHandler = buttonName => {
-      // console.log(buttonName, 'up');
-    };
-
-    const upDownHandler = buttonName => {
-      if (buttonName === 'DpadUp') {
-        upHandler();
-        console.log(buttonName, 'down');
-      }
-    };
-    
-    const upUpHandler = buttonName => {
-      if (buttonName === 'DpadUp') {
-        console.log(buttonName, 'up');
-      }
-    };
-
-    const downUpHandler = buttonName => {
-      if (buttonName === 'DpadDown') {
-        console.log(buttonName, 'up');
-      }
-    };
-    
-    const downDownHandler = buttonName => {
-      if (buttonName === 'DpadDown') {
-        downHandler();
-        console.log(buttonName, 'down');
-      }
+      console.log(buttonName, 'up');
     };
 
     const buttonChangeHandler = (buttonName, down) => {
@@ -65,6 +40,8 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
         }
     };
 
+    const gamepadConnected = <GamepadConnected />
+
     const gamepad = <Gamepad
                         onConnect={connectHandler}
                         onDisconnect={disconnectHandler}
@@ -72,30 +49,26 @@ const useGamepad = (startHandler, backHandler, aHandler, upHandler, downHandler)
                         onButtonUp={buttonUpHandler}
                         onButtonChange={buttonChangeHandler}
                         onAxisChange={axisChangeHandler}
-                        onA={aHandler}
+                        onA={fireHandler}
                         onB={() => { }}
                         onX={() => { }}
                         onY={() => { }}
                         onStart={startHandler}
                         onBack={backHandler}
                         onLT={() => { }}
-                        onRT={aHandler}
+                        onRT={fireHandler}
                         onLB={() => { }}
                         onRB={() => { }}
                         onLS={() => { }}
                         onRS={() => { }}
                         onUp={upHandler}
                         onDown={downHandler}
-                        onUpDown={upDownHandler}
-                        onUpUp={upUpHandler}
-                        onDownUp={downUpHandler}
-                        onDownDown={downDownHandler}
                         onLeft={() => { }}
                         onRight={() => { }}>
                         <div />
                     </Gamepad>
 
-    return { gamepad, connected };
+    return { gamepad, gamepadConnected };
 };
 
 export default useGamepad;

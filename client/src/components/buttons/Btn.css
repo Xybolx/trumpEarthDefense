@@ -1,6 +1,7 @@
 
 .light:hover {
   background: url("../../imgs/arcade-pressed.png");
+  /* background: url("../../imgs/transparent-button-pressed.png"); */
   background-size: contain;
   background-position: left;
   background-repeat: no-repeat;
@@ -21,6 +22,7 @@
 
 .light {
   background: url("../../imgs/arcade-button.png");
+  /* background: url("../../imgs/transparent-button.png"); */
   background-size: contain;
   background-position: left;
   background-repeat: no-repeat;
@@ -56,6 +58,10 @@
   margin-bottom: 5px;
   margin-left: 2px;
   margin-right: 2px;
+}
+
+.button-text {
+  border-radius: 100%;
 }
 
 /* .btn-outline-light:focus {

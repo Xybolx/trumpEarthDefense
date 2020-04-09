@@ -19,19 +19,28 @@
   
   .bg-danger, .badge-danger {
     background: linear-gradient(darkred, tomato, darkred);
+    /* box-shadow: 0 0 5px 5px rgba(250, 152, 150, 0.808); */
   }
   
   .bg-success, .badge-success {
     background: linear-gradient(darkgreen, lawngreen, darkgreen);
+    /* box-shadow: 0 0 5px 5px rgba(186, 247, 145, 0.849); */
   }
   
   .bg-warning, .badge-warning {
     background: linear-gradient(darkgoldenrod, yellow, goldenrod);
+    /* box-shadow: 0 0 5px 5px rgba(247, 247, 166, 0.795); */
   }
 
   .bg-flash {
     background: linear-gradient(darkgreen, lawngreen, darkgreen);
     animation: SpecialFlash .25s infinite alternate;
+  }
+
+  .badge-danger,
+  .badge-success,
+  .badge-warning {
+    background: initial;
   }
 
   /* .fa-star.fa-fw.fa-2x.text-light {

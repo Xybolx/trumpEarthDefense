@@ -42,10 +42,10 @@
 
 @keyframes Tick {
   from {
-    transform: rotate(0deg);
+    transform: scale(.85);
   }
   to {
-    transform: rotate(-30deg);
+    transform: scale(1);
   }
 }
 
@@ -77,16 +77,6 @@
   background-repeat: no-repeat;
   animation: Motion 2s infinite alternate,
             Tick .75s infinite alternate;
-  position: fixed;
-}
-
-.target4 {
-  background: url("../../imgs/trump.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: Motion 2.5s infinite alternate,
-            Tick .25s infinite alternate;
   position: fixed;
 }
 

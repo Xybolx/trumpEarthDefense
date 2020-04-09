@@ -5,9 +5,6 @@ import useTimeout from '../hooks/useTimeout';
 
 const useWidthObserver = (missile, wall, gameOver, isFlying, setIsFlying) => {
 
-    missile = missile.current;
-    wall = wall.current;
-
     // state
     const [wallClass, setWallClass] = useState("wall");
     const [isWallIntersect, setIsWallIntersect] = useState(false);
@@ -22,9 +19,9 @@ const useWidthObserver = (missile, wall, gameOver, isFlying, setIsFlying) => {
     
     
     const missileTick = () => {
-        const rect1 = missile.getBoundingClientRect();
-        const rect2 = wall.getBoundingClientRect();
-        const missileStyle = missile.style;
+        const rect1 = missile.current.getBoundingClientRect();
+        const rect2 = wall.current.getBoundingClientRect();
+        const missileStyle = missile.current.style;
         // const rect3 = wall2.current.getBoundingClientRect();
 
         const wallIntersect = 

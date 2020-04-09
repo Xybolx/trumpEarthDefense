@@ -4,23 +4,23 @@ import "./Btn.css";
 
 const NavBtn = ({ onClick, children }) => {
 
-    const [isPressed, setIsPressed, toggleTrue, toggleFalse] = useToggle();
+    const [isPressed, toggleIsPressed, toggleTrue, toggleFalse] = useToggle();
 
     return (
         <button
-            className={
+             className={
                 isPressed ? 
                 "light pressed" :
                 !isPressed ? 
                 "light" :
                 "light"
             }
-            onMouseDown={ev => toggleTrue(ev)}
-            onMouseUp={ev => toggleFalse(ev)}
+            // onMouseEnter={ev => toggleTrue(ev)}
+            // onMouseLeave={ev => toggleFalse(ev)}
             onClick={onClick}>
-            <small>
+            <div className="button-text">
                 &nbsp;&nbsp;{children}
-            </small>
+            </div>
         </button>
     );
 };

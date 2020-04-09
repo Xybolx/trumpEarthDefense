@@ -14,9 +14,10 @@ import SpecialMissile from '../components/specialMissile';
 import Lightning from '../components/lightning';
 import useGamepad from '../hooks/useGamepad';
 import SpecialAlert from '../components/alerts/SpecialAlert';
-import useWidthObserver from '../hooks/useWidthObserver';
+// import useWidthObserver from '../hooks/useWidthObserver';
 import useCounter from '../hooks/useCounter';
 import useToggle from '../hooks/useToggle';
+import useGamescreen from '../components/useGamescreen';
 
 const GameContainer = () => {
 
@@ -24,7 +25,7 @@ const GameContainer = () => {
 
     const [message, setMessage] = useState("");
 
-    const [isOpen, setIsOpen] = useToggle(false);
+    const [isOpen, setIsOpen, toggleOpen, setOpenTrue, setOpenFalse] = useToggle(false);
 
     // refs
     const planeRef = useRef();
@@ -36,21 +37,14 @@ const GameContainer = () => {
     const enemy2Ref = useRef();
     const enemy3Ref = useRef();
 
-    // audio
-    const laser = new Audio('laser.mp3');
-    const splode = new Audio("splode.mp3");
-    const specialSound = new Audio("special.mp3");
-
     // context
     const { setScore } = useContext(ScoreContext);
-    const { special, clearSpecial } = useContext(SpecialContext);
+    const { clearSpecial } = useContext(SpecialContext);
 
     // state
-    const [gameOver, setGameOver] = useToggle(false);
+    const [gameOver, setGameOver] = useState(false);
     const [lives, setLives] = useCounter(3);
-    const [isFlying, setIsFlying] = useToggle(false);
-    const [charge, setCharge] = useCounter(3);
-    const [specialReset, setSpecialReset] = useToggle(false);
+    const [specialReset, setSpecialReset] = useState(false);
 
     // handle mouse controls
     // handle wheel events
@@ -68,24 +62,7 @@ const GameContainer = () => {
             }
         }, []);
 
-    const fireHandler = useCallback(() => {
-        if (!gameOver && !isFlying && charge === 3 && special < 5) {
-            setIsFlying(true);
-            setCharge(0);
-            laser.volume = .50;
-            laser.play();
-            missileRef.current.style.visibility = "visible";
-        }
-        if (!gameOver && !isFlying && charge === 3 && special === 5) {
-            specialSound.volume = 1;
-            specialSound.play();
-            setCharge(0);
-            setSpecialReset(true);
-            missileRef.current.style.visibility = "hidden";
-            missileRef.current.style.top = 0 + "px";
-            specialMissileRef.current.style.visibility = "visible";
-        }
-    }, [charge, setCharge, setIsFlying, setSpecialReset, gameOver, isFlying, laser, special, specialSound,]);
+        const [fireHandler, isFlying, setIsFlying, wallClass, missile, charge] = useGamescreen(gameOver, setSpecialReset, missileRef, specialMissileRef, wallRef);
 
     // handle mouse down event
     const mouseDownHandler = useCallback(() => {
@@ -129,10 +106,10 @@ const GameContainer = () => {
     useEventListener("keydown", keyHandler, window);
 
     // useIntersection for detecting collision and screen width
-    const wallClass = useWidthObserver(missileRef, wallRef, gameOver, isFlying, setIsFlying);
-    useIntersection(missileRef, enemyRef, -100, "target", isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy2Ref, -200, "target2", isFlying, setIsFlying, setLives, gameOver);
-    useIntersection(missileRef, enemy3Ref, -300, "target3", isFlying, setIsFlying, setLives, gameOver);
+    // const wallClass = useWidthObserver(missileRef, wallRef, gameOver, isFlying, setIsFlying);
+    useIntersection(missile, enemyRef, -100, "target", isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missile, enemy2Ref, -200, "target2", isFlying, setIsFlying, setLives, gameOver);
+    useIntersection(missile, enemy3Ref, -300, "target3", isFlying, setIsFlying, setLives, gameOver);
 
     useEffect(() => {
         if (lives === 0) {
@@ -140,14 +117,14 @@ const GameContainer = () => {
         }
     }, [lives, setGameOver]);
 
-    useEffect(() => {
-        if (!gameOver && charge < 3) {
-            const chargeTimer = setInterval(() => setCharge(charge => charge + 1), 500);
-            return () => {
-                clearInterval(chargeTimer);
-            };
-        }
-    }, [charge, gameOver, setCharge]);
+    // useEffect(() => {
+    //     if (!gameOver && charge < 3) {
+    //         const chargeTimer = setInterval(() => setCharge(charge => charge + 1), 500);
+    //         return () => {
+    //             clearInterval(chargeTimer);
+    //         };
+    //     }
+    // }, [charge, gameOver, setCharge]);
 
     useEffect(() => {
         if (!gameOver) {
@@ -171,6 +148,7 @@ const GameContainer = () => {
             setSpecialReset(false);
         };
         const destroyAllEnemies = async () => {
+            const splode = new Audio("splode.mp3");
             splode.volume = .5;
             splode.play();
             enemyRef.current.className = "destroyed";
@@ -181,14 +159,14 @@ const GameContainer = () => {
             clearSpecial();
         };
         if (!gameOver && specialReset) {
-            const specialResetTimer = setTimeout(enemyReset, 800);
-            const destroyAllTimer = setTimeout(destroyAllEnemies, 500);
+            const specialResetTimer = setTimeout(enemyReset, 1200);
+            const destroyAllTimer = setTimeout(destroyAllEnemies, 800);
             return () => {
                 clearTimeout(specialResetTimer);
                 clearTimeout(destroyAllTimer);
             }
         }
-    }, [gameOver, specialReset, setSpecialReset, clearSpecial, setScore, splode]);
+    }, [gameOver, specialReset, setSpecialReset, clearSpecial, setScore]);
 
     useEffect(() => {
 
@@ -196,59 +174,45 @@ const GameContainer = () => {
         const quiet = new Audio("quiet.mp3");
         const congrats = new Audio("congrats.mp3");
         const rocket = new Audio("rocket.mp3");
-        const wall = new Audio("wall.mp3");
+        const theWall = new Audio("wall.mp3");
 
-        const insults = [rude, quiet, congrats, rocket, wall];
+        const insults = [rude, quiet, congrats, rocket, theWall];
         const indexOfInsult = Math.floor(Math.random() * insults.length);
         const randomInsult = insults[indexOfInsult];
 
         if (!gameOver && specialReset && indexOfInsult === 0) {
             setMessage(`"Don't be rude!"`);
-            setIsOpen(true);
+            setOpenTrue();
             randomInsult.play();
         }
         if (!gameOver && specialReset && indexOfInsult === 1) {
             setMessage(`"Quiet! Quiet!"`);
-            setIsOpen(true);
+            setOpenTrue();
             randomInsult.play();
         }
         if (!gameOver && specialReset && indexOfInsult === 2) {
             setMessage(`"Congratulations!`);
-            setIsOpen(true);
+            setOpenTrue();
             randomInsult.play();
         }
         if (!gameOver && specialReset && indexOfInsult === 3) {
             setMessage(`"Little rocket man!"`);
-            setIsOpen(true);
+            setOpenTrue();
             randomInsult.play();
         }
         if (!gameOver && specialReset && indexOfInsult === 4) {
             setMessage(`"The Wall just got ten feet taller!"`);
-            setIsOpen(true);
+            setOpenTrue();
             randomInsult.play();
         }
         if (!gameOver && !specialReset) {
-            setIsOpen(false);
+            setOpenFalse();
         }
-    }, [gameOver, specialReset, setIsOpen]);
+        
+    }, [gameOver, specialReset, setOpenFalse, setOpenTrue]);
 
     // handle gamepad controls
     const startHandler = () => {};
-
-    // const upHandler = () => {
-    //     if (!gameOver && planeRef.current.getBoundingClientRect().height !== (window.innerHeight || document.documentElement.clientHeight)) {
-    //         planeRef.current.style.top = parseInt(planeRef.current.style.top) - 30 + "px";
-    //     }
-    //     if (!gameOver && planeRef.current.getBoundingClientRect().height === (window.innerHeight || document.documentElement.clientHeight)) {
-    //         console.log("MAX HEIGHT!");
-    //     }  
-    // };
-
-    // const downHandler = () => {
-    //     if (!gameOver) {
-    //         planeRef.current.style.top = parseInt(planeRef.current.style.top) + 30 + "px";
-    //     } 
-    // };
 
     const backHandler = () => {
         history.push("/");

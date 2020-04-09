@@ -155,11 +155,13 @@ const HighScores = () => {
                             search={search}
                             />
                     </Suspense>
-                    <NavBtn 
-                        className="mt-3" 
-                        onClick={redirect}>
-                        Home
-                    </NavBtn>
+                    <div className="score-controls">
+                        <NavBtn 
+                            className="mt-3" 
+                            onClick={redirect}>
+                            Home
+                        </NavBtn>
+                    </div>
                 </CenteredColumn>
             </div>
         </PageContainer>

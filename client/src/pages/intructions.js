@@ -145,8 +145,10 @@ const Instructions = () => {
                         </div>
                     </div>
                 </div>
-                <NavBtn className="mt-3" onClick={backHandler}>Back</NavBtn>
-                <NavBtn className="mt-3" onClick={() => history.push("/game")}>I'm Ready!</NavBtn>
+                <div className="instructions-controls">
+                    <NavBtn className="mt-3" onClick={backHandler}>Back</NavBtn>
+                    <NavBtn className="mt-3" onClick={() => history.push("/game")}>I'm Ready!</NavBtn>
+                </div>
                 </CenteredColumn>
             </div>
         </div>

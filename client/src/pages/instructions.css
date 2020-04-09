@@ -9,14 +9,21 @@
 }
 
 .instructions {
-    background: rgba(0, 0, 0, 0.596);
-    border: double whitesmoke;
+    background: rgba(0, 0, 0, 0.705);
+    box-shadow: 0 0 5px 5px rgba(238, 238, 235, 0.651);
     border-radius: 1%;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
-    text-shadow: 1px 1px 1px tomato; 
+    padding-bottom: 5px;
+    text-shadow: 1px 1px 1px tomato;
+    animation: FadeRight 2s; 
   }
+
+.instructions-controls {
+    box-shadow: 0 0 5px 5px rgba(238, 238, 235, 0.651);
+    animation: FadeRight 1.75s;
+}
 
 .p-head {
     text-decoration: underline;

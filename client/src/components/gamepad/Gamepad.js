@@ -36,10 +36,6 @@ class Gamepad extends Component {
 
     onUp: () => {},
     onDown: () => {},
-    onUpDown: () => {},
-    onUpUp: () => {},
-    onDownUp: () => {},
-    onDownDown: () => {},
     onLeft: () => {},
     onRight: () => {},
   }
@@ -97,10 +93,10 @@ class Gamepad extends Component {
   }
 
   updateGamepad() {
-    if (!this.mounted) return
+    if (!this.mounted) return;
 
-    const gamepadIndex = this.props.gamepadIndex
-    const gamepads = navigator.getGamepads()
+    const gamepadIndex = this.props.gamepadIndex;
+    const gamepads = navigator.getGamepads();
 
     if (gamepads.length && gamepads.length > gamepadIndex && gamepads[gamepadIndex]) {
       const gamepad = gamepads[gamepadIndex]
@@ -131,7 +127,7 @@ class Gamepad extends Component {
       let axisName = this.buttonIndexToAxisName(i)
       this.updateAxis(axisName, value)
     }
-  }
+  };
 
   updateButton(buttonName, pressed) {
     if (this.padState.buttons[buttonName] === undefined) {
@@ -144,8 +140,7 @@ class Gamepad extends Component {
       this.props[`onButton${pressed ? 'Down' : 'Up'}`](buttonName)
       if (pressed) this.props[`on${buttonName.replace('DPad', '')}`]()
     }
-  }
-
+  };
 
   updateAllAxis(gamepad) {
     for (let i = 0; i < gamepad.axes.length; ++i) {
@@ -188,14 +183,14 @@ class Gamepad extends Component {
         if (axisName === 'LeftStickY') {
           if (previousValue <= this.props.stickThreshold &&
               value > this.props.stickThreshold) {
-            this.props.onUpDown();
-            console.log('LeftStickY is positive')
+            this.props.onUp();
+            console.log('LeftStickY is positive');
           }
 
           if (previousValue >= -this.props.stickThreshold &&
               value < -this.props.stickThreshold) {
-            this.props.onDownUp();
-            console.log('LeftStickY is negative')
+            this.props.onDown();
+            console.log('LeftStickY is negative');
           }
         }
       }

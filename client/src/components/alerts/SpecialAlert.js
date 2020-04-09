@@ -7,7 +7,7 @@ const SpecialAlert = props => {
             <div className="card mb-3" style={{maxWidth: "540px"}}>
                 <div className="row no-gutters">
                     <div className="col-md-4 alert-img">
-                        <img style={{ width: 50, height: 50 }} className="img-fluid" src="suprise.png" alt="Trump" />
+                        <img width="35%" height="35%" className="img-fluid" src="suprise.png" alt="Trump" />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -30,4 +30,4 @@ const SpecialAlert = props => {
     );
 };
 
-export default SpecialAlert
+export default SpecialAlert;

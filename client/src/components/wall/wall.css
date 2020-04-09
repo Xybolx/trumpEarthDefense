@@ -1,27 +1,31 @@
 @keyframes WallMotion {
     from {
-      top: 0%;
+      transform: translateY(-110%);
       /* height: 50px; */
     }
     to {
-      top: 60%;
+      transform: translateY(0%);
       /* height: 300px; */
     }
   }
 
   @keyframes WallFlash {
     from {
-      border: 1px dotted fuchsia;
+      border: 1px dotted tomato;
+      background: url("../../imgs/red_cloud.gif");
+      background-size: contain;
+      background-repeat: round;
     }
     to {
       border: 10px whitesmoke;
+      background: url("../../imgs/red_cloud.gif");
+      background-size: contain;
+      background-repeat: round;
     }
   }
 
 .wall {
     background: repeating-linear-gradient(black, silver, black);
-    /* background-size: contain;
-    background-repeat: round; */
     /* background-color: tomato; */
     animation: WallMotion infinite alternate 4s;
     position: absolute;
@@ -32,9 +36,12 @@
 }
 
 .wallAlternate {
-  background: repeating-linear-gradient(rgb(47, 0, 255), rgb(229, 255, 0), rgb(71, 197, 255));
-  animation: WallMotion infinite alternate 4s,
-             WallFlash infinite .25s;
+  border: 7px dotted whitesmoke;
+  background: url("../../imgs/red_cloud.gif");
+  background-size: contain;
+  background-repeat: round;
+  animation: WallMotion infinite alternate 4s;
+             /* WallFlash infinite .25s; */
   position: absolute;
   top: 50%;
   right: 50%;

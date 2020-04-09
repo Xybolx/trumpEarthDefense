@@ -2,19 +2,19 @@ import React, { forwardRef } from "react";
 import "./enemy.css";
 
 export const Enemy = forwardRef(({ children }, enemyRef) => (
-    <div ref={enemyRef} style={{ right: -300, height: 155, width: 155 }} className="target">
+    <div id="enemy1" ref={enemyRef} style={{ right: -300, height: 155, width: 155 }} className="target">
         { children }
     </div>
 ));
 
 export const Enemy2 = forwardRef(({ children }, enemy2Ref) => (
-    <div ref={enemy2Ref} style={{ right: -200, height: 150, width: 150 }} className="target2">
+    <div id="enemy2" ref={enemy2Ref} style={{ right: -200, height: 150, width: 150 }} className="target2">
         { children }
     </div>
 ));
 
 export const Enemy3 = forwardRef(({ children }, enemy3Ref) => (
-    <div ref={enemy3Ref} style={{ right: -100, height: 165, width: 165 }} className="target3">
+    <div id="enemy3" ref={enemy3Ref} style={{ right: -100, height: 165, width: 165 }} className="target3">
         { children }
     </div>
 ));

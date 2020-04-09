@@ -1,22 +1,8 @@
-/* @keyframes Flash {
-  from {
-    color: yellow;
-  }
-  to {
-    color: red;
-  }
-} */
 
 .title {
-  animation: Flash .75s infinite;
+  animation: Flash .75s infinite,
+            FadeAcross 1.5s;
   color: yellow;
   background: rgba(0, 0, 0, 0.705);
-  /* background-image: url("../../imgs/suprise.png");
-  background-size: contain;
-  background-repeat: round;
-  background-position: left; */
-}
-
-.home-title {
-  animation: Flash .75s infinite;
+  box-shadow: 0 0 5px 5px rgba(238, 238, 235, 0.651);
 }
